@@ -127,6 +127,13 @@ class UserController extends Controller
 
 
 
+	// LIST
+	public function list(Request $request){
+		return User::whereNot('role', 'superadmin')->latest()->paginate(10);
+	}
+
+
+
 	// DELETE
 	public function delete(Request $request){
 		$validate = Validator::make($request->all(), [

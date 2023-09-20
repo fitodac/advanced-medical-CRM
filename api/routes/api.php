@@ -30,10 +30,11 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
 	// Users
-	Route::post('/auth/create', 			[UserController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('user.create');
-	Route::put('/auth/update', 				[UserController::class, 'update'])->name('user.update');
-	Route::post('/auth/logout', 			[AuthController::class, 'logout'])->name('user.logout');
-	Route::delete('/auth/delete', 			[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
+	Route::post('/user/create', 			[UserController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('user.create');
+	Route::put('/user/update', 				[UserController::class, 'update'])->name('user.update');
+	Route::post('/user/list', 				[UserController::class, 'list'])->middleware('restrictRole:superadmin')->name('user.list');
+	Route::post('/auth/logout', 			[AuthController::class, 'logout'])->name('logout');
+	Route::delete('/user/delete', 		[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
 
 	// Centers
 	Route::post('/center/create', 		[CenterController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('center.create');
