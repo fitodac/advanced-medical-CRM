@@ -82,7 +82,7 @@ class CenterController extends Controller
 			return $this->errorResponse('No existen datos para este hospital', 404);
 		}
 
-		return $this->successResponse([ 'center' => $center ]);
+		return $this->successResponse($center);
 	}
 
 
