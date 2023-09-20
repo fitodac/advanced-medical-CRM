@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\PatientResource;
 
 use App\Models\Patient;
 use App\Models\Doctor;
@@ -122,7 +123,8 @@ class PatientController extends Controller
 			$doctor = Doctor::where('user_id', $auth->id)->first();
 			return Patient::where('doctor_id', $doctor->id)->latest()->paginate(10);
 		}else{
-			return Patient::latest()->paginate(10);
+			$resp = Patient::latest()->paginate(10);
+			return PatientResource::collection($resp);
 		}
 
 	}

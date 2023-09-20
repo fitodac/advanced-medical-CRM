@@ -19,5 +19,7 @@ class Patient extends Model
 	];
 
 
+	public function getDoctorAttribute(){ return Doctor::find($this->doctor_id)->user; }
+	public function center(){ return $this->belongsTo(Center::class, 'center_id')->select(['id', 'name', 'code']); }
 
 }
