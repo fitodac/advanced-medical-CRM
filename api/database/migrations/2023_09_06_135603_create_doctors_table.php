@@ -15,7 +15,7 @@ return new class extends Migration
 			$table->id();
 			$table->unsignedBigInteger('user_id')->unique()->constrained('users')->cascadeOnDelete();
 			$table->unsignedBigInteger('center_id')->constrained('centers')->nullOnDelete();
-			$table->unsignedBigInteger('speciality_id')->constrained('specialities')->nullOnDelete();
+			$table->unsignedBigInteger('specialty_id')->constrained('specialties')->nullOnDelete();
 			$table->timestamps();
 		});
 	}

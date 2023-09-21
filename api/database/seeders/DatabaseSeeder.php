@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
 		$this->call([
 			UsersSeeder::class,
-			SpecialitySeeder::class,
+			SpecialtySeeder::class,
 		]);
 
 
@@ -36,13 +36,13 @@ class DatabaseSeeder extends Seeder
 		]);
 
 		User::create(['name' => 'doctor1', 'email' => 'doctor1@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor']);
-		Doctor::create(['user_id' => 3, 'center_id' => 1, 'speciality_id' => 3]);
+		Doctor::create(['user_id' => 3, 'center_id' => 1, 'specialty_id' => 3]);
 
 		User::create(['name' => 'doctor2', 'email' => 'doctor2@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor' ]);
-		Doctor::create(['user_id' => 4, 'center_id' => 1, 'speciality_id' => 6]);
+		Doctor::create(['user_id' => 4, 'center_id' => 1, 'specialty_id' => 6]);
 
 		User::create([ 'name' => 'doctor3', 'email' => 'doctor3@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor' ]);
-		Doctor::create(['user_id' => 5, 'center_id' => 1, 'speciality_id' => 10]);
+		Doctor::create(['user_id' => 5, 'center_id' => 1, 'specialty_id' => 10]);
 
 
 		$letrasPosibles = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321';

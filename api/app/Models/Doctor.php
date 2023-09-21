@@ -12,11 +12,11 @@ class Doctor extends Model
 	protected $fillable = [
 		'user_id',
 		'center_id',
-		'speciality_id'
+		'specialty_id'
 	];
 
 	public function user(){ return $this->belongsTo(User::class, 'user_id')->select(['id', 'name', 'email' ]); }
-	public function speciality(){ return $this->belongsTo(Speciality::class)->select(['name']); }	
+	public function specialty(){ return $this->belongsTo(Specialty::class)->select(['name']); }	
 	public function center(){ return $this->belongsTo(Center::class)->select(['id', 'name', 'code']); }
 
 }

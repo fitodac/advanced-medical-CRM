@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\Speciality;
+use App\Models\Specialty;
 
-class SpecialitySeeder extends Seeder
+class SpecialtySeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
@@ -47,7 +47,7 @@ class SpecialitySeeder extends Seeder
 			'Urología'
 		];
 
-		foreach($list as $item) Speciality::create([ 'name' => $item ]);
+		foreach($list as $item) Specialty::create([ 'name' => $item ]);
 
 	}
 }
