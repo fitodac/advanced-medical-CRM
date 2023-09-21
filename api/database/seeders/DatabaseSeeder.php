@@ -35,13 +35,13 @@ class DatabaseSeeder extends Seeder
 			'code' => 'H01'
 		]);
 
-		User::create(['name' => 'doctor1', 'email' => 'doctor1@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor']);
+		User::create(['name' => 'doctor1', 'email' => 'doctor1@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Linda', 'lastname' => 'Hamilton' ]);
 		Doctor::create(['user_id' => 3, 'center_id' => 1, 'specialty_id' => 3]);
 
-		User::create(['name' => 'doctor2', 'email' => 'doctor2@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor' ]);
+		User::create(['name' => 'doctor2', 'email' => 'doctor2@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Arnold', 'lastname' => 'Schwartzeneger' ]);
 		Doctor::create(['user_id' => 4, 'center_id' => 1, 'specialty_id' => 6]);
 
-		User::create([ 'name' => 'doctor3', 'email' => 'doctor3@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor' ]);
+		User::create([ 'name' => 'doctor3', 'email' => 'doctor3@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Edward', 'lastname' => 'Furlong' ]);
 		Doctor::create(['user_id' => 5, 'center_id' => 1, 'specialty_id' => 10]);
 
 
