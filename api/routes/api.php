@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\VisitController;
+use App\Http\Controllers\Api\SpecialtyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	// Users
 	Route::post('/user/create', 			[UserController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('user.create');
 	Route::put('/user/update', 				[UserController::class, 'update'])->name('user.update');
+	Route::post('/user', 							[UserController::class, 'show'])->middleware('restrictRole:superadmin,admin')->name('user.show');
 	Route::post('/user/list', 				[UserController::class, 'list'])->middleware('restrictRole:superadmin')->name('user.list');
 	Route::post('/auth/logout', 			[AuthController::class, 'logout'])->name('logout');
 	Route::delete('/user/delete', 		[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
@@ -41,10 +43,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::put('/center/update', 			[CenterController::class, 'update'])->middleware('restrictRole:superadmin,admin')->name('center.update');
 	Route::post('/center', 						[CenterController::class, 'show'])->middleware('restrictRole:superadmin,admin')->name('center.show');
 	Route::post('/center/list', 			[CenterController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('center.list');
+	Route::post('/center/getAll', 		[CenterController::class, 'getFullList'])->middleware('restrictRole:superadmin,admin')->name('center.getAll');
 	Route::delete('/center/delete', 	[CenterController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('center.delete');
 
 	// Doctors
 	Route::post('/doctors', 					[DoctorController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('doctor.list');
+	
+	// Specialties
+	Route::post('/specialties', 			[SpecialtyController::class, 'getFullList'])->name('specialties');
 
 	// Patients
 	Route::post('/patient/create',		[PatientController::class, 'create'])->name('patient.create');

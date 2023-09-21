@@ -43,4 +43,8 @@ class User extends Authenticatable
 		'email_verified_at' => 'datetime',
 		'password' => 'hashed',
 	];
+
+
+	public function doctor(){ return Doctor::where('user_id', $this->id)->first(); }
+
 }
