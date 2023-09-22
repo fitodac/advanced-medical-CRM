@@ -24,25 +24,31 @@ class PatientController extends Controller
 	{
 
 		$validate = Validator::make($request->all(), [
-			'code' => 'required|unique:patients',
+			'code' => 'required',
 			'doctor_id' => 'required|numeric',
 			'center_id' => 'required|numeric',
 			'name' => 'required',
 			'lastname' => 'required',
+			'gender' => 'required',
 		], [
 			'code.required' => 'Debes incluír un código de paciente',
-			'code.unique' => 'Ya existe un paciente con ese código',
 			'doctor_id.required' => 'El ID del doctor es requerido',
 			'doctor_id.numeric' => 'Formato incorrecto',
 			'center_id.required' => 'El ID del centro médico es requerido',
 			'center_id.numeric' => 'Formato incorrecto',
 			'name.required' => 'Debes incluír un nombre para el paciente',
-			'lastname.required' => 'Debes incluír un apellido para el paciente'
+			'lastname.required' => 'Debes incluír un apellido para el paciente',
+			'gender.required' => 'Debes incluír un género'
 		]);
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
-		$patient = Patient::create($request->all());
+		$lastRecord = Patient::select('id')->latest('id')->first();
+		$lastRecord = $lastRecord ? str_pad(($lastRecord->id + 1), 2, "0", STR_PAD_LEFT) : '01';
+
+		$patientData = array_merge($request->all(), ['code' => $request->code.'-'.$lastRecord]);
+
+		$patient = Patient::create($patientData);
 
 		return $this->successResponse($patient, 'Hemos creado un nuevo paciente');
 
@@ -57,15 +63,21 @@ class PatientController extends Controller
 		$validate = Validator::make($request->all(), [
 			'id' => 'required|numeric',
 			'doctor_id' => 'required|numeric',
+			'center_id' => 'required|numeric',
 			'name' => 'required',
 			'lastname' => 'required',
+			'gender' => 'required',
+			'gender.required' => 'Debes incluír un género'
 		], [
 			'id.required' => 'Debes proveernos el ID del paciente para continuar',
 			'id.numeric' => 'Formato incorrecto',
 			'doctor_id.required' => 'Debes proveernos un ID de usuario',
 			'doctor_id.numeric' => 'Formato incorrecto',
+			'center_id.required' => 'El ID del centro médico es requerido',
+			'center_id.numeric' => 'Formato incorrecto',
 			'name.required' => 'Debes incluír un nombre para el paciente',
-			'lastname.required' => 'Debes incluír un apellido para el paciente'
+			'lastname.required' => 'Debes incluír un apellido para el paciente',
+			'gender.required' => 'Debes incluír un género'
 		]);
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
@@ -100,14 +112,15 @@ class PatientController extends Controller
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
 
-		$patient = Patient::find($request->id);
+		$patient = Patient::select(['id', 'code', 'doctor_id', 'center_id', 'name', 'lastname', 'gender'])->find($request->id);
+
 
 		if( 'doctor' === $auth->role ){
 			$doctor = Doctor::where('user_id', $auth->id)->first();
 			if( $patient->doctor_id !== $doctor->id ) return $this->unauthorizedResponse('No estás autorizado a ver los datos de este paciente');
-			return $this->successResponse($patient, '');
+			return $this->successResponse($patient);
 		}else{
-			return $this->successResponse($patient, '');
+			return $this->successResponse($patient);
 		}
 
 	}
