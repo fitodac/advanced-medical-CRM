@@ -14,12 +14,15 @@ return new class extends Migration
 		Schema::create('patients', function (Blueprint $table) {
 			$table->id();
 			$table->string('code', 10);
-			$table->unsignedBigInteger('doctor_id')->constrained('doctors')->nullOnDelete();
-			$table->unsignedBigInteger('center_id')->constrained('centers')->nullOnDelete();
+			$table->unsignedBigInteger('doctor_id')->nullable();
+			$table->unsignedBigInteger('center_id')->nullable();
 			$table->string('name');
 			$table->string('lastname');
 			$table->enum('gender', ['hombre', 'mujer'])->nullable()->comment('Género del paciente');
 			$table->timestamps();
+
+			$table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('set null');
+			$table->foreign('center_id')->references('id')->on('centers')->onDelete('set null');
 		});
 	}
 

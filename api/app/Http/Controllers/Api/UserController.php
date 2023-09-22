@@ -45,12 +45,12 @@ class UserController extends Controller
 		if( 'doctor' === $userData['role'] ){
 			$validate_doctor = Validator::make($userData, [
 				'center_id' => 'required|numeric',
-				'speciality_id' => 'required|numeric',
+				'specialty_id' => 'required|numeric',
 			], [
 				'center_id.required' => 'Debes seleccionar un hospital para continuar',
 				'center_id.numeric' => 'Formato incorrecto',
-				'speciality_id.required' => 'El doctor debe tener una especialidad',
-				'speciality_id.numeric' => 'Formato incorrecto'
+				'specialty_id.required' => 'El doctor debe tener una especialidad',
+				'specialty_id.numeric' => 'Formato incorrecto'
 			]);
 
 			if( $validate_doctor->fails() ){ return $this->validationErrorResponse($validate_doctor->errors()); }
@@ -59,8 +59,8 @@ class UserController extends Controller
 		$user = User::create($userData);
 
 		if( 'doctor' === $userData['role'] ){
-			$drData = array_merge($userData, ['user_id' => $user->id]);
-			Doctor::create($drData);
+			$doctorData = array_merge($userData, ['user_id' => $user->id]);
+			Doctor::create($doctorData);
 		}
 
 		$token = $user->createToken('my-token')->plainTextToken;
@@ -83,15 +83,19 @@ class UserController extends Controller
 			'name' => 'required|unique:users,name,'.$request->id,
 			'email' => 'required|unique:users,email,'.$request->id,
 			'role' => 'required|in:admin,doctor',
+			'specialty_id' => 'numeric',
+			'center_id' => 'numeric',
 		], [
-			'id.required' => 'Debes proveernos el ID del paciente para continuar',
+			'id.required' => 'Debes proveernos el ID del usuario para continuar',
 			'id.numeric' => 'Formato incorrecto',
 			'name.required' => 'Debes incluír un nombre para el usuario',
 			'name.unique' => 'Ya existe un usuario con ese nombre',
 			'email.required' => 'Debes incluír un email para el usuario',
 			'email.unique' => 'El email que intentas usar ya existe en la base de datos',
 			'role.in' => 'El role no es válido',
-			'role.required' => 'Debes incluír un rol de usuario'
+			'role.required' => 'Debes incluír un rol de usuario',
+			'specialty_id.numeric' => 'El ID de la especialidad debe ser un número',
+			'center_id.numeric' => 'El ID del centro médico debe ser un número'
 		]);
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
@@ -115,6 +119,8 @@ class UserController extends Controller
 		if( !$edit_allowed ) return $this->errorResponse('No estás autorizado a modificar este usuario', 404);
 
 		$userData = array_merge($user->toArray(), [ 
+			'firstname' => $request->firstname,
+			'lastname' => $request->lastname,
 			'name' => $request->name,
 			'email' => $request->email,
 			'role' => $auth->id === $user->id ? $user->role : ('superadmin' === $auth->role ? $request->role : ('admin' === $auth->role ? 'doctor' : 'doctor'))
@@ -122,7 +128,61 @@ class UserController extends Controller
 
 		$user->update($userData);
 
+		// Update doctors table
+		if( $request->specialty_id or $request->center_id ){
+			$doctor = $user->doctor();
+
+			if( 'doctor' === $user->role ){
+				if( $doctor ){
+					$doctorData = array_merge($doctor->toArray(), [ 
+						'user_id' => $user->id,
+						'specialty_id' => $request->specialty_id ?? $doctor->specialty_id, 
+						// 'center_id' => $request->center_id ?? $doctor->center_id
+					]);
+					
+					$doctor->update($doctorData); 
+				}else{
+					Doctor::create([
+						'user_id' => $user->id,
+						'specialty_id' => $request->specialty_id, 
+						'center_id' => $request->center_id 
+					]);
+				}
+			}elseif( 'admin' === $user->role ){
+				$doctor->delete();
+			}
+		}
+
 		return $this->successResponse($user, 'Hemos actualizado los datos del usuario');
+	}
+
+
+
+	// LIST
+	public function list(Request $request)
+	{
+		return User::whereNot('role', 'superadmin')->latest()->paginate(10);
+	}
+
+
+	// SHOW
+	public function show(Request $request)
+	{
+		$user = User::find($request->id);
+
+		if( !$user ){ return $this->errorResponse('El usuario que estás buscando no existe en nuestra base de datos', 404); }
+		if( 'superadmin' === $user->role ){ return $this->errorResponse('El Super Admin no puede ser editado', 404); }
+		
+		if( 'doctor' === $user->role ){
+			$doctor = $user->doctor();
+
+			$user = array_merge($user->toArray(), [
+				'specialty_id' => $doctor->specialty_id,
+				'center_id' => $doctor->center_id
+			]);
+		}
+
+		return $this->successResponse($user);
 	}
 
 

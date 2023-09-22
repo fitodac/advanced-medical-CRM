@@ -90,9 +90,17 @@ class CenterController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-		return Center::latest()->paginate(10);
+		$list = Center::latest()->paginate(10);
+		return $this->successResponse($list);
 	}
-	
+
+
+	// GET FULL LIST
+	public function getFullList(Request $request)
+	{
+		$list = Center::get();
+		return $this->successResponse($list);
+	}
 
 
 

@@ -13,10 +13,14 @@ return new class extends Migration
 	{
 		Schema::create('doctors', function (Blueprint $table) {
 			$table->id();
-			$table->unsignedBigInteger('user_id')->unique()->constrained('users')->cascadeOnDelete();
-			$table->unsignedBigInteger('center_id')->constrained('centers')->nullOnDelete();
-			$table->unsignedBigInteger('speciality_id')->constrained('specialities')->nullOnDelete();
+			$table->unsignedBigInteger('user_id');
+			$table->unsignedBigInteger('center_id')->nullable();
+			$table->unsignedBigInteger('specialty_id')->nullable();
 			$table->timestamps();
+
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('center_id')->references('id')->on('centers')->onDelete('set null');
+			$table->foreign('specialty_id')->references('id')->on('specialties')->onDelete('set null');
 		});
 	}
 
