@@ -86,7 +86,7 @@ class UserController extends Controller
 			'specialty_id' => 'numeric',
 			'center_id' => 'numeric',
 		], [
-			'id.required' => 'Debes proveernos el ID del paciente para continuar',
+			'id.required' => 'Debes proveernos el ID del usuario para continuar',
 			'id.numeric' => 'Formato incorrecto',
 			'name.required' => 'Debes incluír un nombre para el usuario',
 			'name.unique' => 'Ya existe un usuario con ese nombre',
@@ -119,6 +119,8 @@ class UserController extends Controller
 		if( !$edit_allowed ) return $this->errorResponse('No estás autorizado a modificar este usuario', 404);
 
 		$userData = array_merge($user->toArray(), [ 
+			'firstname' => $request->firstname,
+			'lastname' => $request->lastname,
 			'name' => $request->name,
 			'email' => $request->email,
 			'role' => $auth->id === $user->id ? $user->role : ('superadmin' === $auth->role ? $request->role : ('admin' === $auth->role ? 'doctor' : 'doctor'))
@@ -127,29 +129,27 @@ class UserController extends Controller
 		$user->update($userData);
 
 		// Update doctors table
-		if( 'superadmin' === $auth->role or 'admin' === $auth->role ){
-			if( $request->specialty_id and $request->center_id ){
-				$doctor = $user->doctor();
+		if( $request->specialty_id or $request->center_id ){
+			$doctor = $user->doctor();
 
-				if( 'doctor' === $user->role ){
-					if( $doctor ){
-						$doctorData = array_merge($doctor->toArray(), [ 
-							'user_id' => $user->id,
-							'specialty_id' => $request->specialty_id, 
-							'center_id' => $request->center_id 
-						]);
-						
-						$doctor->update($doctorData); 
-					}else{
-						Doctor::create([
-							'user_id' => $user->id,
-							'specialty_id' => $request->specialty_id, 
-							'center_id' => $request->center_id 
-						]);
-					}
-				}elseif( 'admin' === $user->role ){
-					$doctor->delete();
+			if( 'doctor' === $user->role ){
+				if( $doctor ){
+					$doctorData = array_merge($doctor->toArray(), [ 
+						'user_id' => $user->id,
+						'specialty_id' => $request->specialty_id ?? $doctor->specialty_id, 
+						// 'center_id' => $request->center_id ?? $doctor->center_id
+					]);
+					
+					$doctor->update($doctorData); 
+				}else{
+					Doctor::create([
+						'user_id' => $user->id,
+						'specialty_id' => $request->specialty_id, 
+						'center_id' => $request->center_id 
+					]);
 				}
+			}elseif( 'admin' === $user->role ){
+				$doctor->delete();
 			}
 		}
 
