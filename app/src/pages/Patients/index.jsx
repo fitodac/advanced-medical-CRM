@@ -3,8 +3,7 @@ import { List } from '../../api/patients'
 import { useAuth, kickOut } from '../../hooks/useAuth'
 
 import PageHeader from '../../components/PageHeader'
-import Button from '../../components/Ui/Button'
-import ButtonLink from '../../components/Ui/ButtonLink'
+import {Button, ButtonLink} from '../../components/Ui'
 
 export async function loader(){ return null }
 

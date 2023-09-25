@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
-import ButtonLink from '../components/Ui/ButtonLink'
+import { ButtonLink } from '../components/Ui'
 
 PageHeader.propTypes = {
   title: PropTypes.string.isRequired,

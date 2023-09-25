@@ -40,7 +40,7 @@ const COMPONENTS = (addComponents, options) => {
 			...BASE.SELECT,
 			...options['select'],
 
-			['&:focus']: { ...BASE.SELECT, ...options['select:focus'] },
+			['&:focus, &:focus-visible']: { ...BASE.SELECT.FOCUS, ...options['select:focus'] },
 			['&.input-valid']: { ...BASE.SELECT.VALID, ...options['select.input-valid'] },
 			['&.input-error']: { ...BASE.SELECT.ERROR, ...options['select.input-error'] }
 		}

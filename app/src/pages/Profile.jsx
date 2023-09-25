@@ -5,8 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useForm } from '../hooks/useForm'
 
 import PageHeader from '../components/PageHeader'
-import Input from '../components/Ui/Input'
-import Button from '../components/Ui/Button'
+import { Button, Input } from '../components/Ui'
 
 
 export const formContext = createContext({})

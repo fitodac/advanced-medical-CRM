@@ -11,6 +11,7 @@ const OPTIONS = {
 	'.btn-icon': {},
 	'.btn_icon > svg': {},
 	'.btn.rounded': {},
+	'.btn.block': {},
 	'.btn-link': {},
 	'.btn > [class^=ri-]': {},
 	'.btn-group': {},
@@ -73,8 +74,8 @@ const BASE = {
 
 			SVG: { 'transition': theme.transitionProperty.all }
 		},
-
-		ROUNDED: { 'border-radius': theme.borderRadius.full }
+		ROUNDED: { 'border-radius': theme.borderRadius.full },
+		BLOCK: { 'text-align': 'center' }
 	},
 
 	LINK: {
@@ -124,7 +125,6 @@ const BASE = {
 		}
 	},
 	
-
 	RI: { 'font-size': '1.2rem' }
 }
 
@@ -148,6 +148,7 @@ const COMPONENTS = (addComponents, options) => {
 			['&.rounded-full']: {...BASE.BTN.ROUNDED, ...options['.btn.rounded']},
 			['&.btn-link']: {...BASE.LINK, ...options['.btn-link']},
 			['> [class^=ri-]']: {...BASE.RI, ...options['.btn > [class^=ri-]']},
+			['&.block']: {...BASE.BTN.BLOCK, ...options['.btn.block']},
 		}
 	})
 

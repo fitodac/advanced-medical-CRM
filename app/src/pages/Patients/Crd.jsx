@@ -2,13 +2,16 @@ import { useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useForm } from '../../hooks/useForm'
-import { 
-	CriteriosDeInclusion 
-} from '../../helpers/crdForm'
+import data from './crdFormData'
+import crdState from './crdState'
 
 import PageHeader from '../../components/PageHeader'
-import Input from '../../components/Ui/Input'
-import Button from '../../components/Ui/Button'
+import { 
+	Input,
+	Button,
+	CheckboxList,
+	CheckboxGroup
+} from '../../components/Ui'
 
 export const formContext = createContext({})
 
@@ -22,7 +25,6 @@ export async function loader({request, params}){
 }
 
 
-
 export default function Page(){
 	
 	const { id, crd } = useLoaderData()
@@ -32,13 +34,11 @@ export default function Page(){
 	const navigate = useNavigate()
 
 
-	useEffect(() => {}, [])
+	const {formState, setFormState, onInputChange, onResetForm} = useForm(crdState)
 
-	const {formState, setFormState, onInputChange, onResetForm} = useForm({
-		patient_id: id,
-		visit_type: crd,
-		date: ''
-	})
+	useEffect(() => {
+		if(id) setFormState({...formState, patient_id: id, visit_type: crd})
+	}, [id, crd])
 
 	const handleInputChange = e => onInputChange(e)
 
@@ -72,20 +72,93 @@ export default function Page(){
 						</div>
 
 
+						{/* Criterios de inclusión y exclusión */}
 						<section className="space-y-5">
-							<div className="font-bold">Criterios de inclusión y exclusión</div>
-							<div className="space-y-3">
-								<CriteriosDeInclusion />
-
-								{/* 
-
-
-								Mirá este datepicker...
-								https://mymth.github.io/vanillajs-datepicker/#/ 
-
+							<div className="text-slate-400 border-b text-sm font-medium uppercase leading-tight py-1">Criterios de inclusión y exclusión</div>
+							<section className="space-y-7">
+								<div className="space-y-3">
+									<div className="font-bold">Criterios de inclusión</div>
+									<CheckboxGroup options={data.criteriosDeInclusion} />
+								</div>
 								
-								*/}
-							</div>
+								<div className="space-y-3">
+									<div className="font-bold">Criterios de exclusión</div>
+									<CheckboxGroup options={data.criteriosDeExclusion} />
+								</div>
+							</section>
+						</section>
+
+
+						{/* Datos sociodemográficos */}
+						<section className="space-y-5">
+							<div className="text-slate-400 border-b text-sm font-medium uppercase leading-tight py-1">Datos sociodemográficos</div>
+							<section className="space-y-7">
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Antecedentes médicos</div>
+										<div className="text-sm font-medium">(Especificar patología y estadío si procede)</div>
+									</div>
+									<CheckboxList options={data.antecedentesMedicos} />
+								</div>
+							</section>
+						</section>
+
+
+						{/* Ámbito asistencial */}
+						<section className="space-y-5">
+							<div className="text-slate-400 border-b text-sm font-medium uppercase leading-tight py-1">Ámbito asistencial</div>
+							<section className="space-y-7">
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Fecha de valoración</div>
+									</div>
+									<CheckboxList options={data.fechaDeValoracion} />
+								</div>
+								
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Valoración del estado nutricional</div>
+									</div>
+									<CheckboxList options={data.cribadoNutricional} />
+								</div>
+								
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Resultado del cribado nutricional</div>
+										<div className="text-sm font-medium">¿Está el paciente en riesgo de desnutrición?</div>
+									</div>
+									<CheckboxList options={data.resultadoDeCribadoNutricional} />
+								</div>
+
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Cribado muscular</div>
+									</div>
+									<CheckboxList options={data.cribadoMuscular} />
+								</div>
+
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Resultado del cribado muscular</div>
+									</div>
+									<CheckboxList options={data.pacienteEnRiesgoDeSarcopenia} />
+								</div>
+
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Diagnóstico nutricional utilizado</div>
+									</div>
+									<CheckboxList options={data.diagnosticoNutricionalUtilizado} />
+								</div>
+								
+								<div className="space-y-3">
+									<div className="leading-tight">
+										<div className="font-bold">Resultado de la valoracieon nutricional</div>
+										<div className="text-sm font-medium">¿Está el paciente desnutrido?</div>
+									</div>
+									<CheckboxList options={data.resultadoDeLaValoracionNutricional} />
+								</div>
+							</section>
 						</section>
 
 					</div>

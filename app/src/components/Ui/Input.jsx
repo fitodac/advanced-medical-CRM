@@ -1,20 +1,8 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
 
-Input.propTypes = {
-  type: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
-	readonly: PropTypes.bool,
-	disabled: PropTypes.bool,
-	label: PropTypes.string,
-	maxlength: PropTypes.number,
-	minlength: PropTypes.number,
-	className: PropTypes.string,
-	context: PropTypes.object.isRequired
-}
 
-export default function Input(props){
+export const Input = (props) => {
 
 	const context = useContext(props.context)
 
@@ -49,4 +37,18 @@ export default function Input(props){
 			className={className}
 			/>
 	</div>)
+}
+
+
+Input.propTypes = {
+  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+	readonly: PropTypes.bool,
+	disabled: PropTypes.bool,
+	label: PropTypes.string,
+	maxlength: PropTypes.number,
+	minlength: PropTypes.number,
+	className: PropTypes.string,
+	context: PropTypes.object.isRequired
 }

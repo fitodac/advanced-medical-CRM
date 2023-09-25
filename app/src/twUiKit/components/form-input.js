@@ -96,7 +96,7 @@ const COMPONENTS = (addComponents, options) => {
 				...BASE.INPUT,
 				...options['input'],
 
-				['&:focus']: {...BASE.INPUT.FOCUS, ...options['input:focus']},
+				['&:focus, &:focus-visible']: {...BASE.INPUT.FOCUS, ...options['input:focus']},
 				'&::placeholder': {...BASE.INPUT.PLACEHOLDER, ...options['input:placeholder']}
 			}
 		})
