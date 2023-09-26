@@ -6,17 +6,17 @@ import { AuthProvider } from '../hooks/useAuth'
 import App from '../App'
 import Dashboard from '../pages/Dashboard'
 
-import Patient, {loader as loaderPatient} from '../pages/Patients'
+import Patient from '../pages/Patients'
 import PatientForm, {loader as loaderPatientForm} from '../pages/Patients/Form'
 import Crd, {loader as loaderCrd} from '../pages/Patients/Crd'
 
-import MedicalCenter, {loader as loaderCenter} from '../pages/MedicalCenters'
+import MedicalCenter from '../pages/MedicalCenters'
 import MedicalCenterForm, {loader as loaderCenterForm} from '../pages/MedicalCenters/Form'
 
 import Doctor, {loader as loaderDoctor} from '../pages/Doctors'
 import DoctorForm, {loader as loaderDoctorForm} from '../pages/Doctors/Form'
 
-import User, {loader as loaderUser} from '../pages/Users'
+import User from '../pages/Users'
 import UserForm, {loader as loaderUserForm} from '../pages/Users/Form'
 
 import Login from '../pages/Login'
@@ -48,8 +48,7 @@ const router = createBrowserRouter([
 			// Users
 			{
 				path: '/users', 
-				element: <User />,
-				loader: loaderUser
+				element: <User />
 			},
 			{
 				path: '/users/new', 
@@ -80,8 +79,7 @@ const router = createBrowserRouter([
 			// Patients
 			{
 				path: '/patients', 
-				element: <Patient />,
-				loader: loaderPatient
+				element: <Patient />
 			},
 			{
 				path: '/patients/new', 
@@ -111,8 +109,7 @@ const router = createBrowserRouter([
 			// Medical centers
 			{
 				path: '/medical-centers', 
-				element: <MedicalCenter />,
-				loader: loaderCenter
+				element: <MedicalCenter />
 			},
 			{
 				path: '/medical-centers/new', 

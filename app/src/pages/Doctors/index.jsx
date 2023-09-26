@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { List } from '../../api/doctor'
-import { useAuth, kickOut } from '../../hooks/useAuth'
+import { useAuth, usekickOut } from '../../hooks/useAuth'
 
 import PageHeader from '../../components/PageHeader'
 import { Button, ButtonLink } from '../../components/Ui'
@@ -17,7 +17,7 @@ export default function Page(){
 	useEffect(() => {
 		const getData = async () => {
 			const resp = await List(`${token_type} ${token}`)
-			kickOut(resp)
+			usekickOut(resp)
 			setList({...resp})
 		}
 

@@ -1,29 +1,36 @@
-import { useState, useEffect } from 'react'
-import { List, BadgeClassName } from '../../api/user'
-import { useAuth, kickOut } from '../../hooks/useAuth'
-import { dateFormat } from '../../hooks/useDate'
+import { 
+	useAuth, 
+	useAxios, 
+	useDate 
+} from '../../hooks'
+import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
-import { Button, ButtonLink } from '../../components/Ui'
+import { 
+	Button,
+	ButtonLink,
+	Alert
+} from '../../components/Ui'
 
-export async function loader(){
-	return null
+
+const BadgeClassName = role => {
+	switch(role){
+		case 'admin': return 'badge ghost bg-primary border-primary text-primary'
+		case 'doctor': return 'badge ghost bg-green-500 border-green-500 text-green-500'
+	}
 }
+
 
 export default function Page(){
 
 	const { user: {token_type, token} } = useAuth()
-	const [list, setList] = useState(null)
+	const { API_URI } = useAppContext()
 
-	useEffect(() => {
-		const getData = async () => {
-			const resp = await List(`${token_type} ${token}`)
-			kickOut(resp)
-			setList({...resp})
-		}
-
-		getData()
-	}, [])
+	const { response, error, loading } = useAxios({
+		url: `${API_URI}/user/list/`,
+		method: 'POST',
+		token: `${token_type} ${token}`
+	})
 
 
 	return (<>
@@ -35,7 +42,12 @@ export default function Page(){
 			]} />
 
 		<section className="w-full overflow-x-hidden pt-5">
-			<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
+			{ loading && (<div>cargando...</div>)}
+
+			{ !loading && error && <Alert type="error" data={error} /> }
+
+			{ !loading && !error && 
+			(<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
 				<table className="table table-striped hoverable">
 					<thead>
 						<tr>
@@ -49,30 +61,30 @@ export default function Page(){
 						</tr>
 					</thead>
 					<tbody>
-						{ list?.data 
-							? list.data.map((row, i) => (<tr key={i}>
-								<td className="text-slate-300">{row.id}</td>
+						{ response?.data 
+							? response.data.map(({id, name, firstname, lastname, role, created_at}) => (<tr key={id}>
+								<td className="text-slate-300">{id}</td>
 								<td>
-									{ row.firstname || row.lastname 
-									? (<div className="font-semibold leading-none">{`${row.firstname}${row.lastname ? ' '+ row.lastname : null}`}</div>)
+									{ firstname || lastname 
+									? (<div className="font-semibold leading-none">{`${firstname}${lastname ? ' '+ lastname : null}`}</div>)
 									: (<div className="text-slate-300 leading-none">sin datos</div>)}
 									
-									<small className="text-slate-400 text-xs font-light">creado el {dateFormat(row.created_at)}</small>
+									<small className="text-slate-400 text-xs font-light">creado el {useDate(created_at)}</small>
 								</td>
-								<td>{row.name}</td>
-								<td><span className={BadgeClassName(row.role)}>{row.role}</span></td>
+								<td>{name}</td>
+								<td><span className={BadgeClassName(role)}>{role}</span></td>
 								<td>
 									<div className="flex gap-x-2 justify-end h-full">
-										<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/users/edit/${row.id}`}>Editar</ButtonLink>
+										<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/users/edit/${id}`}>Editar</ButtonLink>
 										{/* Delete */}
 										<>
-											<label className="btn btn-sm bg-red-700 border-red-700 text-white" htmlFor={`modal-${row.id}`}>Borrar</label>
-											<input type="checkbox" id={`modal-${row.id}`} className="hidden" />
+											<label className="btn btn-sm bg-red-700 border-red-700 text-white" htmlFor={`modal-${id}`}>Borrar</label>
+											<input type="checkbox" id={`modal-${id}`} className="hidden" />
 											<div className="overlay">
 												<div className="modal w-96 space-y-3 p-3">
 													<div className="text-center space-y-1">
 														<div className="">Estás por eliminar</div>
-														<div className="text-xl font-semibold">{row.name}</div>
+														<div className="text-xl font-semibold">{name}</div>
 													</div>
 
 													<div className="flex justify-betwee gap-x-3 pt-3">
@@ -81,7 +93,7 @@ export default function Page(){
 														</div>
 														
 														<div className="flex-1">
-															<label className="btn w-full" htmlFor={`modal-${row.id}`}>Cancelar</label>
+															<label className="btn w-full" htmlFor={`modal-${id}`}>Cancelar</label>
 														</div>
 													</div>
 												</div>
@@ -93,7 +105,8 @@ export default function Page(){
 							: null }
 					</tbody>
 				</table>
-			</div>
+			</div>)}
+
 		</section>
 	</>)
 }
