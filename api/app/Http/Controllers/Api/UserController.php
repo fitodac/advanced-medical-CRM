@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Traits\ApiResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\UserVerify;
+use App\Traits\ApiResponse;
+use Illuminate\Support\Str;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-  
+
 	use ApiResponse;
 
 	// CREATE
@@ -35,9 +39,9 @@ class UserController extends Controller
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
 		// Set the default password for the new user
-		$userData = array_merge($request->all(), [ 
+		$userData = array_merge($request->all(), [
 			'role' => 'superadmin' === $auth->role ? $request->role : 'doctor',
-			'password' => env('USER_DEFAULT_PASSWORD') 
+			'password' => env('USER_DEFAULT_PASSWORD')
 		]);
 
 
@@ -65,6 +69,17 @@ class UserController extends Controller
 
 		$token = $user->createToken('my-token')->plainTextToken;
 
+        $verify_token = Str::random(64);
+        UserVerify::create([
+            'user_id' => $user->id,
+            'token' => $verify_token
+        ]);
+
+        Mail::send('email.email-verification', ['token' => $verify_token], function($message) use($request){
+            $message->to($request->email);
+            $message->subject(_('Verify Email Address'));
+        });
+
 		return $this->successResponse($user, 'Hemos creado un nuevo usuario');
 
 	}
@@ -77,7 +92,7 @@ class UserController extends Controller
 	{
 
 		$auth = Auth::user();
-		
+
 		$validate = Validator::make($request->all(), [
 			'id' => 'required|numeric',
 			'name' => 'required|unique:users,name,'.$request->id,
@@ -105,7 +120,7 @@ class UserController extends Controller
 		if( !$user ) return $this->errorResponse('El usuario que estás buscando no existe o ha sido eliminado', 404);
 
 		$edit_allowed = false;
-	
+
 		if( 'superadmin' === $auth->role ){
 			$edit_allowed = true;
 		}else{
@@ -118,7 +133,7 @@ class UserController extends Controller
 
 		if( !$edit_allowed ) return $this->errorResponse('No estás autorizado a modificar este usuario', 404);
 
-		$userData = array_merge($user->toArray(), [ 
+		$userData = array_merge($user->toArray(), [
 			'firstname' => $request->firstname,
 			'lastname' => $request->lastname,
 			'name' => $request->name,
@@ -134,18 +149,18 @@ class UserController extends Controller
 
 			if( 'doctor' === $user->role ){
 				if( $doctor ){
-					$doctorData = array_merge($doctor->toArray(), [ 
+					$doctorData = array_merge($doctor->toArray(), [
 						'user_id' => $user->id,
-						'specialty_id' => $request->specialty_id ?? $doctor->specialty_id, 
+						'specialty_id' => $request->specialty_id ?? $doctor->specialty_id,
 						// 'center_id' => $request->center_id ?? $doctor->center_id
 					]);
-					
-					$doctor->update($doctorData); 
+
+					$doctor->update($doctorData);
 				}else{
 					Doctor::create([
 						'user_id' => $user->id,
-						'specialty_id' => $request->specialty_id, 
-						'center_id' => $request->center_id 
+						'specialty_id' => $request->specialty_id,
+						'center_id' => $request->center_id
 					]);
 				}
 			}elseif( 'admin' === $user->role ){
@@ -172,7 +187,7 @@ class UserController extends Controller
 
 		if( !$user ){ return $this->errorResponse('El usuario que estás buscando no existe en nuestra base de datos', 404); }
 		if( 'superadmin' === $user->role ){ return $this->errorResponse('El Super Admin no puede ser editado', 404); }
-		
+
 		if( 'doctor' === $user->role ){
 			$doctor = $user->doctor();
 

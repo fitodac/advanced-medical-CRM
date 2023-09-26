@@ -1,15 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\VisitController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\PatientController;
-use App\Http\Controllers\Api\VisitController;
 use App\Http\Controllers\Api\SpecialtyController;
+use App\Http\Controllers\Api\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	// Doctors
 	Route::post('/doctors', 					[DoctorController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('doctor.list');
 	Route::post('/doctors/getInfo', 	[DoctorController::class, 'show'])->name('doctor.show');
-	
+
 	// Specialties
 	Route::post('/specialties', 			[SpecialtyController::class, 'getFullList'])->name('specialties');
 
@@ -65,3 +65,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::post('/visit/create',			[VisitController::class, 'create'])->name('visit.create');
 	Route::put('/visit/update',				[VisitController::class, 'update'])->name('visit.update');
 });
+
+Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');
+
