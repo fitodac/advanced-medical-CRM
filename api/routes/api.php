@@ -7,9 +7,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VisitController;
 use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\SpecialtyController;
-use App\Http\Controllers\Api\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +64,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	// Visits
 	Route::post('/visit/create',			[VisitController::class, 'create'])->name('visit.create');
 	Route::put('/visit/update',				[VisitController::class, 'update'])->name('visit.update');
+
+    // Export
+    Route::get('/export', [ExportController::class,'index'])->name('export');
 });
 
 Route::get('account/verify/{token}', [AuthController::class, 'verifyAccount'])->name('user.verify');

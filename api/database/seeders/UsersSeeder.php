@@ -15,13 +15,14 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
-      
+
 			// Super Admin
 			User::create([
 				'name' => env('SUPER_ADMIN_NAME'),
 				'email' => env('SUPER_ADMIN_EMAIL'),
 				'password' => bcrypt(env('SUPER_ADMIN_PASSWORD')),
 				'role' => 'superadmin',
+                'email_verified_at' => now()
 			]);
 
 			// Admin
@@ -30,6 +31,7 @@ class UsersSeeder extends Seeder
 				'email' => env('ADMIN_EMAIL'),
 				'password' => bcrypt(env('ADMIN_PASSWORD')),
 				'role' => 'admin',
+                'email_verified_at' => now()
 			]);
 
     }

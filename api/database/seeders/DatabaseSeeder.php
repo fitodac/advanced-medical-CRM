@@ -3,13 +3,14 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use Faker\Factory as Faker;
-
 use App\Models\User;
 use App\Models\Center;
+
 use App\Models\Doctor;
 use App\Models\Patient;
+use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
+use Database\Factories\VisitsFactory;
 
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run(): void
 	{
-		
+
 		$faker = Faker::create();
 
 		$this->call([
@@ -60,13 +61,13 @@ class DatabaseSeeder extends Seeder
 				'gender' => $faker->randomElement(['hombre', 'mujer'])
 			]);
 		}
-			
+
 		// \App\Models\User::factory(10)->create();
 
 		// \App\Models\User::factory()->create([
 		//     'name' => 'Test User',
 		//     'email' => 'test@example.com',
 		// ]);
-
+        $visits = VisitsFactory::new()->count(10)->create();
 	}
 }

@@ -13,7 +13,7 @@ class Visit extends Model
 	protected $fillable = [
 		'patient_id',
 		'visit_type',
-		'date',	
+		'date',
 		'inclusion_q1',
 		'inclusion_q2',
 		'inclusion_q3',
@@ -147,6 +147,15 @@ class Visit extends Model
 		'ans__anthropometry__current_bmi',
 		'ans__anthropometry__calf_circumference',
 	];
+
+    // protected $casts = [
+	// 	'date' => 'datetime:d-m-Y H:i:s',
+	// 	'birth_date' => 'datetime:d-m-Y H:i:s',
+	// 	'valuation_date' => 'datetime:d-m-Y H:i:s',
+	// 	'discharged_date' => 'datetime:d-m-Y H:i:s',
+    //     'readmission_date' => 'datetime:d-m-Y H:i:s',
+    //     'death_date' => 'datetime:d-m-Y H:i:s',
+	// ];
 
 	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'name', 'lastname', 'gender']); }
 
