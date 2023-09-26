@@ -1,29 +1,32 @@
-import { useState, useEffect } from 'react'
-import { List } from '../../api/medicalCenter'
-import { useAuth, kickOut } from '../../hooks/useAuth'
-import { dateFormat } from '../../hooks/useDate'
+import { 
+	useAuth, 
+	useAxios,
+	useDate
+} from '../../hooks'
+import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
-import {Button, ButtonLink} from '../../components/Ui'
+import {
+	Button, 
+	ButtonLink,
+	Alert
+} from '../../components/Ui'
+import { useEffect } from 'react'
 
-export async function loader(){
-	return null
-}
 
 export default function Page(){
 
 	const { user: {token_type, token} } = useAuth()
-	const [list, setList] = useState(null)
+	const { API_URI } = useAppContext()
 
-	useEffect(() => {
-		const getData = async () => {
-			const resp = await List(`${token_type} ${token}`)
-			kickOut(resp)
-			setList({...resp.data})
-		}
+	const { response, error, loading } = useAxios({
+		url: `${API_URI}/center/list/`,
+		method: 'POST',
+		token: `${token_type} ${token}`
+	})
 
-		getData()
-	}, [])
+	useEffect(() => console.log(response.data), [response])
+
 
 	return (<>
 		<PageHeader 
@@ -34,7 +37,13 @@ export default function Page(){
 			]} />
 
 		<section className="w-full overflow-x-hidden pt-5">
-			<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
+			{ loading && (<div>cargando...</div>)}
+
+			{ !loading && error && <Alert type="error" data={error} /> }
+
+			
+			{ !loading && !error && 
+			(<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
 				<table className="table table-striped hoverable">
 					<thead>
 						<tr>
@@ -47,26 +56,25 @@ export default function Page(){
 						</tr>
 					</thead>
 					<tbody>
-						{ list?.data 
-							? list.data.map((row, i) => (<tr key={i}>
-								<td className="text-slate-300">{row.id}</td>
-								<td>{row.code}</td>
+						{ response?.data 
+							? response.data.data.map(({id, code, name, created_at}) => (<tr key={id}>
+								<td className="text-slate-300">{id}</td>
+								<td>{code}</td>
 								<td className="leading-none">
-									<div className="text-lg font-semibold leading-none">{row.name}</div>
-									<small className="text-slate-400 text-xs font-light">creado el {dateFormat(row.created_at)}</small>
+									<div className="text-lg font-semibold leading-none">{name}</div>
+									<small className="text-slate-400 text-xs font-light">creado el {useDate(created_at)}</small>
 								</td>
 								<td>
 									<div className="flex gap-x-2 justify-end h-full">
-										<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/medical-centers/edit/${row.id}`}>Editar</ButtonLink>
-										{/* Delete */}
+										<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/medical-centers/edit/${id}`}>Editar</ButtonLink>
 										<>
-											<label className="btn btn-sm bg-red-700 border-red-700 text-white" htmlFor={`modal-${row.id}`}>Borrar</label>
-											<input type="checkbox" id={`modal-${row.id}`} className="hidden" />
+											<label className="btn btn-sm bg-red-700 border-red-700 text-white" htmlFor={`modal-${id}`}>Borrar</label>
+											<input type="checkbox" id={`modal-${id}`} className="hidden" />
 											<div className="overlay">
 												<div className="modal w-96 space-y-3 p-3">
 													<div className="text-center space-y-1">
 														<div className="">Estás por eliminar</div>
-														<div className="text-xl font-semibold">{row.name}</div>
+														<div className="text-xl font-semibold">{name}</div>
 													</div>
 
 													<div className="flex justify-betwee gap-x-3 pt-3">
@@ -75,7 +83,7 @@ export default function Page(){
 														</div>
 														
 														<div className="flex-1">
-															<label className="btn w-full" htmlFor={`modal-${row.id}`}>Cancelar</label>
+															<label className="btn w-full" htmlFor={`modal-${id}`}>Cancelar</label>
 														</div>
 													</div>
 												</div>
@@ -85,9 +93,10 @@ export default function Page(){
 								</td>
 							</tr>)) 
 							: null }
-					</tbody>
+					</tbody> 
 				</table>
-			</div>
+			</div>)}
+			
 		</section>
 	</>)
 }

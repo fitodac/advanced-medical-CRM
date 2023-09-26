@@ -86,7 +86,7 @@ export default function Page(){
 	}
 
 
-	const contextValue = {formState, handleInputChange}
+	const contextValue = { formState, handleInputChange }
 
 	return(<>
 		<PageHeader 

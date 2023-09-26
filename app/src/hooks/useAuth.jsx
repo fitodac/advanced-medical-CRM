@@ -45,10 +45,11 @@ export const useAuth = () => useContext(AuthContext)
 
 // This evaluates if the user is autenticated,
 // if not, the function return false.
-export const kickOut = resp => {
-	const { statusText, message } = resp
-	if( 'Unauthorized' === statusText && 'Unauthenticated.' === message ){
+export const usekickOut = resp => {
+	const { message } = resp
+	if( 'Unauthenticated.' === message ){
 		window.localStorage.removeItem('user')
+		window.location.reload()
 		return true
 	}else{
 		return false

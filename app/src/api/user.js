@@ -82,20 +82,6 @@ export const Update = async (token, request) => {
 }
 
 
-
-/**
- * 
- * @param {*} role 
- * @returns 
- */
-export const BadgeClassName = role => {
-	switch(role){
-		case 'admin': return 'badge ghost bg-primary border-primary text-primary'
-		case 'doctor': return 'badge ghost bg-green-500 border-green-500 text-green-500'
-	}
-}
-
-
 /**
  * 
  * @param {*} token 
