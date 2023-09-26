@@ -131,14 +131,16 @@ class PatientController extends Controller
 	{
 
 		$auth = Auth::user();
+		$resp = [];
 
 		if( 'doctor' === $auth->role ){
 			$doctor = Doctor::where('user_id', $auth->id)->first();
-			return Patient::where('doctor_id', $doctor->id)->latest()->paginate(10);
+			$resp = Patient::with('doctor.user')->where('doctor_id', $doctor->id)->latest()->paginate(10);
 		}else{
-			$resp = Patient::latest()->paginate(10);
-			return PatientResource::collection($resp);
+			$resp = Patient::with('doctor.user')->latest()->paginate(10);
 		}
+		
+		return $this->successResponse($resp);
 
 	}
 

@@ -176,7 +176,8 @@ class UserController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-		return User::whereNot('role', 'superadmin')->latest()->paginate(10);
+		$resp = User::whereNot('role', 'superadmin')->latest()->paginate(10);
+		return $this->successResponse($resp);
 	}
 
 

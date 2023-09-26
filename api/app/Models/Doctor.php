@@ -17,6 +17,6 @@ class Doctor extends Model
 
 	public function user(){ return $this->belongsTo(User::class, 'user_id')->select(['id', 'name', 'email', 'firstname', 'lastname' ]); }
 	public function specialty(){ return $this->belongsTo(Specialty::class)->select(['id', 'name']); }
-	public function center(){ return $this->belongsTo(Center::class)->select(['id', 'name', 'code']); }
+	public function center(){ return $this->belongsTo(Center::class); }
 
 }
