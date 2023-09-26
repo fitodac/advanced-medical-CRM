@@ -1,4 +1,2 @@
-<h1>Email Verification Mail</h1>
-
-Please verify your email with bellow link:
-<a href="{{ route('user.verify', $token) }}">Verify Email</a>
+{{ __('Please click the button below to verify your email address.') }}
+<a href="{{ route('user.verify', $token) }}">{{ __('Verify Email Address') }}</a>

@@ -77,7 +77,7 @@ class UserController extends Controller
 
         Mail::send('email.email-verification', ['token' => $verify_token], function($message) use($request){
             $message->to($request->email);
-            $message->subject(_('Verify Email Address'));
+            $message->subject(__('Verify Email Address'));
         });
 
 		return $this->successResponse($user, 'Hemos creado un nuevo usuario');
