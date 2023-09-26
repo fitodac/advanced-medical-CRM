@@ -29,7 +29,11 @@ class AuthController extends Controller
 
 		$credentials = $request->only(['email', 'password']);
 
-		if( !Auth::attempt($credentials, false) ) return $this->unauthorizedResponse();
+		if( !Auth::attempt($credentials, false)) return $this->unauthorizedResponse();
+
+        if(!Auth::user()->email_verified_at ) {
+            return $this->unauthorizedResponse('Primero debe verificar su correo electrónico ');
+        }
 
 		$user = $request->user();
 		$token = $user->createToken('authToken')->plainTextToken;
@@ -64,7 +68,7 @@ class AuthController extends Controller
             $user = $verifyUser->user;
 
             if(!$user->email_verified_at) {
-                $verifyUser->user->email_verified_at = 1;
+                $verifyUser->user->email_verified_at = now();
                 $verifyUser->user->save();
                 $message = "Your e-mail is verified. You can now login.";
             } else {
