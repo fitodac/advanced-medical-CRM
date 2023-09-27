@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Center;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Traits\ApiResponse;
-use Illuminate\Support\Facades\Validator;
 
-use App\Models\Center;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 class CenterController extends Controller
@@ -112,21 +113,15 @@ class CenterController extends Controller
 
 
 	// DELETE
-	public function delete(Request $request)
+	public function delete(Center $center)
 	{
-
-		$validate = Validator::make($request->all(), [
-			'id' => 'required|numeric'
-		], [
-			'id.required' => 'Debes proveernos el ID del centro médico para continuar',
-			'id.numeric' => 'Formato incorrecto'
-		]);
-
-		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
-
-		$center = Center::find($request->id);
-
 		if( !$center ) return $this->errorResponse('El centro médico que tratas de eliminar no existe', 404);
+
+        $user = Auth::user();
+
+		if( $user->role == 'doctor') {
+            return $this->errorResponse('No puedes eliminar el centro médico', 200);
+        }
 
 		$center->delete();
 

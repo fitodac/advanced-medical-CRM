@@ -218,19 +218,35 @@ class UserController extends Controller
 
 
 	// DELETE
-	public function delete(Request $request){
-		$validate = Validator::make($request->all(), [
-			'id' => 'required|numeric'
-		], [
-			'id.required' => 'Debes proveernos el ID del usuario para continuar',
-			'id.numeric' => 'Formato incorrecto'
-		]);
+	public function delete(User $user){
+        if( !$user ) return $this->errorResponse('El usuario que tratas de eliminar no existe', 404);
 
-		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
+        $authUser = Auth::user();
 
-		$user = User::find($request->id);
+        if ($authUser->id == $user->id) {
+            // Los usuarios no pueden eliminarse a sí mismos
+            return $this->errorResponse('No te puedes eliminar a ti mismo', 404);
+        }
 
-		if( !$user ) return $this->errorResponse('El usuario que tratas de eliminar no existe', 404);
+        switch ($user->role) {
+            case 'superadmin':
+                // No se puede eliminar a un superadmin
+                return $this->errorResponse('Este usuario no puede eliminarse', 404);
+
+            case 'admin':
+                if ($authUser->role !== 'superadmin') {
+                    // Solo un superadmin puede eliminar a un admin
+                    return $this->errorResponse('Este usuario no puede eliminarse', 404);
+                }
+                break;
+
+            case 'doctor':
+                if ($authUser->role !== 'superadmin' && $authUser->role !== 'admin') {
+                    // Solo un superadmin o un admin puede eliminar a un doctor
+                    return $this->errorResponse('Este usuario no puede eliminarse', 404);
+                }
+                break;
+        }
 
 		$user->delete();
 

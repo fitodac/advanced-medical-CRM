@@ -7,8 +7,8 @@ use App\Models\Patient;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PatientResource;
 use Illuminate\Support\Facades\Validator;
@@ -164,25 +164,24 @@ class PatientController extends Controller
 
 
 	// DELETE
-	public function delete(Request $request)
+	public function delete(Patient $patient)
 	{
+        /**
+         * Lo pueden eliminar cualquiera de los roles,
+         * pero si es doctor hay que validar que el paciente le pertenece.
+         */
 
-		$validate = Validator::make($request->all(), [
-			'id' => 'required|numeric',
-			'doctor_id' => 'required|numeric',
-		], [
-			'id.required' => 'Debes proveernos el ID del paciente para continuar',
-			'id.numeric' => 'Formato incorrecto',
-			'doctor_id.required' => 'Debes proveernos un ID de usuario',
-			'doctor_id.numeric' => 'Formato incorrecto'
-		]);
+        if( !$patient ) return $this->errorResponse('El paciente que tratas de eliminar no existe', 404);
 
-		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
+        $user = Auth::user();
 
-		$patient = Patient::find($request->id);
+        $user->load('doctorRelationship');
 
-		if( !$patient ) return $this->errorResponse('El paciente que tratas de eliminar no existe', 404);
-		if( $request->doctor_id !== $patient->doctor_id ) return $this->unauthorizedResponse('Tu usuario no puede modificar este paciente');
+		if( $user->role == 'doctor' && $user->doctodoctorRelationship) {
+            if ($user->doctorRelationship->id !== $patient->doctor_id ) {
+                return $this->unauthorizedResponse('Tu usuario no puede modificar este paciente');
+            }
+        }
 
 		$patient->delete();
 
