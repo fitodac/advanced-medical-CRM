@@ -15,24 +15,35 @@ class UsersSeeder extends Seeder
      */
     public function run(): void
     {
+        $super_admin = [
+            'name'      => 'cpi_superadmin',
+            'email'     => 'fito+advanced@commonpeoplei.com',
+            'password'  => 'cpi_1975'
+        ];
 
-			// Super Admin
-			User::create([
-				'name' => env('SUPER_ADMIN_NAME'),
-				'email' => env('SUPER_ADMIN_EMAIL'),
-				'password' => bcrypt(env('SUPER_ADMIN_PASSWORD')),
-				'role' => 'superadmin',
-                'email_verified_at' => now()
-			]);
+        $admin = [
+            'name'      => 'cpi_admin',
+            'email'     => 'admin@local.com',
+            'password'  => 'cpi_1975'
+        ];
 
-			// Admin
-			User::create([
-				'name' => env('ADMIN_NAME'),
-				'email' => env('ADMIN_EMAIL'),
-				'password' => bcrypt(env('ADMIN_PASSWORD')),
-				'role' => 'admin',
-                'email_verified_at' => now()
-			]);
+        // Super Admin
+        User::create([
+            'name' => $super_admin['name'],
+            'email' => $super_admin['email'],
+            'password' => bcrypt($super_admin['password']),
+            'role' => 'superadmin',
+            'email_verified_at' => now()
+        ]);
+
+        // Admin
+        User::create([
+            'name' => $admin['name'],
+            'email' => $admin['email'],
+            'password' => bcrypt($admin['password']),
+            'role' => 'admin',
+            'email_verified_at' => now()
+        ]);
 
     }
 }

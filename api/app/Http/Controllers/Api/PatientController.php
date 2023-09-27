@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Doctor;
+use App\Models\Patient;
 use App\Traits\ApiResponse;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PatientResource;
-
-use App\Models\Patient;
-use App\Models\Doctor;
+use Illuminate\Support\Facades\Validator;
 
 
 class PatientController extends Controller
@@ -129,19 +130,36 @@ class PatientController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-
 		$auth = Auth::user();
 		$resp = [];
 
-		if( 'doctor' === $auth->role ){
-			$doctor = Doctor::where('user_id', $auth->id)->first();
-			$resp = Patient::with('doctor.user')->where('doctor_id', $doctor->id)->latest()->paginate(10);
-		}else{
-			$resp = Patient::with('doctor.user')->latest()->paginate(10);
-		}
-		
-		return $this->successResponse($resp);
+        $query = Patient::with('doctor.user');
 
+        if ($auth->role === 'doctor') {
+            $query->where('doctor_id', $auth->id);
+        }
+
+        if ($request->has('code') && !empty($request->code)) {
+            $query->where(DB::raw('UPPER(code)'), 'like',  strtoupper($request->code));
+        }
+
+        if ($request->has('doctor') && !empty($request->doctor)) {
+            $query->whereHas('doctor.user', function ($query) use ($request) {
+                $query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%')
+                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%');
+            });
+        }
+
+        if ($request->has('name') && !empty($request->name)) {
+            $query->where(function($query) use ($request) {
+                $query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+            });
+        }
+
+        $resp = $query->latest()->paginate(10);
+
+		return $this->successResponse($resp);
 	}
 
 

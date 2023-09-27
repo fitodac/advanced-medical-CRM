@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
 			SpecialtySeeder::class,
 		]);
 
-
 		Center::create([
 			'name' => 'Hospital 1',
 			'code' => 'H01'
@@ -62,12 +61,6 @@ class DatabaseSeeder extends Seeder
 			]);
 		}
 
-		// \App\Models\User::factory(10)->create();
-
-		// \App\Models\User::factory()->create([
-		//     'name' => 'Test User',
-		//     'email' => 'test@example.com',
-		// ]);
-        $visits = VisitsFactory::new()->count(10)->create();
+        VisitsFactory::new()->count(10)->create();
 	}
 }
