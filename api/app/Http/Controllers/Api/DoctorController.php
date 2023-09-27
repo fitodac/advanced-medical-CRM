@@ -18,7 +18,7 @@ class DoctorController extends Controller
 
   public function list(Request $request)
 	{
-		$resp = Doctor::with(['center', 'user'])->latest()->paginate(10);
+		$resp = Doctor::with(['center', 'user', 'specialty'])->latest()->paginate(10);
 		return $this->successResponse($resp);
 	}
 
