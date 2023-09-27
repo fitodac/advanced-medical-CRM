@@ -14,7 +14,7 @@ class CenterController extends Controller
 {
 
 	use ApiResponse;
-  
+
 
 	// CREATE
 	public function create(Request $request)
@@ -36,8 +36,8 @@ class CenterController extends Controller
 		return $this->successResponse($center, 'Hemos creado un nuevo centro médico');
 
 	}
-	
-	
+
+
 
 	// UPDATE
 	public function update(Request $request)
@@ -58,7 +58,7 @@ class CenterController extends Controller
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
 
 		$center = Center::find($request->id);
-		
+
 		if( !$center ) return $this->errorResponse('El centro médico que estás buscando no existe o ha sido eliminado', 404);
 
 		$center->update([
@@ -68,7 +68,7 @@ class CenterController extends Controller
 
 		return $this->successResponse($center, 'Hemos actualizado los datos del centro médico');
 	}
-	
+
 
 
 
@@ -90,7 +90,14 @@ class CenterController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-		$list = Center::latest()->paginate(10);
+        $query = Center::query();
+
+        if ($request->has('center_id') && $request->center_id != 0) {
+            $query->where('center_id', $request->center_id);
+        }
+
+        $list = $query->latest()->paginate(10);
+
 		return $this->successResponse($list);
 	}
 
