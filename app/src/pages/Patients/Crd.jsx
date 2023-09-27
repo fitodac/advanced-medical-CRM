@@ -1,4 +1,4 @@
-import { useEffect, createContext } from 'react'
+import { useEffect, createContext, useReducer } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useForm } from '../../hooks/useForm'
@@ -12,6 +12,8 @@ import {
 	CheckboxList,
 	CheckboxGroup
 } from '../../components/Ui'
+import { Navbar } from './Navbar'
+
 
 export const formContext = createContext({})
 
@@ -60,7 +62,9 @@ export default function Page(){
 			]} />
 
 		<formContext.Provider value={contextValue}>
-			<section className="max-w-3xl pt-5">
+			<section className="bg-slate-100 max-w-3xl pt-5">
+				<Navbar />
+
 				<div className="text-lg font-bold">Visita inicial</div>
 
 				<form onSubmit={handleSubmit}>

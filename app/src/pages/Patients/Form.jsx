@@ -1,9 +1,8 @@
 import { useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Get, Create, Update } from '../../api/patients'
-import { Get as getDoctorInfo } from '../../api/doctor'
-import { useAuth } from '../../hooks/useAuth'
-import { useForm } from '../../hooks/useForm'
+import { Create, Update } from '../../api/patients'
+import { useAuth, useAxios, useForm } from '../../hooks'
+import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
 import { Input, Button, ButtonLink } from '../../components/Ui'
@@ -17,8 +16,8 @@ export default function Page(){
 	const { id } = useLoaderData()
 	const { user } = useAuth()
 	const {token_type, token} = user
-	const auth_id = user.info.id
 	const navigate = useNavigate()
+	const { API_URI } = useAppContext()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		code: '',
@@ -29,40 +28,26 @@ export default function Page(){
 		gender: 'mujer'
 	})
 
-
 	const handleInputChange = e => onInputChange(e)
 
 
-	useEffect(() => { 
-		const getData = async () => {
-			try {
-				if(id){
-					const resp = await Get(`${token_type} ${token}`, {id})
+	const getPatient = useAxios({
+		url: `${API_URI}/patient`,
+		method: 'POST',
+		body: {id},
+		token: `${token_type} ${token}`
+	})
 
-					setFormState({
-						...formState,
-						...resp.data
-					})
-				}else{
-					const resp = await getDoctorInfo(`${token_type} ${token}`, {id: auth_id})
-					const {center} = resp.data
 
-					setFormState({
-						...formState,
-						code: center.code, 
-						doctor_id: resp.data.id,
-						center_id: center.id
-					})
-				}
-
-			} catch (err) {
-				console.log('error:', err)
-			}
+	useEffect(() => {
+		if( getPatient.response?.success ){
+			setFormState({
+				...formState, 
+				...getPatient.response.data
+			})
+			getPatient.response.success = null
 		}
-
-		getData()
-
-	}, [])
+	}, [getPatient])
 
 
 	const handleSubmit = async e => {

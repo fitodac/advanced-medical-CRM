@@ -1,11 +1,12 @@
 import { useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Get, Create, Update } from '../../api/medicalCenter'
-import { useAuth } from '../../hooks/useAuth'
-import { useForm } from '../../hooks/useForm'
+import { Create, Update } from '../../api/medicalCenter'
+import { useAuth, useAxios, useForm } from '../../hooks'
+import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
 import { Input, Button, ButtonLink } from '../../components/Ui'
+
 
 export const formContext = createContext({})
 
@@ -16,33 +17,29 @@ export default function Page(){
 	const { id } = useLoaderData()
 	const { user: {token_type, token} } = useAuth()
 	const navigate = useNavigate()
+	const { API_URI } = useAppContext()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		code: '',
 		name: ''
 	})
 
-
 	const handleInputChange = e => onInputChange(e)
 
+	const getCenter = useAxios({
+		url: `${API_URI}/center`,
+		method: 'POST',
+		body: {id},
+		token: `${token_type} ${token}`
+	})
 
-	useEffect(() => { 
-		const getData = async () => {
-			try{
-				const resp = await Get(`${token_type} ${token}`, {id})
-				const { name, code } = resp.data
-				setFormState({
-					...formState, 
-					name, 
-					code
-				})
-			} catch (err) {
-				console.log('error:', err)
-			}
+	useEffect(() => {
+		if( getCenter.response?.success ){
+			const { name, code } = getCenter.response.data
+			setFormState({...formState, name, code})
+			getCenter.response.success = null
 		}
-
-		if(id) getData()
-	}, [])
+	}, [getCenter])
 
 
 	const handleSubmit = async e => {

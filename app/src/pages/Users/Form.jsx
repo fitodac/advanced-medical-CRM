@@ -1,16 +1,25 @@
 import { useEffect, createContext, useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Get, Create, Update, formFieldsData } from '../../api/user'
-import { useAuth } from '../../hooks/useAuth'
-import { useForm } from '../../hooks/useForm'
+import { Create, Update } from '../../api/user'
+import { 
+	useAuth, 
+	useAxios, 
+	useForm 
+} from '../../hooks'
+import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
-import { Input, Button, ButtonLink } from '../../components/Ui'
+import { 
+	Input, 
+	Button, 
+	ButtonLink 
+} from '../../components/Ui'
 
 
 export const formContext = createContext({})
 
 export async function loader({params}){ return {...params, id: parseInt(params.id)} }
+
 
 export default function Page(){
 
@@ -19,6 +28,7 @@ export default function Page(){
 	const [centers, setCenters] = useState(null)
 	const [specialties, setSpecialties] = useState(null)
 	const navigate = useNavigate()
+	const { API_URI } = useAppContext()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		firstname: '',
@@ -30,46 +40,52 @@ export default function Page(){
 		specialty_id: 0
 	})
 
-
 	const handleInputChange = e => onInputChange(e)
 
+	const getUser = useAxios({
+		url: `${API_URI}/user`,
+		method: 'POST',
+		body: {id},
+		token: `${token_type} ${token}`
+	})
 
-	useEffect(() => { 
-		const getData = async () => {
-			try {
-				const resp = await Get(`${token_type} ${token}`, {id})
+	const getSpecialties = useAxios({
+		url: `${API_URI}/specialties`,
+		method: 'POST',
+		token: `${token_type} ${token}`
+	})
 
-				setFormState({
-					...formState,
-					firstname: resp.data.firstname,
-					lastname: resp.data.lastname,
-					name: resp.data.name, 
-					email: resp.data.email,
-					role: resp.data.role,
-					center_id: resp.data.center_id,
-					specialty_id: resp.data.specialty_id
-				})
-			} catch (err) {
-				console.log('error:', err)
-			}
+	const getCenters = useAxios({
+		url: `${API_URI}/center/getAll`,
+		method: 'POST',
+		token: `${token_type} ${token}`
+	})
+	
+
+	useEffect(() => {
+		if( getUser.response?.success ){
+			const { firstname, lastname, name, email, role, center_id, specialty_id } = getUser.response.data
+			setFormState({...formState, name, firstname, lastname, email, role, center_id, specialty_id})
+			getUser.response.success = null
 		}
+	}, [getUser])
 
-		if(id) getData()
-
-
-		// Get additional content for fields
-		const getFormData = async () => {
-			try {
-				const resp = await formFieldsData(`${token_type} ${token}`)
-				setCenters([...resp.centers])
-				setSpecialties([...resp.specialties])
-			} catch (err) {
-				console.log('error:', err)
-			}
+	
+	useEffect(() => {
+		if( getSpecialties.response?.success ){
+			setSpecialties([...getSpecialties.response.data])
+			getSpecialties.response.success = null
 		}
+	}, [getSpecialties])
 
-		getFormData()
-	}, [])
+
+	useEffect(() => {
+		if( getCenters.response?.success ){
+			setCenters([...getCenters.response.data])
+			getCenters.response.success = null
+		}
+	}, [getCenters])
+
 
 
 	const handleSubmit = async e => {

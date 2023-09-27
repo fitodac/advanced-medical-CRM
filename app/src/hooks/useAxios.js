@@ -10,6 +10,7 @@ import { usekickOut } from './useAuth'
 
 import axios from 'axios'
 
+
 export const useAxios = ({ 
 	url, 
 	method = 'GET',
@@ -28,7 +29,7 @@ export const useAxios = ({
 			axios.request({
 				url,
 				method,
-				body: JSON.parse(body), 
+				data: body, 
 				headers: {...headers, Authorization: token}
 			})
 			.then(resp => setResponse(resp.data))
@@ -38,6 +39,7 @@ export const useAxios = ({
 			})
 			.finally(() => setLoading(false))
 		}
+
 
 		setLoading(true)
 
@@ -57,5 +59,6 @@ export const useAxios = ({
 
 useAxios.propTypes = {
 	url: PropTypes.string.isRequired,
-	method: PropTypes.string
+	method: PropTypes.string,
+	headers: PropTypes.object
 }

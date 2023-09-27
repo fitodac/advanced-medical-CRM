@@ -11,21 +11,6 @@ import { getAll as getCenters } from './medicalCenter'
 import { getAll as getSpecialtiesList } from './specialty'
 
 
-/**
- * 
- * @param {*} token 
- * @returns 
- */
-export const List = async token => {
-
-	if( !token ) return NoToken()
-
-	return axios.post(`${API_URI}/user/list`, null, { headers: { Authorization: token } })
-					.then(resp => resp.data)
-					.catch(err => ErrorResponse(err.response))
-
-}
-
 
 /**
  * 

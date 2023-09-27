@@ -15,7 +15,7 @@ export default function Navbar(){
 							<NavLink to={'/'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Dashboard</NavLink>
 						</li>
 
-						{ ('admin' === role) 
+						{ ('admin' === role || 'superadmin' === role) 
 						? (<>
 							<li>
 								<NavLink to={'/doctors'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Doctores</NavLink>
