@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::put('/user/update', 				[UserController::class, 'update'])->name('user.update');
 	Route::post('/user', 							[UserController::class, 'show'])->middleware('restrictRole:superadmin,admin')->name('user.show');
 	Route::post('/user/list', 				[UserController::class, 'list'])->middleware('restrictRole:superadmin')->name('user.list');
-	Route::delete('/user/delete', 		[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
+	Route::delete('/user/delete/{user}', 		[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
 
 	// Centers
 	Route::post('/center/create', 		[CenterController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('center.create');
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::post('/center', 						[CenterController::class, 'show'])->middleware('restrictRole:superadmin,admin')->name('center.show');
 	Route::post('/center/list', 			[CenterController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('center.list');
 	Route::post('/center/getAll', 		[CenterController::class, 'getFullList'])->name('center.getAll');
-	Route::delete('/center/delete', 	[CenterController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('center.delete');
+	Route::delete('/center/delete/{center}', 	[CenterController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('center.delete');
 
 	// Doctors
 	Route::post('/doctors', 					[DoctorController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('doctor.list');
@@ -59,11 +59,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::put('/patient/update',			[PatientController::class, 'update'])->name('patient.update');
 	Route::post('/patient',						[PatientController::class, 'show'])->name('patient.show');
 	Route::post('/patient/list',			[PatientController::class, 'list'])->name('patient.list');
-	Route::delete('/patient/delete',	[PatientController::class, 'delete'])->name('patient.delete');
+	Route::delete('/patient/delete/{patient}',	[PatientController::class, 'delete'])->name('patient.delete');
 
-	// Visits
+    // Visits
 	Route::post('/visit/create',			[VisitController::class, 'create'])->name('visit.create');
 	Route::put('/visit/update',				[VisitController::class, 'update'])->name('visit.update');
+	Route::delete('/visit/delete/{visit}',	[VisitController::class, 'delete'])->name('visit.delete');
 
     // Export
     Route::get('/export', [ExportController::class,'index'])->name('export');

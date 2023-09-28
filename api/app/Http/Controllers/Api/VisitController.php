@@ -69,4 +69,32 @@ class VisitController extends Controller
 
 	}
 
+    // DELETE
+	public function delete(Visit $visit)
+	{
+        /**
+         * Lo elimina cualquier rol. Si el rol es doctor,
+         * hay que validar que la visita le pertenece al paciente,
+         * que a su vez le pertenece al doctor.
+         */
+
+        if( !$visit ) return $this->errorResponse('La visita que tratas de eliminar no existe', 200);
+
+        $user = Auth::user();
+
+        $visit->load('patient');
+
+		if( $user->role == 'doctor') {
+            $doctor = $visit->patient->doctorRelation;
+
+            if ($doctor && $doctor->user_id !== $user->id) {
+                return $this->errorResponse('No puedes eliminar la visita seleccionada', 200);
+            }
+        }
+
+		$visit->delete();
+
+		return $this->successResponse([], 'Se ha eliminado la visita');
+
+	}
 }

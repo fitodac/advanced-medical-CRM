@@ -30,19 +30,18 @@ class DatabaseSeeder extends Seeder
 			SpecialtySeeder::class,
 		]);
 
-
 		Center::create([
 			'name' => 'Hospital 1',
 			'code' => 'H01'
 		]);
 
-		User::create(['name' => 'doctor1', 'email' => 'doctor1@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Linda', 'lastname' => 'Hamilton' ]);
+		User::create(['name' => 'doctor1', 'email' => 'doctor1@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Linda', 'lastname' => 'Hamilton', 'email_verified_at' => now() ]);
 		Doctor::create(['user_id' => 3, 'center_id' => 1, 'specialty_id' => 3]);
 
-		User::create(['name' => 'doctor2', 'email' => 'doctor2@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Arnold', 'lastname' => 'Schwartzeneger' ]);
+		User::create(['name' => 'doctor2', 'email' => 'doctor2@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Arnold', 'lastname' => 'Schwartzeneger', 'email_verified_at' => now() ]);
 		Doctor::create(['user_id' => 4, 'center_id' => 1, 'specialty_id' => 6]);
 
-		User::create([ 'name' => 'doctor3', 'email' => 'doctor3@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Edward', 'lastname' => 'Furlong' ]);
+		User::create([ 'name' => 'doctor3', 'email' => 'doctor3@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Edward', 'lastname' => 'Furlong', 'email_verified_at' => now() ]);
 		Doctor::create(['user_id' => 5, 'center_id' => 1, 'specialty_id' => 10]);
 
 
@@ -62,12 +61,6 @@ class DatabaseSeeder extends Seeder
 			]);
 		}
 
-		// \App\Models\User::factory(10)->create();
-
-		// \App\Models\User::factory()->create([
-		//     'name' => 'Test User',
-		//     'email' => 'test@example.com',
-		// ]);
-        $visits = VisitsFactory::new()->count(10)->create();
+        VisitsFactory::new()->count(10)->create();
 	}
 }

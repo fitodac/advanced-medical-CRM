@@ -9,6 +9,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -176,7 +177,20 @@ class UserController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-		$resp = User::whereNot('role', 'superadmin')->latest()->paginate(10);
+        $query = User::whereNot('role', 'superadmin');
+
+        if ($request->has('name') && !empty($request->name)) {
+            $query->where(function($query) use ($request) {
+                $query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+            });
+        }
+
+        if ($request->has('role') && !empty($request->role)) {
+            $query->where('role', $request->role);
+        }
+
+        $resp = $query->latest()->paginate(10);
 		return $this->successResponse($resp);
 	}
 
@@ -204,19 +218,35 @@ class UserController extends Controller
 
 
 	// DELETE
-	public function delete(Request $request){
-		$validate = Validator::make($request->all(), [
-			'id' => 'required|numeric'
-		], [
-			'id.required' => 'Debes proveernos el ID del usuario para continuar',
-			'id.numeric' => 'Formato incorrecto'
-		]);
+	public function delete(User $user){
+        if( !$user ) return $this->errorResponse('El usuario que tratas de eliminar no existe', 404);
 
-		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
+        $authUser = Auth::user();
 
-		$user = User::find($request->id);
+        if ($authUser->id == $user->id) {
+            // Los usuarios no pueden eliminarse a sí mismos
+            return $this->errorResponse('No te puedes eliminar a ti mismo', 404);
+        }
 
-		if( !$user ) return $this->errorResponse('El usuario que tratas de eliminar no existe', 404);
+        switch ($user->role) {
+            case 'superadmin':
+                // No se puede eliminar a un superadmin
+                return $this->errorResponse('Este usuario no puede eliminarse', 404);
+
+            case 'admin':
+                if ($authUser->role !== 'superadmin') {
+                    // Solo un superadmin puede eliminar a un admin
+                    return $this->errorResponse('Este usuario no puede eliminarse', 404);
+                }
+                break;
+
+            case 'doctor':
+                if ($authUser->role !== 'superadmin' && $authUser->role !== 'admin') {
+                    // Solo un superadmin o un admin puede eliminar a un doctor
+                    return $this->errorResponse('Este usuario no puede eliminarse', 404);
+                }
+                break;
+        }
 
 		$user->delete();
 
