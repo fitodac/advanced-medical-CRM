@@ -2,32 +2,29 @@ import { useContext } from 'react'
 import PropTypes from 'prop-types'
 
 
-export const Input = (props) => {
+export const Input = ({
+	type,
+	name,
+	placeholder,
+	readonly,
+	disabled,
+	label,
+	maxlength,
+	minlength,
+	className,
+	context
+}) => {
 
-	const context = useContext(props.context)
+	const formContext = useContext(context)
 
-	const {
-		type,
-		name,
-		placeholder,
-		readonly,
-		disabled,
-		label,
-		maxlength,
-		minlength,
-		className
-	} = props
-
-	const handleChange = e => {
-		context.handleInputChange(e)
-	}
+	const handleChange = e => formContext.handleInputChange(e)
 
 	return (<div className="">
-		{ label ? (<label className="select-none">{label}</label>) : null }
+		{ label && (<label className="select-none">{label}</label>) }
 		<input 
 			type={type ?? 'text'} 
 			name={name} 
-			defaultValue={context.formState[name]}
+			defaultValue={formContext.formState[name]}
 			onChange={handleChange}
 			placeholder={placeholder}
 			readOnly={readonly}

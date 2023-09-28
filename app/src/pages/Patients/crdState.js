@@ -42,7 +42,9 @@ export default {
 	ns__result: '',
 	ms__sarc_f: '',
 	ms__other: '',
+	
 	ms__result: '',
+	
 	nd__glim: '',
 	nd__mna: '',
 	nd__vgs: '',

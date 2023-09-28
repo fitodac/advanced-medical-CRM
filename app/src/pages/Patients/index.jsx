@@ -61,8 +61,8 @@ export default function Page(){
 						<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
 						<td className="leading-none">
 							{ doctor 
-							? doctor.firstname || doctor.lastname ? (<div className="whitespace-nowrap text-ellipsis">{doctor.firstname} {doctor.lastname}</div>) : (<div>{doctor.name}</div>)
-							: (<div className="text-slate-300">sin datos</div>) }
+								? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor.user.firstname} {doctor.user.lastname}</div>) : (<div>{doctor.user.name}</div>)
+								: (<div className="text-slate-300">sin datos</div>) }
 							
 							{ center 
 							? (<small className="text-slate-500 text-xs font-light">{center.name}</small>)

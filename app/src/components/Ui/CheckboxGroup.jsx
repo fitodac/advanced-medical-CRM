@@ -17,7 +17,7 @@ export const CheckboxGroup = ({
 																		<span>{choice.label}</span>
 																	</label>))}
 			
-			<div className="text-slate-500 leading-tight pl-4">{e?.text}</div>
+			<div className="text-slate-500 leading-tight pl-4 select-none">{e?.text}</div>
 		</div>)) }
 	</div>)
 
