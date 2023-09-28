@@ -1,15 +1,25 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Pagination } from '.'
 
-export const Table = ({header, children, pager}) => {
+export const Table = React.memo( function Table({
+  header, 
+  children, 
+  pager,
+  context
+}){
 	return (<>
 		<table className="table table-striped hoverable">
 
-			<thead>
-				{ header && header.map(e => (<th key={e.title}>
-					<div className={e.class}>{e.title}</div>
-				</th>))}
-			</thead>
+			{ header && 
+			(<thead>
+				<tr>
+					{ header.map(e => (<th key={e.title}>
+						<div className={e.class}>{e.title}</div>
+					</th>)) }
+				</tr>
+			</thead>) }
+			
 
 			<tbody>
 				{ children }
@@ -17,13 +27,15 @@ export const Table = ({header, children, pager}) => {
 
 		</table>
 
-		{pager && (<Pagination links={pager} />)}
+		{pager && (<Pagination links={pager} context={context} />)}
 	</>)
-}
+})
+
 
 
 Table.propTypes = {
-	header: PropTypes.array.isRequired,
+	header: PropTypes.array,
 	children: PropTypes.node.isRequired,
-	pager: PropTypes.array
+	pager: PropTypes.array,
+	context: PropTypes.object.isRequired
 }

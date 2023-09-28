@@ -5,7 +5,7 @@ export const HeaderFieldGroup = ({
 	subtitle
 }) => {
 	return (<div className="leading-tight select-none">
-						{title && (<div className="font-bold">{title}</div>)}
+						{title && (<div className="text-slate-500 font-bold">{title}</div>)}
 						{subtitle && (<div className="text-slate-500 text-sm">{subtitle}</div>)}
 					</div>)
 }

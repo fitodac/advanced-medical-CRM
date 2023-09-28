@@ -18,16 +18,22 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         $super_admin = [
-            'name'      => 'cpi_superadmin',
-            'email'     => 'fito+advanced@commonpeoplei.com',
-            'password'  => 'cpi_1975'
+					'name'      => 'cpi_superadmin',
+					'email'     => 'fito+advanced@commonpeoplei.com',
+					'password'  => 'cpi_1975'
         ];
 
         $admin = [
-            'name'      => 'cpi_admin',
-            'email'     => 'admin@local.com',
-            'password'  => 'cpi_1975'
-        ];
+					'name'      => 'cpi_admin',
+					'email'     => 'admin@local.com',
+					'password'  => 'cpi_1975'
+				];
+
+        $dogtor = [
+					'name'      => 'house_md',
+					'email'     => 'house_md@local.com',
+					'password'  => 'cpi_1975'
+				];
 
         // Super Admin
         User::create([
@@ -46,6 +52,16 @@ class UsersSeeder extends Seeder
             'role' => 'admin',
             'email_verified_at' => now()
         ]);
+
+			  // Dogtor
+        User::create([
+            'name' => $dogtor['name'],
+            'email' => $dogtor['email'],
+            'password' => bcrypt($dogtor['password']),
+            'role' => 'doctor',
+            'email_verified_at' => now()
+        ]);
+
 
         User::factory(15)->create()->each(function ($user) {
             $doctor = Doctor::factory()->create(['user_id' => $user->id]);

@@ -24,7 +24,7 @@ function App() {
 
   return (
 		<appContext.Provider value={contextValue}>
-			{ navigation.state === 'loading' && (<div className="bg-slate-100 w-screen h-screen grid place-content-center">
+			{ navigation.state === 'loading' && (<div className="w-screen h-screen grid place-content-center">
 				<div className="spinner w-20"></div>
 			</div>) }
 

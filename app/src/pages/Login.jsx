@@ -74,7 +74,7 @@ export default function Page(){
 									className="bg-indigo-500 border-indigo-500 text-white w-full" 
 									type="button" 
 									onClick={() => {
-										setLoginForm({email: 'doctor1@local.com', password: 'advanced'})
+										setLoginForm({email: 'house_md@local.com', password: 'cpi_1975'})
 									}}>
 									Entrar como doctor
 								</Button>

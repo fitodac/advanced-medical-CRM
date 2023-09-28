@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 import { 
 	ErrorResponse, 
-	NoToken,
-	NoRequest
+	NoToken
 } from './useApiResponses'
 import { usekickOut } from './useAuth'
 
@@ -50,7 +49,13 @@ export const useAxios = ({
 			console.log('Error:', err)
 			throw new Error(err)
 		}
-	}, [])
+	}, [
+		url,
+		body,
+		headers,
+		method,
+		token
+	])
 
 	return { response, error, loading }
 
