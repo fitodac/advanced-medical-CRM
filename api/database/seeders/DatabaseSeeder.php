@@ -34,8 +34,7 @@ class DatabaseSeeder extends Seeder
 			SpecialtySeeder::class,
 			UsersSeeder::class,
             PatientSeeder::class,
+            VisitsSeeder::class,
 		]);
-
-        VisitsFactory::new()->count(10)->create();
 	}
 }
