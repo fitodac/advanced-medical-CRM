@@ -23,43 +23,18 @@ class DatabaseSeeder extends Seeder
 	public function run(): void
 	{
 
-		$faker = Faker::create();
+		// $faker = Faker::create();
 
-		$this->call([
-			UsersSeeder::class,
-			SpecialtySeeder::class,
-		]);
-
-		Center::create([
+        Center::create([
 			'name' => 'Hospital 1',
 			'code' => 'H01'
 		]);
 
-		User::create(['name' => 'doctor1', 'email' => 'doctor1@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Linda', 'lastname' => 'Hamilton', 'email_verified_at' => now() ]);
-		Doctor::create(['user_id' => 3, 'center_id' => 1, 'specialty_id' => 3]);
-
-		User::create(['name' => 'doctor2', 'email' => 'doctor2@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Arnold', 'lastname' => 'Schwartzeneger', 'email_verified_at' => now() ]);
-		Doctor::create(['user_id' => 4, 'center_id' => 1, 'specialty_id' => 6]);
-
-		User::create([ 'name' => 'doctor3', 'email' => 'doctor3@local.com', 'password' => bcrypt(env('USER_DEFAULT_PASSWORD')), 'role' => 'doctor', 'firstname' => 'Edward', 'lastname' => 'Furlong', 'email_verified_at' => now() ]);
-		Doctor::create(['user_id' => 5, 'center_id' => 1, 'specialty_id' => 10]);
-
-
-		$letrasPosibles = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321';
-		$longitud = 5;
-
-		for($i = 0; $i < 10; $i++){
-			$stringAleatorio = substr(str_shuffle($letrasPosibles), 0, $longitud);
-
-			Patient::create([
-				'code' => $stringAleatorio,
-				'doctor_id' => rand(1,3),
-				'center_id' => 1,
-				'name' => $faker->name,
-				'lastname' => $faker->lastname,
-				'gender' => $faker->randomElement(['hombre', 'mujer'])
-			]);
-		}
+		$this->call([
+			SpecialtySeeder::class,
+			UsersSeeder::class,
+            PatientSeeder::class,
+		]);
 
         VisitsFactory::new()->count(10)->create();
 	}

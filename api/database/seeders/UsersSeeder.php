@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
 use App\Models\User;
+use App\Models\Doctor;
+
+use App\Models\Patient;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 
 class UsersSeeder extends Seeder
@@ -45,5 +47,9 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now()
         ]);
 
+        User::factory(15)->create()->each(function ($user) {
+            $doctor = Doctor::factory()->create(['user_id' => $user->id]);
+            Patient::factory()->create(['doctor_id' => $doctor->id]);
+        });
     }
 }
