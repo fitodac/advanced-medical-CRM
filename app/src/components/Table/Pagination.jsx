@@ -5,9 +5,9 @@ import { useContext } from 'react'
 const btnClassName = {
 	btn: `border-none text-base w-10 h-10 p-0 grid place-content-center select-none rounded transition-all group hover:bg-primary hover:text-white`,
 	disabled: `bg-transparent border-transparent text-slate-300 text-base w-10 h-10 p-0 grid place-content-center select-none rounded transition-all group cursor-default`,
-	arrowLeft: `ri-arrow-left-s-line relative transition-all`,
+	arrowLeft: `ri-arrow-left-s-line relative transition-all top-px relative`,
 	arrowLeftHover: `group-hover:-ml-2`,
-	arrowRight: `ri-arrow-right-s-line relative transition-all`,
+	arrowRight: `ri-arrow-right-s-line relative transition-all top-px relative`,
 	arrowRightHover: `group-hover:ml-2`
 }
 
@@ -32,13 +32,15 @@ export const Pagination = ({
 	return (<div className="pt-3">
 		<div className="flex gap-x-1 overflow-x-hidden justify-end">
 
-			<Button 
-				className={first.url ? btnClassName.btn : btnClassName.disabled}
+			{first.url 
+			&& (<Button 
+				className={btnClassName.btn}
 				onClick={() => navigate(first.url)}>
 				<i className={`${btnClassName.arrowLeft} ${first.url && btnClassName.arrowLeftHover}`} />
-			</Button>
+			</Button>)}
 
-			{ pager.length && pager.map(({url, label, active}) => (
+
+			{ pager.length > 1 && pager.map(({url, label, active}) => (
 				<Button 
 					className={active ? btnClassName.disabled : btnClassName.btn} 
 					key={url}
@@ -46,11 +48,12 @@ export const Pagination = ({
 					{label}
 				</Button>))}
 
-			<Button 
-				className={last.url ? btnClassName.btn : btnClassName.disabled} disabled={!last.url}
+			{last.url
+			&& (<Button 
+				className={btnClassName.btn}
 				onClick={() => navigate(last.url)}>
 				<i className={`${btnClassName.arrowRight} ${last.url && btnClassName.arrowRightHover}`} />
-			</Button>
+			</Button>)}
 
 		</div>
 	</div>)

@@ -13,7 +13,7 @@ import Crd, {loader as loaderCrd} from '../pages/Patients/Crd'
 import MedicalCenter from '../pages/MedicalCenters'
 import MedicalCenterForm, {loader as loaderCenterForm} from '../pages/MedicalCenters/Form'
 
-import Doctor, {loader as loaderDoctor} from '../pages/Doctors'
+import Doctor from '../pages/Doctors'
 import DoctorForm, {loader as loaderDoctorForm} from '../pages/Doctors/Form'
 
 import User from '../pages/Users'
@@ -63,8 +63,7 @@ const router = createBrowserRouter([
 			// Doctors
 			{
 				path: '/doctors', 
-				element: <Doctor />,
-				loader: loaderDoctor
+				element: <Doctor />
 			},
 			{
 				path: '/doctors/new', 
