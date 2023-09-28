@@ -4,10 +4,11 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/antropometria'
 
+const id = 'antropometria'
 
 export const Antropometria = ({context}) => {
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup title="Antropometría" />
 
 			{fields.map(({name, label, append}) => (<div key={label} className="grid grid-cols-12 gap-x-4">

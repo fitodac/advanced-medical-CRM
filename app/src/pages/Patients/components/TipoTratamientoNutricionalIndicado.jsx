@@ -7,10 +7,12 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/tipoTratamientoNutricionalIndicado'
 
+const id = 'tipoDeTratamientoNutricionalIndicado'
+
 export const TipoTratamientoNutricionalIndicado = ({context}) => {
 
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Tipo de tratamiento nutricional indicado" />
 
 			{fields.map(({key, name, value, label, options}) => (<div key={key} className="">

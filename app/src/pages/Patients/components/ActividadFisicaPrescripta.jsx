@@ -4,14 +4,14 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/actividadFisicaPrescrita'
 
+const id = 'haPrescritoActividadFisica'
+
 export const ActividadFisicaPrescripta = ({context}) => {
 
 	const {name, value, label} = fields[0]
 
-
-	
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="¿Ha prescrito actividad física al paciente?" />
 
 			<label className="input-checkbox">

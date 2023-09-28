@@ -7,10 +7,12 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/diagnosticoNutricionalUtilizado'
 
+const id = 'diagnosticoNutricionalUtilizado'
+
 export const DiagnosticoNutricionalUtilizado = ({context}) => {
 
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Diagnóstico nutricional utilizado" />
 			
 			<CheckboxList options={fields} />

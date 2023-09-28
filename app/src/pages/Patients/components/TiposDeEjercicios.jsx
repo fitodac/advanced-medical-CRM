@@ -4,10 +4,12 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/tiposDeEjercicios'
 
+const id = 'queTipoDeEjerciciosHaRecomendado'
+
 export const TiposDeEjercicios = ({context}) => {
 
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="¿Qué tipo de ejercicios ha recomendado?"
 				subtitle="(Señale uno o varios si aplican)" />

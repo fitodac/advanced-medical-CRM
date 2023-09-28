@@ -4,10 +4,11 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/otrasMedicionesDeComposicionCorporal'
 
+const id = 'otrasMedidasDeComposicionCorporal'
 
 export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup title="Otras medidas de composición corporal" />
 
 			<section className="space-y-8">

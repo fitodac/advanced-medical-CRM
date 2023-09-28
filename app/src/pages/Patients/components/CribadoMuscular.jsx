@@ -7,10 +7,11 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/cribadoMuscular'
 
+const id = 'cribadoMuscular'
 
 export const CribadoMuscular = ({context}) => {
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Cribado muscular" />
 
 			<CheckboxList options={fields} />

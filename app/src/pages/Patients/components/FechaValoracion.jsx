@@ -8,9 +8,11 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/fechaValoracion'
 
+const id = 'fechaValoracion'
+
 export const FechaValoracion = ({context}) => {
 	return (<>
-	<section className="space-y-3">
+	<section className="space-y-3" id={id}>
 		<HeaderFieldGroup title="Fecha de valoración" />
 		
 		<InputDate label="Fecha" name="valuation_date" context={context} />

@@ -1,23 +1,18 @@
 import PropTypes from 'prop-types'
-// import { Input } from '../../../components/Ui'
 import { HeaderFieldGroup } from '.'
 
-import fields from '../formfields/cribadoMuscularResults'
+import fields from '../formfields/resultadoCribadoMuscular'
 
+const id = 'resultadoCribadoMuscular'
 
-export const CribadoMuscularResults = ({context}) => {
+export const ResultadoCribadoMuscular = ({context}) => {
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Resultado del cribado muscular"
 				subtitle="¿Está el paciente en riesgo de sarcopenia?" />
 
 			<div className="flex gap-x-4">
-				{/* <div className="">
-					<label>Puntuación</label>
-					<Input name={fields} context={context} />
-				</div> */}
-
 				{ fields && fields.options.map((e) => (<div key={e?.value} className="flex gap-6 items-start">
 					<label className="input-checkbox">
 						<input type="checkbox" />
@@ -30,6 +25,6 @@ export const CribadoMuscularResults = ({context}) => {
 }
 
 
-CribadoMuscularResults.propTypes = {
+ResultadoCribadoMuscular.propTypes = {
 	context: PropTypes.object.isRequired
 }

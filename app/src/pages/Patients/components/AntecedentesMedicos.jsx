@@ -7,10 +7,12 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/antecedentesMedicos'
 
+const id = 'antecedentesMedicos'
+
 export const AntecedentesMedicos = ({context}) => {
 
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Antecedentes médicos"
 				subtitle="(Especificar patología y estadío si procede)" />

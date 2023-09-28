@@ -9,6 +9,12 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [twUiKit],
+  plugins: [
+		twUiKit({
+			'.tabs .tabs-content .tab-body': {
+				'padding': 0
+			}
+		})
+	],
 }
 

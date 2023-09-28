@@ -7,12 +7,14 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/parametrosFuncionales'
 
+const id = 'parametrosFuncionales'
+
 export const ParametrosFuncionales = ({context}) => {
 
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
-				title="Parámtros funcionales"
+				title="Parámetros funcionales"
 				subtitle="(Detalle de los valores obtenidos)" />
 
 			<div className="space-y-5">

@@ -7,10 +7,12 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/resultadoValoracionNutricional'
 
+const id = 'resultadoDeLaValoracionNutricional'
+
 export const ResultadoValoracionNutricional = ({context}) => {
 
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Resultado de la valoración nutricional"
 				subtitle="¿Está el paciente desnutrido?" />

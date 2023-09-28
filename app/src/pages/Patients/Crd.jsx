@@ -17,9 +17,9 @@ import {
 	FechaValoracion,
 	Antropometria,
 	CribadoNutricional,
-	CribadoNutricionalResults,
+	ResultadoCribadoNutricional,
 	CribadoMuscular,
-	CribadoMuscularResults,
+	ResultadoCribadoMuscular,
 	DiagnosticoNutricionalUtilizado,
 	ResultadoValoracionNutricional,
 	ParametrosFuncionales,
@@ -126,6 +126,7 @@ export default function Page(){
 
 
 	const contextValue = {
+		patient,
 		formState, 
 		state_first,
 		state_initial,
@@ -151,7 +152,7 @@ export default function Page(){
 					<div className="col-span-4 max-h-[73vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-2 pb-28 pr-10 xl:pr-14">
 						{formType === 'first' 
 						&& (<form onSubmit={handleSubmit}>
-							<HeaderForm title="Visita inicial" patient={patient} context={formContext} />
+							<HeaderForm title="Visita inicial" context={formContext} />
 
 							<div className="space-y-14 mt-14">
 								<FromGroup>
@@ -173,9 +174,9 @@ export default function Page(){
 										<FechaValoracion context={formContext} />
 										<Antropometria context={formContext} />
 										<CribadoNutricional context={formContext} />
-										<CribadoNutricionalResults context={formContext} />
+										<ResultadoCribadoNutricional context={formContext} />
 										<CribadoMuscular context={formContext} />
-										<CribadoMuscularResults context={formContext} />
+										<ResultadoCribadoMuscular context={formContext} />
 										<DiagnosticoNutricionalUtilizado context={formContext} />
 										<ResultadoValoracionNutricional context={formContext} />
 										<ParametrosFuncionales context={formContext} />
@@ -213,7 +214,7 @@ export default function Page(){
 
 						{formType === 'initial' 
 						&& (<form onSubmit={handleSubmit}>
-							<HeaderForm title="Seguimiento 1" patient={patient} />
+							<HeaderForm title="Seguimiento 1" />
 							<div ref={initialFooter} />
 						</form>)}
 

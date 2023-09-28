@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types'
-import { 
-	CheckboxList
-} from '../../../components/Ui'
 import { HeaderFieldGroup } from '.'
 
-import fields from '../formfields/cribadoNutricionalResults'
+import fields from '../formfields/resultadoCribadoNutricional'
 
+const id = 'resultadoCribadoNutricional'
 
-export const CribadoNutricionalResults = ({context}) => {
+export const ResultadoCribadoNutricional = ({context}) => {
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Resultado del cribado nutricional"
 				subtitle="¿Está el paciente en riesgo de desnutrición?" />
@@ -27,6 +25,6 @@ export const CribadoNutricionalResults = ({context}) => {
 }
 
 
-CribadoNutricionalResults.propTypes = {
+ResultadoCribadoNutricional.propTypes = {
 	context: PropTypes.object.isRequired
 }

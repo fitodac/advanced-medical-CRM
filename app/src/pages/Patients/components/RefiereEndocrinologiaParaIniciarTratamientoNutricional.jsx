@@ -4,14 +4,14 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/refiereEndocrinologiaParaIniciarTratamientoNutricional'
 
+const id = 'refiereAlServicioDeEndocrinologiaParaIniciarTratamiento'
+
 export const RefiereEndocrinologiaParaIniciarTratamientoNutricional = ({context}) => {
 
 	const {name, value, label} = fields[0]
 
-
-	
 	return (<>
-		<section className="space-y-3">
+		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Refiere al Servicio de Endocrinología y Nutrición para iniciar tratamiento nutricional" />
 
 			<label className="input-checkbox">

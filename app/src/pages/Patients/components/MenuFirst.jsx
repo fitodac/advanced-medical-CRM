@@ -11,29 +11,35 @@ const menu = [
 	}
 ]
 
+
 export const MenuFirst = ({
 	title,
 	menuClass,
 	handleScroll
 }) => {
 
-	const handleClick = id => handleScroll(id)
-
 	return (<>
-		<div className={menuClass.title}>{title}</div>
+		{title && (<div className={menuClass.title}>{title}</div>)}
 
-		<ul className={menuClass.ul}>
-			{menu.map(({toId, label}) => (<li key={toId}>
-				<button 
-					className={menuClass.nav}
-					onClick={() => handleClick(toId)}>{label}</button>
-			</li>))}
-		</ul>
+		<div className={menuClass.container}>
+			<ul className={menuClass.ul}>
+				{menu.map(({toId, label}) => (<li key={toId}>
+					<button 
+						className={menuClass.nav}
+						onClick={() => handleScroll(toId)}>{label}</button>
+				</li>))}
+			</ul>
+		</div>
 	</>)
 }
 
 MenuFirst.propTypes = {
 	title: PropTypes.string,
-	menuClass: PropTypes.object,
+	menuClass: PropTypes.shape({
+		title: PropTypes.string,
+		container: PropTypes.string,
+		ul: PropTypes.string,
+		nav: PropTypes.string,
+	}),
 	handleScroll: PropTypes.func
 }
