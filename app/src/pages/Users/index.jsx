@@ -1,8 +1,4 @@
-import { 
-	useAuth, 
-	useAxios, 
-	useDate 
-} from '../../hooks'
+import { useAxios, useDate } from '../../hooks'
 import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
@@ -32,13 +28,12 @@ const BadgeClassName = role => {
 
 export default function Page(){
 
-	const { user: {token_type, token} } = useAuth()
-	const { API_URI } = useAppContext()
+	const { API_URI, token } = useAppContext()
 
 	const { response, error, loading } = useAxios({
 		url: `${API_URI}/user/list/`,
 		method: 'POST',
-		token: `${token_type} ${token}`
+		token
 	})
 
 

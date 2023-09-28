@@ -1,7 +1,7 @@
 import { useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Create, Update } from '../../api/patients'
-import { useAuth, useAxios, useForm } from '../../hooks'
+import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
@@ -13,11 +13,9 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
+	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
-	const { user } = useAuth()
-	const {token_type, token} = user
 	const navigate = useNavigate()
-	const { API_URI } = useAppContext()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		code: '',
@@ -35,7 +33,7 @@ export default function Page(){
 		url: `${API_URI}/patient`,
 		method: 'POST',
 		body: {id},
-		token: `${token_type} ${token}`
+		token
 	})
 
 
@@ -56,9 +54,9 @@ export default function Page(){
 
 		try {
 			if( id ){
-				resp = await Update(`${token_type} ${token}`, {...formState})
+				resp = await Update(token, {...formState})
 			}else{ 
-				resp = await Create(`${token_type} ${token}`, {...formState})
+				resp = await Create(token, {...formState})
 			}
 
 			console.log('resp', resp)

@@ -1,7 +1,4 @@
-import { 
-	useAuth, 
-	useAxios 
-} from '../../hooks'
+import { useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
@@ -28,13 +25,12 @@ export async function loader(){ return null }
 
 export default function Page(){
 
-	const { user: {token_type, token} } = useAuth()
-	const { API_URI } = useAppContext()
+	const { API_URI, token } = useAppContext()
 
 	const { response, error, loading } = useAxios({
 		url: `${API_URI}/doctors/`,
 		method: 'POST',
-		token: `${token_type} ${token}`
+		token
 	})
 
 

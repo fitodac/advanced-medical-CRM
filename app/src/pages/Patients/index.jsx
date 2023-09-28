@@ -11,6 +11,7 @@ import {
 	Alert
 } from '../../components/Ui'
 import { Table } from '../../components/Table'
+import { useEffect } from 'react'
 
 
 const thead = [
@@ -25,15 +26,15 @@ const thead = [
 
 export default function Page(){
 
-	const { user: {token_type, token, info: {role}} } = useAuth()
-	const { API_URI } = useAppContext()
+	const { API_URI, token, user: {info: {role}} } = useAppContext()
 
 	const { response, error, loading } = useAxios({
 		url: `${API_URI}/patient/list/`,
 		method: 'POST',
-		token: `${token_type} ${token}`
+		token
 	})
 
+	useEffect(() => {console.log(response)}, [response])
 
 	return (<>
 		<PageHeader 
@@ -72,7 +73,6 @@ export default function Page(){
 							<div className="flex gap-x-2 justify-end h-full">
 								{ 'doctor' === role && <ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/crd/${id}/initial`}>CRD</ButtonLink> }
 								<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
-								{/* Delete */}
 								<>
 									<label className="btn btn-sm bg-red-700 border-red-700 text-white" htmlFor={`modal-${id}`}>Borrar</label>
 									<input type="checkbox" id={`modal-${id}`} className="hidden" />

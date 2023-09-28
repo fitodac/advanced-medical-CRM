@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext } from 'react'
 import { Outlet, useNavigation } from 'react-router-dom'
 
+import { useAuth } from './hooks'
 import { API_URI } from './config.dev'
 import Navbar from './components/Navbar'
 import Header from './components/Header'
@@ -12,9 +13,13 @@ export const appContext = createContext({})
 function App() {
 
 	const navigation = useNavigation()
+	const { user } = useAuth()
+	const { token_type, token } = user
 
 	const contextValue = {
-		API_URI
+		API_URI,
+		user,
+		token: `${token_type} ${token}`
 	}
 
   return (

@@ -136,7 +136,7 @@ class PatientController extends Controller
         $query = Patient::with('doctor.user');
 
         if ($auth->role === 'doctor') {
-            $query->where('doctor_id', $auth->id);
+            $query->where('doctor_id', $auth->doctor->id);
         }
 
         if ($request->has('code') && !empty($request->code)) {

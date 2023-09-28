@@ -49,9 +49,9 @@ class User extends Authenticatable implements MustVerifyEmail
 	];
 
 
-	public function doctor(){ return Doctor::where('user_id', $this->id)->first(); }
+	// public function doctor(){ return Doctor::where('user_id', $this->id)->first(); }
 
-    public function doctorRelationship(): HasOne
+    public function doctor(): HasOne
     {
         return $this->hasOne(Doctor::class);
     }

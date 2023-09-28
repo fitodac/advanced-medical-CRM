@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-const navClass = 'border-slate-100 border-l-2 text-sm text-left leading-none inline-block px-3 select-none transition-all hover:text-primary hover:border-primary'
+
+import { MenuInitial, MenuFirst } from '.'
+
+const menuClass = {
+	title: 'text-slate-400 text-sm font-semibold',
+	ul: 'text-slate-500 space-y-4 pt-6 -ml-4',
+	nav: 'border-slate-100 border-l-2 text-sm text-left leading-none inline-block px-3 select-none transition-all hover:text-primary hover:border-primary'
+}
 
 const handleScroll = id => {
 	const el = document.getElementById(id)
@@ -8,7 +15,7 @@ const handleScroll = id => {
 }
 
 
-export const Navbar = ({setFormType}) => {
+export const Sidebar = ({setFormType}) => {
 
 	const [ visit, setVisit ] = useState('first')
 
@@ -29,21 +36,17 @@ export const Navbar = ({setFormType}) => {
 			<div className="tabs-content">
 				
 				<div className="tab-body">
-					<div className="text-slate-400 text-sm font-semibold">Visita inicial</div>
-
-					<ul className="text-slate-500 space-y-4 pt-6 -ml-4">
-						<li className="">
-							<button onClick={() => handleScroll('criteriosInclusionExclusion')} className={navClass}>Criterios de inclusión y exclusión</button>
-						</li>
-						<li className="">
-							<button onClick={() => handleScroll('datosSociodemograficos')} className={navClass}>Datos sociodemográficos</button>
-						</li>
-					</ul>
+					<MenuInitial 
+						title="Visita inicial"
+						menuClass={menuClass} />
 				</div>
 				
 				
 				<div className="tab-body">
-					<div className="text-slate-400 text-sm font-semibold">Primer seguimiento</div>
+					<MenuFirst 
+						title="Primer seguimiento"
+						menuClass={menuClass} />
+					
 				</div>
 
 			</div>
@@ -52,6 +55,6 @@ export const Navbar = ({setFormType}) => {
 }
 
 
-Navbar.prototype = {
+Sidebar.prototype = {
 	setFormType: PropTypes.func
 }

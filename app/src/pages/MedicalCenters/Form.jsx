@@ -1,7 +1,7 @@
 import { useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Create, Update } from '../../api/medicalCenter'
-import { useAuth, useAxios, useForm } from '../../hooks'
+import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
@@ -14,10 +14,9 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
+	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
-	const { user: {token_type, token} } = useAuth()
 	const navigate = useNavigate()
-	const { API_URI } = useAppContext()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		code: '',
@@ -30,7 +29,7 @@ export default function Page(){
 		url: `${API_URI}/center`,
 		method: 'POST',
 		body: {id},
-		token: `${token_type} ${token}`
+		token
 	})
 
 	useEffect(() => {
@@ -48,9 +47,9 @@ export default function Page(){
 		
 		try {
 			if( id ){
-				resp = await Update(`${token_type} ${token}`, {...formState, code: formState.code.toUpperCase(), id: parseInt(id)})
+				resp = await Update(token, {...formState, code: formState.code.toUpperCase(), id: parseInt(id)})
 			}else{ 
-				resp = await Create(`${token_type} ${token}`, {...formState, code: formState.code.toUpperCase()})
+				resp = await Create(token, {...formState, code: formState.code.toUpperCase()})
 			}
 			
 			console.log('resp', resp)

@@ -1,11 +1,7 @@
 import { useEffect, createContext, useState } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Create, Update } from '../../api/user'
-import { 
-	useAuth,
-	useForm,
-	useAxios
-} from '../../hooks'
+import { useForm, useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 
 import PageHeader from '../../components/PageHeader'
@@ -21,12 +17,11 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
+	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
-	const { user: {token_type, token} } = useAuth()
 	const [centers, setCenters] = useState(null)
 	const [specialties, setSpecialties] = useState(null)
 	const navigate = useNavigate()
-	const { API_URI } = useAppContext()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		firstname: '',
@@ -43,19 +38,19 @@ export default function Page(){
 		url: `${API_URI}/user`,
 		method: 'POST',
 		body: {id},
-		token: `${token_type} ${token}`
+		token
 	})
 
 	const getSpecialties = useAxios({
 		url: `${API_URI}/specialties`,
 		method: 'POST',
-		token: `${token_type} ${token}`
+		token
 	})
 
 	const getCenters = useAxios({
 		url: `${API_URI}/center/getAll`,
 		method: 'POST',
-		token: `${token_type} ${token}`
+		token
 	})
 
 
@@ -96,9 +91,9 @@ export default function Page(){
 				if( !center_id ) form_state.center_id = parseInt(centers[0].id)
 				if( !specialty_id ) form_state.specialty_id = parseInt(specialties[0].id)
 
-				resp = await Update(`${token_type} ${token}`, {...form_state})
+				resp = await Update(token, {...form_state})
 			}else{ 
-				resp = await Create(`${token_type} ${token}`, {...formState})
+				resp = await Create(token, {...formState})
 			}
 
 			console.log('resp', resp)

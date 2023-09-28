@@ -1,22 +1,12 @@
-import { useState, useEffect, createContext, useReducer } from 'react'
+import { useState, useEffect, createContext, useReducer, useRef } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { 
-	useAuth, 
-	useForm, 
-	useAxios 
-} from '../../hooks'
+import { useForm, useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 import crdState from './crdState'
 
 import PageHeader from '../../components/PageHeader'
-import { 
-	Input,
-	Button,
-	CheckboxList,
-	CheckboxGroup,
-	InputDate
-} from '../../components/Ui'
 import {
+	Sidebar,
 	HeaderForm,
 	HeaderSection,
 	FromGroup,
@@ -33,13 +23,21 @@ import {
 	DiagnosticoNutricionalUtilizado,
 	ResultadoValoracionNutricional,
 	ParametrosFuncionales,
-	OtrasMedicionesDeComposicionCorporal
+	OtrasMedicionesDeComposicionCorporal,
+	ResultadoValoracionMuscular,
+	ObjetivosPlanteados,
+	IniciaTratamientoNutricional,
+	TipoTratamientoNutricionalIndicado,
+	RefiereEndocrinologiaParaIniciarTratamientoNutricional,
+	ActividadFisicaPrescripta,
+	TiposDeEjercicios
 } from './components'
+import { Button } from '../../components/Ui'
+
 import {
 	reducerInitialStateFirst,
 	reducerInitialStateInitial
 } from './reducers'
-import { Navbar } from './Navbar'
 
 
 const reducerFirst = (state, action) => {
@@ -65,14 +63,27 @@ export async function loader({request, params}){
 
 export default function Page(){
 	
+	const { API_URI, user } = useAppContext()
 	const { id, crd } = useLoaderData()
-	const { user } = useAuth()
 	const {token_type, token} = user
 	const [ patient, setPatient ] = useState({name: '', gender: ''})
 	const [ formType, setFormType ] = useState('first')
-
+	const firstFooter = useRef(null)
+	const initialFooter = useRef(null)
 	// const navigate = useNavigate()
-	const { API_URI } = useAppContext()
+
+	const scrollToTheEnd = () => {
+		switch(formType){
+			case 'first':
+				firstFooter.current.scrollIntoView({ behavior: 'smooth' })
+				break;
+			case 'initial':
+				initialFooter.current.scrollIntoView({ behavior: 'smooth' })
+				break;
+		}
+		return
+	}
+
 
 	const [ state_first, dispatchFirst ] = useReducer(reducerFirst, reducerInitialStateFirst)
 	const [ state_initial, dispatchInitial ] = useReducer(reducerInitial, reducerInitialStateInitial)
@@ -135,10 +146,10 @@ export default function Page(){
 		<formContext.Provider value={contextValue}>
 			<section className="max-w-7xl pt-10 -mr-6 xl:mr-0">
 				<div className="lg:grid lg:grid-cols-5 lg:gap-x-10">
-					<Navbar setFormType={val => { setFormType(val) }} />
+					<Sidebar setFormType={val => { setFormType(val) }} />
 
-					<div className="col-span-4 max-h-[73vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-2 pr-10 xl:pr-14">
-						{ formType === 'first' 
+					<div className="col-span-4 max-h-[73vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-2 pb-28 pr-10 xl:pr-14">
+						{formType === 'first' 
 						&& (<form onSubmit={handleSubmit}>
 							<HeaderForm title="Visita inicial" patient={patient} context={formContext} />
 
@@ -150,7 +161,6 @@ export default function Page(){
 								
 								<FromGroup>
 									<HeaderSection title="Datos sociodemográficos" />
-									
 									<FromGroupContainer>
 										<FechaNacimiento context={formContext} />
 										<AntecedentesMedicos context={formContext} />
@@ -170,24 +180,66 @@ export default function Page(){
 										<ResultadoValoracionNutricional context={formContext} />
 										<ParametrosFuncionales context={formContext} />
 										<OtrasMedicionesDeComposicionCorporal context={formContext} />
+										<ResultadoValoracionMuscular context={formContext} />
 									</FromGroupContainer>
 								</FromGroup>
 
+								<FromGroup>
+									<HeaderSection title="Tratamiento nutricional (si procede)" />
+									<FromGroupContainer>
+										<ObjetivosPlanteados context={formContext} />
+										<IniciaTratamientoNutricional context={formContext} />
+										<TipoTratamientoNutricionalIndicado context={formContext} />
+										<RefiereEndocrinologiaParaIniciarTratamientoNutricional context={formContext} />
+									</FromGroupContainer>
+								</FromGroup>
+								
+								<FromGroup>
+									<HeaderSection title="Actividad física - promoción" />
+									<FromGroupContainer>
+										<ActividadFisicaPrescripta context={formContext} />
+										<TiposDeEjercicios context={formContext} />
+									</FromGroupContainer>
+								</FromGroup>
+
+								<div className="">
+									<Button className="btn-lg text-base bg-primary border-primary text-white">Guardar</Button>
+								</div>
 							</div>
+
+							<div ref={firstFooter} />
 						</form>)}
 
 
-
-						{ formType === 'initial' 
+						{formType === 'initial' 
 						&& (<form onSubmit={handleSubmit}>
 							<HeaderForm title="Seguimiento 1" patient={patient} />
+							<div ref={initialFooter} />
 						</form>)}
 
 					</div>
 				</div>
 
-				
 			</section>
+
+
+			{/* Scroll to the end of the "first" form */}
+			{formType === 'first' 
+			&& (<button 
+						className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
+						onClick={scrollToTheEnd}>
+						<i className="ri-arrow-down-line top-0.5 relative"></i>
+					</button>)}
+			
+			
+			{/* Scroll to the end of the "initial" form */}
+			{formType === 'initial'
+			&& (<button
+						className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
+						onClick={scrollToTheEnd}>
+						<i className="ri-arrow-down-line top-0.5 relative"></i>
+					</button>)}
+			
 		</formContext.Provider>
 	</>)
 }

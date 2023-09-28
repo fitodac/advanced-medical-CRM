@@ -157,7 +157,7 @@ return new class extends Migration
 			$table->text('nt__has_not_got_improvement_reason')->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?, No, motivos');
 			// Actividad física, promoción
 			$table->enum('pa__prescribed', ['y', 'n'])->nullable()->comment('Actividad física: ¿Ha prescrito actividad física al paciente?');
-			$table->text('pa__prescribed_reasons')->nullable()->comment('SON: otras');
+			$table->text('pa__prescribed_reasons')->nullable()->comment('Actividad física: No. espceifique motivos');
 			$table->enum('pa__aerobic_predominance', ['y', 'n'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Predominio aeróbico');
 			$table->enum('pa__predominance_muscular_strength', ['y', 'n'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Predominio de fuerza/resistencia muscular');
 			$table->enum('pa__mixed', ['y', 'n'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Mixto');

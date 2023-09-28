@@ -11,13 +11,13 @@ export const CheckboxGroup = ({
 }) => {
 
 	return (<div className="space-y-6">
-		{ options && options.map((e) => (<div key={e?.text} className="flex gap-5 items-start">
-				{ e?.options && e?.options.map(choice => (<label key={choice.value} className="input-checkbox">
-																		<input type="checkbox" />
-																		<span>{choice.label}</span>
+		{ options && options.map(({key, text, options}) => (<div key={key} className="flex gap-5 items-start">
+				{ options && options.map(({key, name, value, label}) => (<label key={key} className="input-checkbox">
+																		<input type="checkbox" name={name} defaultValue={value} />
+																		<span>{label}</span>
 																	</label>))}
 			
-			<div className="text-slate-500 leading-tight pl-4 select-none">{e?.text}</div>
+			<div className="text-slate-500 leading-tight pl-4 select-none">{text}</div>
 		</div>)) }
 	</div>)
 
