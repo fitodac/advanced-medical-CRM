@@ -9,7 +9,7 @@ export const CheckboxList = ({
 }) => {
 
 	return (<div className="space-y-3">
-		{ options && options.map((e) => (<div key={e?.value} className="flex gap-6 items-start">
+		{ options && options.map((e) => (<div key={e?.name} className="flex gap-6 items-start">
 				<label className="input-checkbox">
 					<input type="checkbox" />
 					<span>{e.label}</span>

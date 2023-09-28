@@ -12,7 +12,7 @@ export const Antropometria = ({context}) => {
 
 			{fields.map(({name, label, append}) => (<div key={label} className="grid grid-cols-12 gap-x-4">
 				<div className="col-span-3 flex items-center">
-					<label className="text-sm text-right leading-none font-normal w-full block select-none">{label}</label>
+					<label className="text-sm leading-none font-normal w-full block select-none">{label}</label>
 				</div>
 				
 				<div className="col-span-2 lg:col-span-2">

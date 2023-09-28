@@ -1,87 +1,85 @@
 export default {
-	bioimpedanciaElectrica: [
-		{
-			name: 'bi',
-			label: 'Bioimpedancia eléctrica',
-			options: [
-				{
-					name: 'bi__hydratation',
-					label: 'Porcentaje de hidratación',
-					append: '%'
-				},
-				{
-					name: 'bi__tbm',
-					label: 'TBW (aguacorporal total)',
-					append: 'L'
-				},
-				{
-					name: 'bi__ecw',
-					label: 'ECW (agua extracelular)',
-					append: 'L'
-				},
-				{
-					name: 'bi__icw',
-					label: 'ICW (agua intracelular)',
-					append: 'L'
-				},
-				{
-					name: 'bi__ffm',
-					label: 'FFM (masa magra)',
-					append: 'kg'
-				},
-				{
-					name: 'bi__fm',
-					label: 'FM (masa grasa)',
-					append: 'kg'
-				},
-				{
-					name: 'bi__bcm',
-					label: 'BCM (masa celular, kg)',
-					append: 'kg'
-				},
-				{
-					name: 'bi__bcm_h',
-					label: 'BCM/h† (masa celular dividido entre altura)',
-					append: 'kg/m'
-				},
-				{
-					name: 'bi__asmm',
-					label: 'ASMM (masa celular apendicular, kg)',
-					append: 'kg'
-				},
-				{
-					name: 'bi__smi',
-					label: 'SMI (Índice de masa muscular, kg)',
-					append: 'kg'
-				},
-				{
-					name: 'bi__body_fat',
-					label: 'Grasa corporal',
-					append: '%'
-				},
-				{
-					name: 'bi__resistance',
-					label: 'Resistencia (Xc/h, Ohm)',
-					append: 'Ohm/m'
-				},
-				{
-					name: 'bi__reactance',
-					label: 'Reactancia (Xc/h, Ohm)',
-					append: 'Ohm/m'
-				},
-				{
-					name: 'bi__phase_angle',
-					label: 'Ángulo de fase (PA)',
-					append: 'deg'
-				},
-				{
-					name: 'bi__standarized_phase_angle',
-					label: 'Ángulo de fase estandarizado* (PA/talla en m2)',
-					append: null
-				}
-			]
-		}
-	],
+	bioimpedanciaElectrica: {
+		name: 'bi',
+		label: 'Bioimpedancia eléctrica',
+		options: [
+			{
+				name: 'bi__hydratation',
+				label: {__html: 'Porcentaje de hidratación'},
+				append: '%'
+			},
+			{
+				name: 'bi__tbm',
+				label: {__html: 'TBW <br>(aguacorporal total)'},
+				append: 'L'
+			},
+			{
+				name: 'bi__ecw',
+				label: {__html: 'ECW <br>(agua extracelular)'},
+				append: 'L'
+			},
+			{
+				name: 'bi__icw',
+				label: {__html: 'ICW <br>(agua intracelular)'},
+				append: 'L'
+			},
+			{
+				name: 'bi__ffm',
+				label: {__html: 'FFM <br>(masa magra)'},
+				append: 'kg'
+			},
+			{
+				name: 'bi__fm',
+				label: {__html: 'FM <br>(masa grasa)'},
+				append: 'kg'
+			},
+			{
+				name: 'bi__bcm',
+				label: {__html: 'BCM <br>(masa celular, kg)'},
+				append: 'kg'
+			},
+			{
+				name: 'bi__bcm_h',
+				label: {__html: 'BCM/h† <br>(masa celular dividido entre altura)'},
+				append: 'kg/m'
+			},
+			{
+				name: 'bi__asmm',
+				label: {__html: 'ASMM <br>(masa celular apendicular, kg)'},
+				append: 'kg'
+			},
+			{
+				name: 'bi__smi',
+				label: {__html: 'SMI <br>(Índice de masa muscular, kg)'},
+				append: 'kg'
+			},
+			{
+				name: 'bi__body_fat',
+				label: {__html: 'Grasa corporal'},
+				append: '%'
+			},
+			{
+				name: 'bi__resistance',
+				label: {__html: 'Resistencia <br>(Xc/h, Ohm)'},
+				append: 'Ohm/m'
+			},
+			{
+				name: 'bi__reactance',
+				label: {__html: 'Reactancia <br>(Xc/h, Ohm)'},
+				append: 'Ohm/m'
+			},
+			{
+				name: 'bi__phase_angle',
+				label: {__html: 'Ángulo de fase (PA)'},
+				append: 'deg'
+			},
+			{
+				name: 'bi__standarized_phase_angle',
+				label: {__html: 'Ángulo de fase estandarizado* <br>(PA/talla en m<sup>2</sup>'},
+				append: null
+			}
+		]
+	},
 	
 	
 	dexa: [
