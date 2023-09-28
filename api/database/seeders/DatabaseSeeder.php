@@ -22,15 +22,8 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run(): void
 	{
-
-		// $faker = Faker::create();
-
-        Center::create([
-			'name' => 'Hospital 1',
-			'code' => 'H01'
-		]);
-
 		$this->call([
+			CenterSeeder::class,
 			SpecialtySeeder::class,
 			UsersSeeder::class,
             PatientSeeder::class,

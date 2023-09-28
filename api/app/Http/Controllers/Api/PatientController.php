@@ -44,12 +44,13 @@ class PatientController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
-		$lastRecord = Patient::select('id')->latest('id')->first();
-		$lastRecord = $lastRecord ? str_pad(($lastRecord->id + 1), 2, "0", STR_PAD_LEFT) : '01';
+        // Saque esto porque agregue un metodo en el modelo para que genere solo.
+		// $lastRecord = Patient::select('id')->latest('id')->first();
+		// $lastRecord = $lastRecord ? str_pad(($lastRecord->id + 1), 2, "0", STR_PAD_LEFT) : '01';
 
-		$patientData = array_merge($request->all(), ['code' => $request->code.'-'.$lastRecord]);
+		// $patientData = array_merge($request->all(), ['code' => $request->code.'-'.$lastRecord]);
 
-		$patient = Patient::create($patientData);
+		$patient = Patient::create($request->all());
 
 		return $this->successResponse($patient, 'Hemos creado un nuevo paciente');
 

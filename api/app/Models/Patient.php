@@ -9,6 +9,17 @@ class Patient extends Model
 {
 	use HasFactory;
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($patient) {
+            $formattedId = str_pad($patient->id, 2, '0', STR_PAD_LEFT);  // Agrega '0' si es menor a 10
+            $patient->code = $patient->center->code . '-' . $formattedId;
+            $patient->save();
+        });
+    }
+
 	protected $fillable = [
 		'code',
 		'doctor_id',
