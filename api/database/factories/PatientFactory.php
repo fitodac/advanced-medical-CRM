@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Center;
 use App\Models\Doctor;
 use App\Models\Patient;
 use Illuminate\Support\Str;
@@ -21,12 +22,12 @@ class PatientFactory extends Factory
     public function definition(): array
     {
         $genders = ['hombre', 'mujer'];
-        $doctor_id = Doctor::inRandomOrder()->first()->id;
+        $doctor = Doctor::inRandomOrder()->first();
 
         return [
             'code' => Str::upper($this->randomAlphaNum(5)),
-            'doctor_id' => $doctor_id,
-            'center_id' => 1,
+            'doctor_id' => $doctor->id,
+            'center_id' => $doctor->center->id,
             'name' => $this->faker->firstName,
             'lastname' => $this->faker->lastName,
             'gender' => $this->faker->randomElement($genders),

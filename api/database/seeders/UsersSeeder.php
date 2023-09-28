@@ -49,7 +49,7 @@ class UsersSeeder extends Seeder
 
         User::factory(15)->create()->each(function ($user) {
             $doctor = Doctor::factory()->create(['user_id' => $user->id]);
-            Patient::factory()->create(['doctor_id' => $doctor->id]);
+            Patient::factory()->create();
         });
     }
 }
