@@ -168,7 +168,7 @@ export default {
 							append: 'cm'
 						},
 						{
-							name: '',
+							name: 'mu__axes_yax',
 							label: 'Y-ax',
 							append: 'cm'
 						}

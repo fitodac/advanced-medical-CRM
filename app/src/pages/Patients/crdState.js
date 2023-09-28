@@ -80,6 +80,7 @@ export default {
 	mu__area: '',
 	mu__circumference: '',
 	mu__axes_xax: '',
+	mu__axes_yax: '',
 	mu__adipose_tissue: '',
 	mar__normal: '',
 	nt__planted_objectives__weight_gain: '',

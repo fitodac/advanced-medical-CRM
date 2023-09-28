@@ -106,10 +106,11 @@ return new class extends Migration
 			$table->unsignedDecimal('au__superficial', 5, 2)->nullable()->comment('Ecografía abdominal: superficial | cm');
 			$table->unsignedDecimal('au__preperitoneal', 5, 2)->nullable()->comment('Ecografía abdominal: preperitoneal | cm');
 			// Ecografía muscular
-			$table->unsignedDecimal('mu__area', 5, 2)->nullable()->comment('FFM (masa magra) | cm2');
-			$table->unsignedDecimal('mu__circumference', 5, 2)->nullable()->comment('FFM (masa magra) | cm');
-			$table->unsignedDecimal('mu__axes_xax', 5, 2)->nullable()->comment('FFM (masa magra) | cm');
-			$table->unsignedDecimal('mu__adipose_tissue', 5, 2)->nullable()->comment('FFM (masa magra) | cm');
+			$table->unsignedDecimal('mu__area', 5, 2)->nullable()->comment('Ecografía muscular: Área | cm');
+			$table->unsignedDecimal('mu__circumference', 5, 2)->nullable()->comment('Ecografía muscular: Circunferencia | cm');
+			$table->unsignedDecimal('mu__axes_xax', 5, 2)->nullable()->comment('Ecografía muscular: Ejes X | cm');
+			$table->unsignedDecimal('mu__axes_yax', 5, 2)->nullable()->comment('Ecografía muscular: Ejes Y | cm');
+			$table->unsignedDecimal('mu__adipose_tissue', 5, 2)->nullable()->comment('Ecografía muscular: Tejido adiposo | cm');
 			// Resultado de la valoración muscular
 			$table->enum('mar__normal', ['y', 'n'])->nullable()->comment('Resultado de la valoración muscular: ¿La masa muscular/función del paciente es normal?');
 			// Tratamiento nutricional
