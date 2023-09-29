@@ -114,7 +114,7 @@ class PatientController extends Controller
 
 
 		if( 'doctor' === $auth->role ){
-			$doctor = Doctor::where('user_id', $auth->id)->first();
+            $doctor = Doctor::where('user_id', $auth->id)->first();
 			if( $patient->doctor_id !== $doctor->id ) return $this->unauthorizedResponse('No estás autorizado a ver los datos de este paciente');
 			return $this->successResponse($patient);
 		}else{
@@ -136,7 +136,7 @@ class PatientController extends Controller
 		$query = Patient::with('doctor.user');
 
 		if ($auth->role === 'doctor') {
-			$query->where('doctor_id', $auth->id);
+			$query->where('doctor_id', $auth->doctor->id);
 		}
 
 		if ($request->has('code') && !empty($request->code)) {
