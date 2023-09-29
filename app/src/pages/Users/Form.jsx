@@ -41,45 +41,90 @@ export default function Page(){
 
 	const handleInputChange = e => onInputChange(e)
 
-	const getUser = useAxios({
+	// Get user data on edition
+	const { 
+		response: getUserResponse, 
+		error: getUserError, 
+		loading: getUserLoading, 
+		refetch: getUserRefetch 
+	} = useAxios({
 		url: `${API_URI}/user`,
 		method: 'POST',
 		body: {id},
-		token
+		token,
+		init: 0
 	})
 
-	const getSpecialties = useAxios({
+	// Get specialties list
+	const {
+		response: getSpecialtiesResponse,
+		error: getSpecialtiesError,
+		loading: getSpecialtiesLoading,
+		refetch: getSpecialtiesRefetch
+	} = useAxios({
 		url: `${API_URI}/specialties`,
 		method: 'POST',
-		token
+		token,
+		init: 0
 	})
 
-	const getCenters = useAxios({
+	// Get centers list
+	const {
+		response: getCentersResponse,
+		error: getCentersError,
+		loading: getCentersLoading,
+		refetch: getCentersRefetch
+	} = useAxios({
 		url: `${API_URI}/center/getAll`,
 		method: 'POST',
-		token
+		token,
+		init: 0
+	})
+
+
+	// Create user
+	const { 
+		response: createUserResponse, 
+		error: createUserError, 
+		loading: createUserLoading, 
+		refetch: createUserRefetch 
+	} = useAxios({
+		url: `${API_URI}/user/create`,
+		method: 'POST',
+		body: {...formState},
+		token,
+		init: 0
+	})
+
+	// Upadate user
+	const { 
+		response: updateUserResponse, 
+		error: updateUserError, 
+		loading: updateUserLoading, 
+		refetch: updateUserRefetch 
+	} = useAxios({
+		url: `${API_URI}/user/update`,
+		method: 'PUT',
+		body: {...formState, id},
+		token,
+		init: 0
 	})
 
 
 	useEffect(() => {
-		if( getSpecialties.response?.success ){
-			setSpecialties([...getSpecialties.response.data])
-			getSpecialties.response.success = null
-		}
-	}, [getSpecialties])
+		if( id ) getUserRefetch() 
+		getSpecialtiesRefetch()
+		getCentersRefetch()
+		setLoading(false)
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 
 	useEffect(() => {
-		if( getCenters.response?.success ){
-			setCenters([...getCenters.response.data])
-			getCenters.response.success = null
-		}
-	}, [getCenters])
-
-
-	useEffect(() => {
-		if( id && getUser.response?.success ){
-			const { firstname, lastname, name, email, role, doctor } = getUser.response.data
+		if( getUserResponse?.success ){
+			console.log(getUserResponse.data)
+			const { firstname, lastname, name, email, role, doctor } = getUserResponse.data
 			const center_id = doctor ? doctor.center_id : 0
 			const specialty_id = doctor ? doctor.specialty_id : 0
 			setFormState({
@@ -92,42 +137,53 @@ export default function Page(){
 				center_id, 
 				specialty_id
 			})
-
-			getUser.response.success = null
 		}
-		setLoading(false)
-	}, [
-		id,
-		getUser, 
-		setFormState, 
-		setLoading, 
-		formState
-	])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getUserResponse])
+
+
+	useEffect(() => {
+		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
+	}, [getSpecialtiesResponse])
+
+
+	useEffect(() => {
+		if( getCentersResponse?.success ) setCenters([...getCentersResponse.data])
+	}, [getCentersResponse])
+
+useEffect(() => {
+	if( !getSpecialtiesLoading && !getCentersLoading ) setLoading(false)
+}, [ getSpecialtiesLoading, getCentersLoading ])
 
 
 
 	const handleSubmit = async e => {
 		e.preventDefault()
-		let resp
 
 		try {
 			if( id ){
 				const { role, center_id, specialty_id } = formState
-				const form_state = {...formState}
+
 
 				if( 'doctor' === role ){
-					if( !center_id ) form_state.center_id = parseInt(centers[0].id)
-					if( !specialty_id ) form_state.specialty_id = parseInt(specialties[0].id)
+					const centerID = !center_id ? parseInt(centers[0].id) : center_id
+					const specialtyID = !specialty_id ? parseInt(specialties[0].id) : specialty_id
+					setFormState({
+						...formState,
+						center_id: centerID,
+						specialty_id: specialtyID
+					})
 				}
-				
-				resp = await Update(token, {...form_state, id})
+
+				updateUserRefetch()
+				console.log('resp', updateUserResponse)
 			}else{ 
-				resp = await Create(token, {...formState})
+				createUserRefetch()
+				console.log('resp', createUserResponse)
 			}
 
-			console.log('resp', resp)
-			onResetForm()
-			if(navigate) navigate('/users')
+			// onResetForm()
+			// if(navigate) navigate('/users')
 		} catch (err) {
 			console.log('error', err)
 		}
@@ -165,7 +221,7 @@ export default function Page(){
 
 						<div>
 							{ 'doctor' === formState.role 
-							? (<div className="space-y-2 pt-4">
+							? (<div className="space-y-4 pt-4">
 									<div className="font-medium leading-tight">Datos del doctor</div>
 
 									{ specialties 

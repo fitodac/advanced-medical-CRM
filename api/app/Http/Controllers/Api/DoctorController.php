@@ -64,19 +64,21 @@ class DoctorController extends Controller
 		return $this->successResponse($doctor);
 	}
 
-    public function delete(Doctor $doctor)
-    {
-        if( !$doctor ) return $this->errorResponse('El médico que tratas de eliminar no existe', 404);
 
-        $user = Auth::user();
 
-        if( $user->role == 'doctor') {
-            return $this->errorResponse('No puedes eliminar el médico', 200);
-        }
+	public function delete(Doctor $doctor)
+	{
+		if( !$doctor ) return $this->errorResponse('El médico que tratas de eliminar no existe', 404);
 
-        $doctor->delete();
+		$user = Auth::user();
+
+		if( $user->role == 'doctor') {
+				return $this->errorResponse('No puedes eliminar el médico', 200);
+		}
+
+		$doctor->delete();
 
 		return $this->successResponse([], 'Se ha eliminado el médico');
-    }
+	}
 
 }

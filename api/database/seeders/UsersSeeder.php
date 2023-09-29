@@ -40,6 +40,8 @@ class UsersSeeder extends Seeder
             'name' => $super_admin['name'],
             'email' => $super_admin['email'],
             'password' => bcrypt($super_admin['password']),
+						'firstname' => 'Master',
+						'lastname' => 'Jedi',
             'role' => 'superadmin',
             'email_verified_at' => now()
         ]);
@@ -49,6 +51,8 @@ class UsersSeeder extends Seeder
             'name' => $admin['name'],
             'email' => $admin['email'],
             'password' => bcrypt($admin['password']),
+						'firstname' => 'Admin',
+						'lastname' => 'Padawan',
             'role' => 'admin',
             'email_verified_at' => now()
         ]);

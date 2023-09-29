@@ -40,7 +40,7 @@ export default function Page(){
 	const handleInputChange = e => onInputChange(e)
 
 	const getUser = useAxios({
-		url: `${API_URI}/doctors/getInfo`,
+		url: `${API_URI}/doctor/getInfo`,
 		method: 'POST',
 		body: {id},
 		token

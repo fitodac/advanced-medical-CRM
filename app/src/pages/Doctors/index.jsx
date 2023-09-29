@@ -28,17 +28,13 @@ export const pageContext = createContext({})
 export default function Page(){
 
 	const { API_URI, token } = useAppContext()
-	const [ request, setRequest ] = useState(`${API_URI}/doctors/`)
+	const [ request, setRequest ] = useState(`${API_URI}/doctor/`)
 
 	const { response, error, loading, refetch } = useAxios({
 		url: request,
 		method: 'POST',
 		token
 	})
-
-	useEffect(() => {
-		console.log('response', response)
-	}, [response])
 
 	const requestUpdate = url => {
 		setRequest(url)

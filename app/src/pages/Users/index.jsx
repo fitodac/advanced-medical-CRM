@@ -23,8 +23,8 @@ const thead = [
 
 const BadgeClassName = role => {
 	switch(role){
-		case 'admin': return 'badge ghost bg-primary border-primary text-primary'
-		case 'doctor': return 'badge ghost bg-green-500 border-green-500 text-green-500'
+		case 'admin': return 'badge ghost bg-sky-200 text-sky-500 border-primary text-primary'
+		case 'doctor': return 'badge ghost bg-green-200 text-green-500'
 	}
 }
 
