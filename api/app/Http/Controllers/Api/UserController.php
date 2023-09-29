@@ -146,7 +146,7 @@ class UserController extends Controller
 
 		// Update doctors table
 		if( $request->specialty_id or $request->center_id ){
-			$doctor = $user->doctor();
+            $doctor = $user->doctor;
 
 			if( 'doctor' === $user->role ){
 				if( $doctor ){
@@ -200,7 +200,7 @@ class UserController extends Controller
 	{
 
 		$user = User::with('doctor')->find($request->id);
-		
+
 		// if( 'doctor' === $user->role ){
 			// $user = User::width('doctor')->find($request->id);
 			// $doctor = $user->doctor();
