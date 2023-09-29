@@ -175,10 +175,10 @@ class PatientController extends Controller
 
         $user = Auth::user();
 
-        $user->load('doctorRelationship');
+        $user->load('doctor');
 
-		if( $user->role == 'doctor' && $user->doctodoctorRelationship) {
-            if ($user->doctorRelationship->id !== $patient->doctor_id ) {
+		if( $user->role == 'doctor' && $user->doctor) {
+            if ($user->doctor->id !== $patient->doctor_id ) {
                 return $this->unauthorizedResponse('Tu usuario no puede modificar este paciente');
             }
         }

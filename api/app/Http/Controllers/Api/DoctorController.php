@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Doctor;
 use App\Models\User;
+use App\Models\Doctor;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\DoctorResource;
 use Illuminate\Support\Facades\Validator;
 
@@ -62,5 +63,20 @@ class DoctorController extends Controller
 
 		return $this->successResponse($doctor);
 	}
+
+    public function delete(Doctor $doctor)
+    {
+        if( !$doctor ) return $this->errorResponse('El médico que tratas de eliminar no existe', 404);
+
+        $user = Auth::user();
+
+        if( $user->role == 'doctor') {
+            return $this->errorResponse('No puedes eliminar el médico', 200);
+        }
+
+        $doctor->delete();
+
+		return $this->successResponse([], 'Se ha eliminado el médico');
+    }
 
 }
