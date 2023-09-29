@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Doctor;
+use App\Models\User;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,13 +54,13 @@ class DoctorController extends Controller
 			'id.numeric' => 'Formato incorrecto',
 		]);
 
-		$doctor = Doctor::select(['id', 'specialty_id', 'center_id'])->where('user_id', $request->id)->first();
+		$doctor = User::with('doctor.center')->find($request->id);
 
-		return $this->successResponse([
-			'id' => $doctor->id,
-			'specialty_id' => $doctor->specialty_id,
-			'center' => $doctor->center
-		]);
+		if( !$doctor ){
+			return $this->errorResponse('El doctor que buscas no existe en nuestra base de datos', 404);
+		}
+
+		return $this->successResponse($doctor);
 	}
 
 }

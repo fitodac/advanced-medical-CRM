@@ -1,10 +1,9 @@
 import { useEffect, createContext, useState } from 'react'
-import { Update, formFieldsData, updateUserInLocalStorage } from '../api/user'
-import { Get } from '../api/doctor'
-import { useAuth } from '../hooks/useAuth'
-import { useForm } from '../hooks/useForm'
+import { Update, updateUserInLocalStorage } from '../api/user'
+import { useForm, useAxios } from '../hooks'
+import { useAppContext } from '../App'
 
-import PageHeader from '../components/PageHeader'
+import { PageHeader } from '../components'
 import { Button, Input } from '../components/Ui'
 
 
@@ -13,9 +12,9 @@ export const formContext = createContext({})
 export default function Page(){
 	
 	const { 
+		API_URI, 
+		token,
 		user: {
-			token_type, 
-			token,
 			info: {
 				id, 
 				firstname, 
@@ -25,9 +24,54 @@ export default function Page(){
 				role
 			}
 		}
-	} = useAuth()
-	const [specialties, setSpecialties] = useState(null)
-	const [center, setCenter] = useState(null)
+	} = useAppContext()
+	
+	const [ specialties, setSpecialties ] = useState(null)
+	const [ center, setCenter ] = useState(null)
+
+
+	const { response, error, loading } = useAxios({
+		url: `${API_URI}/doctors/getInfo`,
+		method: 'POST',
+		body: {id},
+		token
+	})
+	
+	const getCenters = useAxios({
+		url: `${API_URI}/center/getAll`,
+		method: 'POST',
+		token
+	})
+	
+	const getSpecialties = useAxios({
+		url: `${API_URI}/specialties`,
+		method: 'POST',
+		token
+	})
+
+	useEffect(() => {
+		if( response?.data && 'doctor' === role ){
+			const {specialty_id, center} = response.data.doctor
+			setFormState({ ...formState, specialty_id })
+			setCenter({...center})
+		}
+	}, [response])
+
+
+	useEffect(() => {
+		if( getCenters?.response.success ){
+			getCenters.response.success = null
+		}
+	}, [getCenters])
+	
+
+	useEffect(() => {
+		if( getSpecialties?.response.success ){
+			setSpecialties([...getSpecialties.response.data])
+			getSpecialties.response.success = null
+		}
+	}, [getSpecialties])
+
 
 
 	const {formState, setFormState, onInputChange} = useForm({
@@ -41,36 +85,6 @@ export default function Page(){
 	})
 
 	const handleInputChange = e => onInputChange(e)
-
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				const resp = await Get(`${token_type} ${token}`, {id})
-				console.log(resp.data)
-				const {specialty_id, center} = resp.data
-				setFormState({ ...formState, specialty_id })
-				setCenter({...center})
-			} catch (err) {
-				console.log('error:', err)
-			}
-		}
-
-		// Get additional content for fields
-		const getFormData = async () => {
-			try {
-				const resp = await formFieldsData(`${token_type} ${token}`)
-				setSpecialties([...resp.specialties])
-			} catch (err) {
-				console.log('error:', err)
-			}
-		}
-
-
-		if( 'doctor' === role ){
-			getData()
-			getFormData()
-		}
-	}, [])
 
 
 	const handleSubmit = async e => {
@@ -131,7 +145,6 @@ export default function Page(){
 						</div>
 					</>)
 					: null }
-					
 
 
 					{ 'doctor' === role 
@@ -169,10 +182,9 @@ export default function Page(){
 							<Button className="bg-primary border-primary text-white">{id ? 'Actualizar' : 'Guardar'}</Button>
 						</div>)
 					: null }
-					
 
 				</form>
-			</section>
+			</section> 
 		</formContext.Provider>
 		
 	</>)

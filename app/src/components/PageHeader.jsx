@@ -2,16 +2,10 @@ import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import { ButtonLink } from '../components/Ui'
 
-PageHeader.propTypes = {
-  title: PropTypes.string.isRequired,
-	buttons: PropTypes.array,
-	breadcrumbs: PropTypes.array
-}
-
 const navItemClassName = 'transition-all hover:text-primary'
-const navItemActiveClassName = 'text-primary'
+const navItemActiveClassName = 'text-teal'
 
-export default function PageHeader(props){
+export const PageHeader = (props) => {
 
 	const {
 		title,
@@ -22,7 +16,8 @@ export default function PageHeader(props){
 
 	return (<div className="flex justify-between">
 		<div>
-			<h1 className="text-slate-500 text-3xl font-semibold leading-tight select-none">{title}</h1>
+			<h1 className="text-primary text-3xl font-semibold leading-tight select-none">{title}</h1>
+
 			{ breadcrumbs
 			? (<ul className="text-slate-400 text-sm leading-none flex items-center mt-2 select-none">
 					<li className="flex items-center">
@@ -32,19 +27,30 @@ export default function PageHeader(props){
 					{ breadcrumbs.map((e,i) => (<li key={i} className="flex items-center">
 						<span className="bg-slate-200 w-px h-4 mx-2.5 inline-block" />
 						{e.current 
-						? (<span>{e.title}</span>)
+						? (<span className={navItemActiveClassName}>{e.title}</span>)
 						: (<NavLink to={e.link} className={navItemClassName}>{e.title}</NavLink>)}
 					</li>)) }
-					{/* <li>Pacientes</li> */}
-					{/* <li className="bg-slate-200 w-px h-4 mx-2.5"></li> */}
-					{/* <li>Nuevo paciente</li> */}
 				</ul>)
 			: null }
 			
 		</div>
 
-		{ buttons && buttons.map((e, i) => (<ButtonLink link={e.link} key={i}>{e.text}</ButtonLink>) ) }
+		{buttons && 
+			buttons.map((e, i) => (
+			<ButtonLink 
+				link={e.link} 
+				key={i}
+				className="bg-teal border-teal text-white">
+				{e.text}
+			</ButtonLink>))}
 		
 	</div>)
 
+}
+
+
+PageHeader.propTypes = {
+  title: PropTypes.string.isRequired,
+	buttons: PropTypes.array,
+	breadcrumbs: PropTypes.array
 }

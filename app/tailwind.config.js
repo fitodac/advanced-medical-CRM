@@ -7,7 +7,19 @@ export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
 	darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+			colors: {
+				primary: {
+					DEFAULT: '#34569d'
+				},
+				secondary: {
+					DEFAULT: '#cead2d'
+				},
+				teal: {
+					DEFAULT: '#00a6af'
+				}
+			}
+		},
   },
   plugins: [
 		twUiKit({

@@ -4,7 +4,7 @@ import { useForm, useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 import crdState from './crdState'
 
-import PageHeader from '../../components/PageHeader'
+import { PageHeader } from '../../components'
 import {
 	Sidebar,
 	HeaderForm,
@@ -70,7 +70,7 @@ export default function Page(){
 	const [ formType, setFormType ] = useState('first')
 	const firstFooter = useRef(null)
 	const initialFooter = useRef(null)
-	// const navigate = useNavigate()
+	const navigate = useNavigate()
 
 	const scrollToTheEnd = () => {
 		switch(formType){
@@ -214,7 +214,7 @@ export default function Page(){
 
 						{formType === 'initial' 
 						&& (<form onSubmit={handleSubmit}>
-							<HeaderForm title="Seguimiento 1" />
+							<HeaderForm title="Seguimiento 1" context={formContext} />
 							<div ref={initialFooter} />
 						</form>)}
 

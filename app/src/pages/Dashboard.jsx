@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import PageHeader from '../components/PageHeader'
+import { PageHeader } from '../components'
 
 const boxClassName = `bg-white border boder-slate-100 px-7 py-4 space-y-1 select-none transition-all rounded-md 
 											hover:bg-slate-400 hover:border-slate-400 hover:text-white`

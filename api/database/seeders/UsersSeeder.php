@@ -54,14 +54,21 @@ class UsersSeeder extends Seeder
         ]);
 
 			  // Dogtor
-        User::create([
+        $dr = User::create([
             'name' => $dogtor['name'],
             'email' => $dogtor['email'],
             'password' => bcrypt($dogtor['password']),
             'role' => 'doctor',
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+						'firstname' => 'Gregory',
+						'lastname' => 'House'
         ]);
 
+				Doctor::create([
+					'user_id' => $dr->id,
+					'center_id' => 1,
+					'specialty_id' => 7
+				]);
 
         User::factory(15)->create()->each(function ($user) {
             $doctor = Doctor::factory()->create(['user_id' => $user->id]);

@@ -1,10 +1,13 @@
-import { useEffect, createContext } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Create, Update } from '../../api/medicalCenter'
 import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
-import PageHeader from '../../components/PageHeader'
+import {
+	Loading,
+	PageHeader
+} from '../../components'
 import { Input, Button, ButtonLink } from '../../components/Ui'
 
 
@@ -16,6 +19,7 @@ export default function Page(){
 
 	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
+	const [ loading, setLoading ] = useState(true)
 	const navigate = useNavigate()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
@@ -33,11 +37,16 @@ export default function Page(){
 	})
 
 	useEffect(() => {
-		if( getCenter.response?.success ){
+		if( id && getCenter.response?.success ){
 			const { name, code } = getCenter.response.data
-			setFormState({...formState, name, code})
+			setFormState({
+				...formState, 
+				name, 
+				code
+			})
 			getCenter.response.success = null
 		}
+		setLoading(false)
 	}, [getCenter])
 
 
@@ -94,6 +103,8 @@ export default function Page(){
 				</form>
 			</section>
 		</formContext.Provider>
+
+		{loading && (<Loading />)}
 	</>)
 
 }

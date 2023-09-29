@@ -15,49 +15,46 @@ export const useAxios = ({
 	method = 'GET',
 	headers = null,
 	body = null,
-	token = null
+	token = null,
+	init = 1 // Set "init" to zero to disable the auto-execution of this hook
 }) => {
 
 	const [response, setResponse] = useState({})
 	const [loading, setLoading] = useState(true)
 	const [error, setError] = useState(false)
+	const [reload, setReload] = useState(init)
 
+	const refetch = async () => setReload(prev => prev + 1)
 
 	useEffect(() => {
-		const fetchData = () => {
-			axios.request({
-				url,
-				method,
-				data: body, 
-				headers: {...headers, Authorization: token}
-			})
-			.then(resp => setResponse(resp.data))
-			.catch(err => {
-				setError(ErrorResponse(err.response))
-				usekickOut(err.response.data)
-			})
-			.finally(() => setLoading(false))
+		if( reload ){
+			const fetchData = () => {
+				axios.request({
+					url,
+					method,
+					data: body, 
+					headers: {...headers, Authorization: token}
+				})
+				.then(resp => setResponse(resp.data))
+				.catch(err => {
+					setError(ErrorResponse(err.response))
+					usekickOut(err.response.data)
+				})
+				.finally(() => setLoading(false))
+			}
+
+			try {
+				if( !token ) setError(NoToken())
+				fetchData()
+			}catch(err){
+				console.log('Error:', err)
+				throw new Error(err)
+			}
 		}
+		// eslint-disable-next-line
+	}, [reload])
 
-
-		setLoading(true)
-
-		try {
-			if( !token ) setError(NoToken())
-			fetchData()
-		}catch(err){
-			console.log('Error:', err)
-			throw new Error(err)
-		}
-	}, [
-		url,
-		body,
-		headers,
-		method,
-		token
-	])
-
-	return { response, error, loading }
+	return { response, error, loading, refetch }
 
 }
 

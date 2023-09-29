@@ -1,10 +1,13 @@
-import { useEffect, createContext, useState } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Create, Update } from '../../api/user'
 import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
-import PageHeader from '../../components/PageHeader'
+import {
+	Loading,
+	PageHeader
+} from '../../components'
 import { 
 	Input, 
 	Button, 
@@ -21,8 +24,9 @@ export default function Page(){
 
 	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
-	const [centers, setCenters] = useState(null)
-	const [specialties, setSpecialties] = useState(null)
+	const [ centers, setCenters ] = useState(null)
+	const [ specialties, setSpecialties ] = useState(null)
+	const [ loading, setLoading ] = useState(true)
 	const navigate = useNavigate()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
@@ -55,17 +59,8 @@ export default function Page(){
 		method: 'POST',
 		token
 	})
-	
 
-	useEffect(() => {
-		if( getUser.response?.success ){
-			const { firstname, lastname, name, email, role, center_id, specialty_id } = getUser.response.data
-			setFormState({...formState, name, firstname, lastname, email, role, center_id, specialty_id})
-			getUser.response.success = null
-		}
-	}, [getUser])
 
-	
 	useEffect(() => {
 		if( getSpecialties.response?.success ){
 			setSpecialties([...getSpecialties.response.data])
@@ -80,6 +75,34 @@ export default function Page(){
 			getCenters.response.success = null
 		}
 	}, [getCenters])
+
+
+	useEffect(() => {
+		if( id && getUser.response?.success ){
+			const { firstname, lastname, name, email, role, doctor } = getUser.response.data
+			const center_id = doctor ? doctor.center_id : 0
+			const specialty_id = doctor ? doctor.specialty_id : 0
+			setFormState({
+				...formState, 
+				name, 
+				firstname, 
+				lastname, 
+				email, 
+				role,
+				center_id, 
+				specialty_id
+			})
+
+			getUser.response.success = null
+		}
+		setLoading(false)
+	}, [
+		id,
+		getUser, 
+		setFormState, 
+		setLoading, 
+		formState
+	])
 
 
 
@@ -178,5 +201,7 @@ export default function Page(){
 				</form>
 			</section>
 		</formContext.Provider>
+
+		{loading && (<Loading />)}
 	</>)
 }

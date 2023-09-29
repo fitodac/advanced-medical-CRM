@@ -14,7 +14,7 @@ export const Table = React.memo( function Table({
 			{ header && 
 			(<thead>
 				<tr>
-					{ header.map(e => (<th key={e.title}>
+					{ header.map(e => (<th key={e.title} className="text-slate-700">
 						<div className={e.class}>{e.title}</div>
 					</th>)) }
 				</tr>

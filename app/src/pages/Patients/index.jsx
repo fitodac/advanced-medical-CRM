@@ -2,8 +2,11 @@ import { useState, createContext } from 'react'
 import { useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 
-import Loading from '../../components/Loading'
-import PageHeader from '../../components/PageHeader'
+import {
+	Loading,
+	PageHeader,
+	Delete
+} from '../../components'
 import {
 	Button, 
 	ButtonLink,
@@ -28,15 +31,21 @@ export default function Page(){
 	const { API_URI, token, user: {info: {role}} } = useAppContext()
 	const [ request, setRequest ] = useState(`${API_URI}/patient/list/`)
 
-	const { response, error, loading } = useAxios({
+	const { response, error, loading, refetch } = useAxios({
 		url: request,
 		method: 'POST',
 		token
 	})
 
-	const requestUpdate = url => setRequest(url)
+	const requestUpdate = url => {
+		setRequest(url)
+		refetch()
+	}
 
-	const contextValue = {requestUpdate}
+	const contextValue = {
+		requestUpdate,
+		request
+	}
 
 	return (<>
 		<PageHeader 
@@ -64,39 +73,21 @@ export default function Page(){
 							<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
 							<td className="leading-none">
 								{ doctor 
-									? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor.user.firstname} {doctor.user.lastname}</div>) : (<div>{doctor.user.name}</div>)
+									? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor?.user.firstname} {doctor?.user.lastname}</div>) : (<div>{doctor?.user.name}</div>)
 									: (<div className="text-slate-300">sin datos</div>) }
 								
 								{ center 
-								? (<small className="text-slate-500 text-xs font-light">{center.name}</small>)
+								? (<small className="text-slate-500 text-xs font-light">{center?.name}</small>)
 								: (<small className="text-slate-300 text-xs font-light">sin datos</small>) }
 							</td>
 							<td>
 								<div className="flex gap-x-2 justify-end h-full">
 									{ 'doctor' === role && <ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/crd/${id}/initial`}>CRD</ButtonLink> }
 									<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
-									<>
-										<label className="btn btn-sm bg-red-700 border-red-700 text-white" htmlFor={`modal-${id}`}>Borrar</label>
-										<input type="checkbox" id={`modal-${id}`} className="hidden" />
-										<div className="overlay">
-											<div className="modal w-96 space-y-3 p-3">
-												<div className="text-center space-y-1">
-													<div className="">Estás por eliminar</div>
-													<div className="text-xl font-semibold">{name}</div>
-												</div>
-
-												<div className="flex justify-betwee gap-x-3 pt-3">
-													<div className="flex-1">
-														<Button className="bg-red-700 border-red-700 text-white w-full">Lo quiero borrar</Button>
-													</div>
-													
-													<div className="flex-1">
-														<label className="btn w-full" htmlFor={`modal-${id}`}>Cancelar</label>
-													</div>
-												</div>
-											</div>
-										</div>
-									</>
+									<Delete 
+											id={id} 
+											url={`${API_URI}/patient/delete/${id}`}
+											context={pageContext} />
 								</div>
 							</td>
 						</tr>))

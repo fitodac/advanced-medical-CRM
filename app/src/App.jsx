@@ -3,9 +3,12 @@ import { Outlet, useNavigation } from 'react-router-dom'
 
 import { useAuth } from './hooks'
 import { API_URI } from './config.dev'
-import Navbar from './components/Navbar'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import {
+	Loading,
+	Navbar,
+	Header,
+	Footer
+} from './components'
 
 
 export const appContext = createContext({})
@@ -24,15 +27,13 @@ function App() {
 
   return (
 		<appContext.Provider value={contextValue}>
-			{ navigation.state === 'loading' && (<div className="w-screen h-screen grid place-content-center">
-				<div className="spinner w-20"></div>
-			</div>) }
+			{ navigation.state === 'loading' && (<Loading />) }
 
 
 			{ navigation.state === 'idle' 
 			&& (<div className="grid grid-cols-12">
 						<div 
-							className="bg-slate-100 w-screen min-h-screen -left-full fixed 
+							className="bg-teal w-screen min-h-screen -left-full fixed 
 													sm:w-auto sm:relative sm:left-auto sm:col-span-3 
 													lg:col-span-2">
 							<Navbar />

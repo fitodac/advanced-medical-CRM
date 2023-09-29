@@ -44,12 +44,6 @@ class PatientController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
-        // Saque esto porque agregue un metodo en el modelo para que genere solo.
-		// $lastRecord = Patient::select('id')->latest('id')->first();
-		// $lastRecord = $lastRecord ? str_pad(($lastRecord->id + 1), 2, "0", STR_PAD_LEFT) : '01';
-
-		// $patientData = array_merge($request->all(), ['code' => $request->code.'-'.$lastRecord]);
-
 		$patient = Patient::create($request->all());
 
 		return $this->successResponse($patient, 'Hemos creado un nuevo paciente');
@@ -99,6 +93,8 @@ class PatientController extends Controller
 	}
 
 
+
+
 	// SHOW
 	public function show(Request $request)
 	{
@@ -128,37 +124,40 @@ class PatientController extends Controller
 	}
 
 
+
+
+
 	// LIST
 	public function list(Request $request)
 	{
 		$auth = Auth::user();
 		$resp = [];
 
-        $query = Patient::with('doctor.user');
+		$query = Patient::with('doctor.user');
 
-        if ($auth->role === 'doctor') {
-            $query->where('doctor_id', $auth->doctor->id);
-        }
+		if ($auth->role === 'doctor') {
+			$query->where('doctor_id', $auth->id);
+		}
 
-        if ($request->has('code') && !empty($request->code)) {
-            $query->where(DB::raw('UPPER(code)'), 'like',  strtoupper($request->code));
-        }
+		if ($request->has('code') && !empty($request->code)) {
+			$query->where(DB::raw('UPPER(code)'), 'like',  strtoupper($request->code));
+		}
 
-        if ($request->has('doctor') && !empty($request->doctor)) {
-            $query->whereHas('doctor.user', function ($query) use ($request) {
-                $query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%')
-                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%');
-            });
-        }
+		if ($request->has('doctor') && !empty($request->doctor)) {
+			$query->whereHas('doctor.user', function ($query) use ($request) {
+				$query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%')
+						->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%');
+			});
+		}
 
-        if ($request->has('name') && !empty($request->name)) {
-            $query->where(function($query) use ($request) {
-                $query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
-                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
-            });
-        }
+		if ($request->has('name') && !empty($request->name)) {
+			$query->where(function($query) use ($request) {
+				$query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+						->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+			});
+		}
 
-        $resp = $query->latest()->paginate(10);
+		$resp = $query->latest()->paginate(10);
 
 		return $this->successResponse($resp);
 	}

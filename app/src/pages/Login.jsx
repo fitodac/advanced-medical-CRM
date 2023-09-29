@@ -3,9 +3,9 @@ import { useAuth, useLogin } from '../hooks'
 
 import { API_URI } from '../config.dev'
 import { Button, Alert } from '../components/Ui'
-
-
-
+import {
+	Loading
+} from '../components'
 
 export default function Page(){
 
@@ -37,75 +37,86 @@ export default function Page(){
 
 
 	return (<>
-		{ !user 
-			? (<section className="bg-slate-100 h-screen p-6 grid place-content-center grid-cols-1">
+		{!user 
+		? (<section 
+				className="bg-primary bg-[url(/background.jpg)] bg-center bg-no-repeat bg-cover 
+				border-b-[46px] border-secondary h-screen p-6 grid place-content-center grid-cols-1">
 
+			<div className="col-span-1 flex justify-center">
+				<div>
 
-				<div className="col-span-1 flex justify-center">
-					<div>
+					{ loading && (<Loading />)}
 
-						{ loading && (<div>cargando...</div>)}
+					{ !loading &&
+					(<div className="w-full max-w-xs pb-10">
 
-						{ !loading &&
-						(<div className="w-full max-w-sm pb-10">
-							<h1>Login</h1>
-							<br />
+						<section className="space-y-6">
+							<div className="flex justify-center">
+								<img 
+									src="/brand.png" 
+									alt="Advanced experts" 
+									className="w-60 object-cover pointer-events-none" />
+							</div>
 
 							<form onSubmit={loginSubmit}>
 								<section className="grid gap-y-3">
-									<div className="grid gap-y-1">
-										<label>Email:</label>
+									
+									<div className="space-y-2">
+										<label className="text-white text-base font-light">Email:</label>
 										<input type="email" value={loginForm.email} name="email" onChange={handleInput} />
 									</div>
 
-									<div className="grid gap-y-1">
-										<label>Password:</label>
+									<div className="space-y-2">
+										<label className="text-white text-base font-light">Password:</label>
 										<input type="password" value={loginForm.password} name="password" onChange={handleInput} />
 									</div>
 
-									<div className="">
-										<Button className="bg-primary border-primary text-white">Entrar</Button>
+									<div className="pt-2">
+										<Button className="bg-teal border-teal text-white w-full">Entrar</Button>
 									</div>
 								</section>
 							</form>
+						</section>
+						
 
-							<div className="w-full mt-5 space-y-3">
-								<Button 
-									className="bg-indigo-500 border-indigo-500 text-white w-full" 
-									type="button" 
-									onClick={() => {
-										setLoginForm({email: 'house_md@local.com', password: 'cpi_1975'})
-									}}>
-									Entrar como doctor
-								</Button>
 
-								<Button 
-									className="bg-indigo-400 border-indigo-400 text-white w-full" 
-									type="button" 
-									onClick={() => {
-										setLoginForm({email: 'admin@local.com', password: 'cpi_1975'})
-									}}>
-									Entrar como admin
-								</Button>
+						<div className="w-full mt-10 space-y-3">
+							<Button 
+								className="bg-indigo-500 border-indigo-500 text-white w-full" 
+								type="button" 
+								onClick={() => {
+									setLoginForm({email: 'house_md@local.com', password: 'cpi_1975'})
+								}}>
+								Entrar como doctor
+							</Button>
 
-								<Button 
-									className="bg-indigo-300 border-indigo-300 text-white w-full" 
-									type="button" 
-									onClick={() => {
-										setLoginForm({email: 'fito+advanced@commonpeoplei.com', password: 'cpi_1975'})
-									}}>
-									Entrar como superadmin
-								</Button>
-							</div>
+							<Button 
+								className="bg-indigo-400 border-indigo-400 text-white w-full" 
+								type="button" 
+								onClick={() => {
+									setLoginForm({email: 'admin@local.com', password: 'cpi_1975'})
+								}}>
+								Entrar como admin
+							</Button>
 
-						</div>)}
+							<Button 
+								className="bg-indigo-300 border-indigo-300 text-white w-full" 
+								type="button" 
+								onClick={() => {
+									setLoginForm({email: 'fito+advanced@commonpeoplei.com', password: 'cpi_1975'})
+								}}>
+								Entrar como superadmin
+							</Button>
+						</div>
 
-						{ !loading && error && <Alert type="error" data={error} /> }
+					</div>)}
 
-					</div>
+					{ !loading && error && <Alert type="error" data={error} /> }
+
 				</div>
-			</section>)
-			: null }
+			</div>
+		</section>)
+		: null }
 		
 	</>)
 }

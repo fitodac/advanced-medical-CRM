@@ -1,61 +1,71 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
-const itemClassName = `text-slate-500 text-[15px]`
-const itemActiveClassName = `text-primary text-[15px]`
+const itemClassName = `text-white text-opacity-60 text-[15px] pl-6 py-2 block hover:text-opacity-80`
+const itemActiveClassName = `border-r-4 border-r-white text-white text-[15px] pl-6 py-2 block`
 
-export default function Navbar(){
+export const Navbar = () => {
 
 	const { user } = useAuth()
 	const { role } = user.info
 
-  return <nav className="">
-					<ul className="text-sm p-6 space-y-4 select-none">
-						<li>
-							<NavLink to={'/'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Dashboard</NavLink>
-						</li>
+  return (<nav className="">
 
-						{ ('admin' === role || 'superadmin' === role) 
-						? (<>
-							<li>
-								<NavLink to={'/doctors'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Doctores</NavLink>
-							</li>
-						</>)
-						: null }
+		<div className="px-6 pt-3 pb-10">
+			<NavLink to="/">
+				<img 
+					src="/brand.png" 
+					alt="Advanced experts" 
+					className="w-40 object-cover pointer-events-none" />
+			</NavLink>
+		</div>
 
-						<li>
-							<NavLink to={'/patients'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Pacientes</NavLink>
-						</li>
-						
+		<ul className="text-sm pb-6 select-none">
+			<li>
+				<NavLink to={'/'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Dashboard</NavLink>
+			</li>
+
+			{ ('admin' === role || 'superadmin' === role) 
+			? (<>
+				<li>
+					<NavLink to={'/doctors'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Doctores</NavLink>
+				</li>
+			</>)
+			: null }
+
+			<li>
+				<NavLink to={'/patients'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Pacientes</NavLink>
+			</li>
+			
 
 
-						{ ('admin' === role || 'superadmin' === role) 
-						? (<>
-							<li>
-								<NavLink to={'/medical-centers'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Centros médicos</NavLink>
-							</li>
-						</>)
-						: null }
+			{ ('admin' === role || 'superadmin' === role) 
+			? (<>
+				<li>
+					<NavLink to={'/medical-centers'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Centros médicos</NavLink>
+				</li>
+			</>)
+			: null }
 
 
-						{ ('superadmin' === role) 
-						? (<>
-							<li>
-								<NavLink to={'/users'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Usuarios</NavLink>
-							</li>
-						</>)
-						: null }
+			{ ('superadmin' === role) 
+			? (<>
+				<li>
+					<NavLink to={'/users'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Usuarios</NavLink>
+				</li>
+			</>)
+			: null }
 
-						<li>
-							<NavLink to={'/documents'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Documentos</NavLink>
-						</li>
+			<li>
+				<NavLink to={'/documents'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Documentos</NavLink>
+			</li>
 
-						{ 'superadmin' === role 
-						? (<li>
-								<NavLink to={'/export-excel'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Exportar datos</NavLink>
-							</li>)
-						: null }
+			{ 'superadmin' === role 
+			? (<li>
+					<NavLink to={'/export-excel'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Exportar datos</NavLink>
+				</li>)
+			: null }
 
-					</ul>
-				</nav>
+		</ul>
+	</nav>)
 }

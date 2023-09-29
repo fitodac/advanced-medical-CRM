@@ -1,15 +1,19 @@
-import { useEffect, createContext, useState } from 'react'
+import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { Create, Update } from '../../api/user'
 import { useForm, useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 
-import PageHeader from '../../components/PageHeader'
+import {
+	Loading,
+	PageHeader
+} from '../../components'
 import { 
 	Input, 
 	Button, 
 	ButtonLink 
 } from '../../components/Ui'
+
 
 export const formContext = createContext({})
 
@@ -21,6 +25,7 @@ export default function Page(){
 	const { id } = useLoaderData()
 	const [centers, setCenters] = useState(null)
 	const [specialties, setSpecialties] = useState(null)
+	const [ loading, setLoading ] = useState(true)
 	const navigate = useNavigate()
 
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
@@ -35,7 +40,7 @@ export default function Page(){
 	const handleInputChange = e => onInputChange(e)
 
 	const getUser = useAxios({
-		url: `${API_URI}/user`,
+		url: `${API_URI}/doctors/getInfo`,
 		method: 'POST',
 		body: {id},
 		token
@@ -55,15 +60,6 @@ export default function Page(){
 
 
 	useEffect(() => {
-		if( getUser.response?.success ){
-			const { firstname, lastname, name, email, role, center_id, specialty_id } = getUser.response.data
-			setFormState({...formState, name, firstname, lastname, email, role, center_id, specialty_id})
-			getUser.response.success = null
-		}
-	}, [getUser])
-
-
-	useEffect(() => {
 		if( getSpecialties.response?.success ){
 			setSpecialties([...getSpecialties.response.data])
 			getSpecialties.response.success = null
@@ -78,6 +74,30 @@ export default function Page(){
 		}
 	}, [getCenters])
 
+
+	useEffect(() => {
+		if( id && getUser.response?.success ){
+			const { firstname, lastname, name, email, role, center_id, specialty_id } = getUser.response.data
+			setFormState({
+				...formState, 
+				name, 
+				firstname, 
+				lastname, 
+				email, 
+				role, 
+				center_id, 
+				specialty_id
+			})
+			getUser.response.success = null
+		}
+		setLoading(false)
+	}, [
+		id,
+		getUser, 
+		setFormState, 
+		setLoading, 
+		formState
+	])
 
 
 	const handleSubmit = async e => {
@@ -154,7 +174,10 @@ export default function Page(){
 
 					</div>
 				</form>
+
 			</section>
 		</formContext.Provider>
+
+		{loading && (<Loading />)}
 	</>)
 }

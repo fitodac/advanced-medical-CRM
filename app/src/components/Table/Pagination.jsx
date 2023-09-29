@@ -3,12 +3,12 @@ import { Button } from '../../components/Ui'
 import { useContext } from 'react'
 
 const btnClassName = {
-	btn: `border-none text-base w-10 h-10 p-0 grid place-content-center select-none rounded transition-all group hover:bg-primary hover:text-white`,
-	disabled: `bg-transparent border-transparent text-slate-300 text-base w-10 h-10 p-0 grid place-content-center select-none rounded transition-all group cursor-default`,
+	btn: `border-none text-base w-10 h-10 p-0 grid place-content-center select-none rounded transition-all hover:bg-teal hover:text-white`,
+	disabled: `bg-transparent border-transparent text-slate-300 text-base w-10 h-10 p-0 grid place-content-center select-none rounded transition-all cursor-default`,
 	arrowLeft: `ri-arrow-left-s-line relative transition-all top-px relative`,
-	arrowLeftHover: `group-hover:-ml-2`,
+	arrowLeftHover: ``,
 	arrowRight: `ri-arrow-right-s-line relative transition-all top-px relative`,
-	arrowRightHover: `group-hover:ml-2`
+	arrowRightHover: ``
 }
 
 
@@ -30,7 +30,7 @@ export const Pagination = ({
 	}
 
 	return (<div className="pt-3">
-		<div className="flex gap-x-1 overflow-x-hidden justify-end">
+		<div className="flex overflow-x-hidden justify-end">
 
 			{first.url 
 			&& (<Button 
