@@ -66,7 +66,9 @@ export default function Page(){
 					<Table header={thead} pager={response.data.links} context={pageContext}>
 						{ response?.data 
 							? response.data.data.map(({id, code, name, created_at}) => (<tr key={id}>
-								<td className="text-slate-300">{id}</td>
+								<td>
+									<span className="text-slate-300 text-xs">{id}</span>
+								</td>
 								<td>{code}</td>
 								<td className="leading-none">
 									<div className="text-lg font-semibold leading-none">{name}</div>

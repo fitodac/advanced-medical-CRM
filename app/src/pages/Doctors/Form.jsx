@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Create, Update } from '../../api/user'
 import { useForm, useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
 
@@ -39,45 +38,78 @@ export default function Page(){
 
 	const handleInputChange = e => onInputChange(e)
 
-	const getUser = useAxios({
+	// Get doctor data on edition
+	const {
+		response: getDoctorResponse,
+		error: getDoctorError,
+		loading: getDoctorLoading,
+		refetch: getDoctorRefetch
+	} = useAxios({
 		url: `${API_URI}/doctor/getInfo`,
 		method: 'POST',
 		body: {id},
-		token
+		token,
+		init: 0
 	})
 
-	const getSpecialties = useAxios({
+	// Get specialties list
+	const {
+		response: getSpecialtiesResponse,
+		error: getSpecialtiesError,
+		loading: getSpecialtiesLoading,
+		refetch: getSpecialtiesRefetch
+	} = useAxios({
 		url: `${API_URI}/specialties`,
 		method: 'POST',
-		token
+		token,
+		init: 0
 	})
 
-	const getCenters = useAxios({
+	// Get centers list
+	const {
+		response: getCentersResponse,
+		error: getCentersError,
+		loading: getCentersLoading,
+		refetch: getCentersRefetch
+	} = useAxios({
 		url: `${API_URI}/center/getAll`,
 		method: 'POST',
-		token
+		token,
+		init: 0
+	})
+
+	// Create doctor
+	const { 
+		response: createDoctorResponse, 
+		error: createDoctorError, 
+		loading: createDoctorLoading, 
+		refetch: createDoctorRefetch 
+	} = useAxios({
+		url: `${API_URI}/user/create`,
+		method: 'POST',
+		body: {...formState, role: 'doctor'},
+		token,
+		init: 0
+	})
+
+	// Upadate doctor
+	const { 
+		response: updateDoctorResponse, 
+		error: updateDoctorError, 
+		loading: updateDoctorLoading, 
+		refetch: updateDoctorRefetch 
+	} = useAxios({
+		url: `${API_URI}/user/update`,
+		method: 'PUT',
+		body: {...formState, id},
+		token,
+		init: 0
 	})
 
 
 	useEffect(() => {
-		if( getSpecialties.response?.success ){
-			setSpecialties([...getSpecialties.response.data])
-			getSpecialties.response.success = null
-		}
-	}, [getSpecialties])
-
-
-	useEffect(() => {
-		if( getCenters.response?.success ){
-			setCenters([...getCenters.response.data])
-			getCenters.response.success = null
-		}
-	}, [getCenters])
-
-
-	useEffect(() => {
-		if( id && getUser.response?.success ){
-			const { firstname, lastname, name, email, role, center_id, specialty_id } = getUser.response.data
+		if( getDoctorResponse?.success ){
+			const { firstname, lastname, name, email, role, doctor: {center_id, specialty_id} } = getDoctorResponse.data
 			setFormState({
 				...formState, 
 				name, 
@@ -88,43 +120,72 @@ export default function Page(){
 				center_id, 
 				specialty_id
 			})
-			getUser.response.success = null
 		}
-		setLoading(false)
-	}, [
-		id,
-		getUser, 
-		setFormState, 
-		setLoading, 
-		formState
-	])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getDoctorResponse])
+
+	useEffect(() => {
+		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
+	}, [getSpecialtiesResponse])
+
+	useEffect(() => {
+		if( getCentersResponse?.success ) setCenters([...getCentersResponse.data])
+	}, [getCentersResponse])
+
+	useEffect(() => setLoading(getSpecialtiesLoading), [getSpecialtiesLoading])
+	useEffect(() => setLoading(getCentersLoading), [getCentersLoading])
+	useEffect(() => setLoading(createDoctorLoading), [createDoctorLoading])
+	useEffect(() => setLoading(updateDoctorLoading), [updateDoctorLoading])
+
+	useEffect(() => {
+		if( createDoctorResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/doctors')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createDoctorResponse])
+
+	useEffect(() => {
+		if( updateDoctorResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/doctors')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateDoctorResponse])
+
+	useEffect(() => {
+		if( id ) getDoctorRefetch()
+		getSpecialtiesRefetch()
+		getCentersRefetch()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 
-	const handleSubmit = async e => {
+	const handleSubmit = e => {
 		e.preventDefault()
-		let resp
 
 		try {
 			if( id ){
 				const { center_id, specialty_id } = formState
-				const form_state = {...formState, role: 'doctor', id}
-				if( !center_id ) form_state.center_id = parseInt(centers[0].id)
-				if( !specialty_id ) form_state.specialty_id = parseInt(specialties[0].id)
 
-				resp = await Update(token, {...form_state})
+				const centerID = !center_id ? parseInt(centers[0].id) : center_id
+				const specialtyID = !specialty_id ? parseInt(specialties[0].id) : specialty_id
+
+				setFormState({
+					...formState,
+					role: 'doctor',
+					center_id: centerID,
+					specialty_id: specialtyID
+				})
+
+				updateDoctorRefetch()
 			}else{ 
-				resp = await Create(token, {...formState})
+				createDoctorRefetch()
 			}
-
-			console.log('resp', resp)
-			onResetForm()
-			if(navigate) navigate('/doctors')
 		} catch (err) {
 			console.log('error', err)
 		}
-
 	}
-
 
 	const contextValue = {formState, handleInputChange}
 
@@ -165,11 +226,12 @@ export default function Page(){
 						: null }
 
 						<div className="flex gap-x-5 justify-between pt-4 col-span-2">
+							<ButtonLink link="/doctors">Cancelar</ButtonLink>
+							
 							<div className="w-32">
 								<Button className="bg-primary border-primary text-white w-full">{id ? 'Actualizar' : 'Guardar'}</Button>
 							</div>
 
-							<ButtonLink link="/doctors">Cancelar</ButtonLink>
 						</div>
 
 					</div>
@@ -177,6 +239,7 @@ export default function Page(){
 
 			</section>
 		</formContext.Provider>
+
 
 		{loading && (<Loading />)}
 	</>)

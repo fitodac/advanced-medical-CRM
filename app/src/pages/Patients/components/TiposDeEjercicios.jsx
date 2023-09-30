@@ -14,7 +14,7 @@ export const TiposDeEjercicios = ({context}) => {
 				title="¿Qué tipo de ejercicios ha recomendado?"
 				subtitle="(Señale uno o varios si aplican)" />
 
-			<CheckboxList options={fields} />
+			<CheckboxList options={fields} context={context} />
 		</section>
 	</>)
 

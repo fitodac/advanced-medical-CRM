@@ -59,13 +59,19 @@ export default [
 				name: 'nti__son__snp',
 				value: 'y',
 				label: 'Específica para paciente nefrópata'
-			},
-		]
+			}
+		],
+		other: {
+			name: 'nti__son__other',
+			checkbox: {
+				label: 'Otras (especifique)'
+			}
+		}
 	},
 	{
 		key: 'nti__en',
 		name: 'nti__en',
-		value: '',
+		value: 'y',
 		label: {__html: 'Nutrición enteral, tipo de fórmula'},
 		options: [
 			{
@@ -110,6 +116,12 @@ export default [
 				value: 'y',
 				label: 'Específica para paciente nefrópata '
 			},
-		]
+		],
+		other: {
+			name: 'nti__en__other',
+			checkbox: {
+				label: 'Otras (especifique)'
+			}
+		}
 	},
 ]

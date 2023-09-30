@@ -8,7 +8,6 @@ import {
 	Delete
 } from '../../components'
 import {
-	Button, 
 	ButtonLink,
 	Alert
 } from '../../components/Ui'
@@ -64,25 +63,31 @@ export default function Page(){
 
 				{ !loading && !error && 
 				(<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
-					<Table header={thead} pager={response.data.links} context={pageContext}>
+					<Table header={'doctor' === role ? [...thead].filter(i => i.title !== 'Doctor') : thead} pager={response.data.links} context={pageContext}>
 						{ response?.data 
 						? response.data.data.map(({id, code, name, lastname, gender, doctor, center}) => (<tr key={id}>
-							<td className="text-slate-300">{id}</td>
-							<td>{code}</td>
-							<td className="font-semibold">{`${name} ${lastname}`}</td>
-							<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
-							<td className="leading-none">
-								{ doctor 
-									? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor?.user.firstname} {doctor?.user.lastname}</div>) : (<div>{doctor?.user.name}</div>)
-									: (<div className="text-slate-300">sin datos</div>) }
-								
-								{ center 
-								? (<small className="text-slate-500 text-xs font-light">{center?.name}</small>)
-								: (<small className="text-slate-300 text-xs font-light">sin datos</small>) }
+							<td>
+								<span className="text-slate-300 text-xs">{id}</span>
 							</td>
 							<td>
+								<span className="text-slate-500 text-sm font-bold">{code}</span>
+							</td>
+							<td className="font-semibold">{`${name} ${lastname}`}</td>
+							<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
+							{ 'doctor' !== role 
+							&& (<td className="leading-none">
+										{ doctor 
+											? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor?.user.firstname} {doctor?.user.lastname}</div>) : (<div>{doctor?.user.name}</div>)
+											: (<div className="text-slate-300">sin datos</div>) }
+										
+										{ center 
+										? (<small className="text-slate-500 text-xs font-light">{center?.name}</small>)
+										: (<small className="text-slate-300 text-xs font-light">sin datos</small>) }
+									</td>)}
+							
+							<td>
 								<div className="flex gap-x-2 justify-end h-full">
-									{ 'doctor' === role && <ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/crd/${id}/initial`}>CRD</ButtonLink> }
+									{ 'doctor' === role && <ButtonLink className="btn-sm bg-secondary border-secondary text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
 									<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
 									<Delete 
 											id={id} 

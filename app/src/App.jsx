@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { Outlet, useNavigation } from 'react-router-dom'
+import { Outlet, useNavigation, useLocation } from 'react-router-dom'
 
 import { useAuth } from './hooks'
 import { API_URI } from './config.dev'
@@ -18,6 +18,8 @@ function App() {
 	const navigation = useNavigation()
 	const { user } = useAuth()
 	const { token_type, token } = user
+	const location = useLocation()
+
 
 	const contextValue = {
 		API_URI,
@@ -51,7 +53,7 @@ function App() {
 										<Outlet />
 									</div>
 
-									<Footer />
+									{!location.pathname.includes('/crd/') && (<Footer />)}
 								</div>
 							</div>
 

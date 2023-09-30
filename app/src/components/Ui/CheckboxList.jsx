@@ -2,17 +2,35 @@
  * CheckboxGroup 
  * Muestra una lista de checkboxes.
  */
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
 
 export const CheckboxList = ({
-	options
+	options,
+	context
 }) => {
 
+	const formContext = useContext(context)
+
+	const handleChange = e => {
+		const {name, value, checked} = e.target
+		const val = checked ? value : ''
+		formContext.handleInputChange({target: {name, value: val}})
+	}
+
+
 	return (<div className="space-y-3">
-		{ options && options.map(({key, name, label}) => (<div key={key} className="flex gap-6 items-start">
+		{ options && options.map(({key, name, label, value}) => (<div key={key} className="flex gap-6 items-start">
 				<label className="input-checkbox">
-					<input type="checkbox" name={name} />
+					
+					<input 
+						type="checkbox" 
+						name={name} 
+						onChange={handleChange} 
+						defaultValue={value} />
+					
 					<span>{label}</span>
+				
 				</label>
 			</div>))}
 	</div>)
@@ -21,5 +39,6 @@ export const CheckboxList = ({
 
 
 CheckboxList.propTypes = {
-	options: PropTypes.array
+	options: PropTypes.array,
+	context: PropTypes.object.isRequired
 }

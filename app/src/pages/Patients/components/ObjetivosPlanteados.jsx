@@ -16,9 +16,14 @@ export const ObjetivosPlanteados = ({context}) => {
 				title="Objetivo/s planteado/s"
 				subtitle="(Puede indicarse más de uno si en su opinión aplica)" />
 
-			<CheckboxList options={fields} />
+			<CheckboxList options={fields} context={context} />
 
-			<ConditionalInput label="Otro (especifique)" context={context} />
+			<ConditionalInput 
+				checkbox={{
+					label: 'Otro (especifique)'
+				}} 
+				name="nt__planted_objectives__other"
+				context={context} />
 		</section>
 	</>)
 }

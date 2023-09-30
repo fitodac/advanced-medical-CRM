@@ -1,7 +1,7 @@
 import { PageHeader } from '../components'
 
 const boxClassName = `bg-white border boder-slate-100 px-7 py-4 space-y-1 select-none transition-all rounded-md 
-											hover:bg-slate-400 hover:border-slate-400 hover:text-white`
+											hover:bg-teal hover:border-teal hover:text-white`
 
 
 export default function Page(){

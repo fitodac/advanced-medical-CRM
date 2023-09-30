@@ -1,61 +1,23 @@
-import { useState, useEffect, createContext, useReducer, useRef } from 'react'
-import { useLoaderData, useNavigate } from 'react-router-dom'
-import { useForm, useAxios } from '../../hooks'
+import { 
+	useState, 
+	useEffect, 
+	createContext,
+	useRef 
+} from 'react'
+import { useLoaderData } from 'react-router-dom'
+import { useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
-import crdState from './crdState'
 
-import { PageHeader } from '../../components'
-import {
-	Sidebar,
-	HeaderForm,
-	HeaderSection,
-	FromGroup,
-	FromGroupContainer,
-	CriteriosInclusionExclusionExclusion,
-	FechaNacimiento,
-	AntecedentesMedicos,
-	FechaValoracion,
-	Antropometria,
-	CribadoNutricional,
-	ResultadoCribadoNutricional,
-	CribadoMuscular,
-	ResultadoCribadoMuscular,
-	DiagnosticoNutricionalUtilizado,
-	ResultadoValoracionNutricional,
-	ParametrosFuncionales,
-	OtrasMedicionesDeComposicionCorporal,
-	ResultadoValoracionMuscular,
-	ObjetivosPlanteados,
-	IniciaTratamientoNutricional,
-	TipoTratamientoNutricionalIndicado,
-	RefiereEndocrinologiaParaIniciarTratamientoNutricional,
-	ActividadFisicaPrescripta,
-	TiposDeEjercicios
-} from './components'
-import { Button } from '../../components/Ui'
+import { Loading, PageHeader } from '../../components'
+import { Sidebar } from './components'
+import { FormFirst, FormInitial } from './forms'
 
-import {
-	reducerInitialStateFirst,
-	reducerInitialStateInitial
-} from './reducers'
-
-
-const reducerFirst = (state, action) => {
-	return state
-}
-
-const reducerInitial = (state, action) => {
-	return state
-}
-
-
+// eslint-disable-next-line react-refresh/only-export-components
 export const formContext = createContext({})
 
-export async function loader({request, params}){ 
-	const crd = request.url.indexOf('/initial') ? 'initial' : request.url.indexOf('/first') ? 'first' : null
+export async function loader({params}){ 
 	return {
 		...params,
-		crd,
 		id: parseInt(params.id)
 	}
 }
@@ -63,15 +25,15 @@ export async function loader({request, params}){
 
 export default function Page(){
 	
-	const { API_URI, user } = useAppContext()
-	const { id, crd } = useLoaderData()
-	const {token_type, token} = user
+	const { API_URI, token } = useAppContext()
+	const { id } = useLoaderData()
 	const [ patient, setPatient ] = useState({name: '', gender: ''})
 	const [ formType, setFormType ] = useState('first')
+	const [ loading, setLoading ] = useState(true)
 	const firstFooter = useRef(null)
 	const initialFooter = useRef(null)
-	const navigate = useNavigate()
 
+	
 	const scrollToTheEnd = () => {
 		switch(formType){
 			case 'first':
@@ -85,53 +47,34 @@ export default function Page(){
 	}
 
 
-	const [ state_first, dispatchFirst ] = useReducer(reducerFirst, reducerInitialStateFirst)
-	const [ state_initial, dispatchInitial ] = useReducer(reducerInitial, reducerInitialStateInitial)
-
-	const {formState, setFormState, onInputChange, onResetForm} = useForm(crdState)
-
-	const getPatient = useAxios({
+	// Get patient data
+	const {
+		response,
+		loading: getPatientLoading,
+		// error,
+	} = useAxios({
 		url: `${API_URI}/patient`,
 		method: 'POST',
 		body: {id},
-		token: `${token_type} ${token}`
+		token,
 	})
 
 	useEffect(() => {
-		if( getPatient.response?.success ){
-			// console.log(getPatient.response.data)
-			const { name, lastname, gender } = getPatient.response.data
+		if( response?.success ){
+			const { name, lastname, gender } = response.data
 			
 			setPatient({
 				...patient, 
 				name: `${name} ${lastname}`,
 				gender
 			})
-			
-			getPatient.response.success = null
 		}
-	}, [getPatient])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [response])
 
+	useEffect(() => setLoading(getPatientLoading), [getPatientLoading])
+	// Get patient
 
-	useEffect(() => {
-		if(id) setFormState({...formState, patient_id: id, visit_type: crd})
-	}, [id, crd])
-
-	const handleInputChange = e => onInputChange(e)
-
-
-	const handleSubmit = async e => {
-		e.preventDefault()
-	}
-
-
-	const contextValue = {
-		patient,
-		formState, 
-		state_first,
-		state_initial,
-		handleInputChange
-	}
 
 
 	return (<>
@@ -142,81 +85,25 @@ export default function Page(){
 				{title: 'CRD', current: true}
 			]} />
 
-		
+			<div className="border-t -mx-6 mt-6"></div>
 
-		<formContext.Provider value={contextValue}>
-			<section className="max-w-7xl pt-10 -mr-6 xl:mr-0">
+			<section className="max-w-7xl -mb-5 xl:mr-0">
 				<div className="lg:grid lg:grid-cols-5 lg:gap-x-10">
 					<Sidebar setFormType={val => { setFormType(val) }} />
 
-					<div className="col-span-4 max-h-[73vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-2 pb-28 pr-10 xl:pr-14">
+					<div className="col-span-4 max-h-[80.5vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-4 pb-28 pr-10 xl:pr-14">
 						{formType === 'first' 
-						&& (<form onSubmit={handleSubmit}>
-							<HeaderForm title="Visita inicial" context={formContext} />
-
-							<div className="space-y-14 mt-14">
-								<FromGroup>
-									<HeaderSection title="Criterios de inclusión y exclusión" />
-									<CriteriosInclusionExclusionExclusion context={formContext} />
-								</FromGroup>
-								
-								<FromGroup>
-									<HeaderSection title="Datos sociodemográficos" />
-									<FromGroupContainer>
-										<FechaNacimiento context={formContext} />
-										<AntecedentesMedicos context={formContext} />
-									</FromGroupContainer>
-								</FromGroup>
-
-								<FromGroup>
-									<HeaderSection title="Ámbito asistencial" />
-									<FromGroupContainer>
-										<FechaValoracion context={formContext} />
-										<Antropometria context={formContext} />
-										<CribadoNutricional context={formContext} />
-										<ResultadoCribadoNutricional context={formContext} />
-										<CribadoMuscular context={formContext} />
-										<ResultadoCribadoMuscular context={formContext} />
-										<DiagnosticoNutricionalUtilizado context={formContext} />
-										<ResultadoValoracionNutricional context={formContext} />
-										<ParametrosFuncionales context={formContext} />
-										<OtrasMedicionesDeComposicionCorporal context={formContext} />
-										<ResultadoValoracionMuscular context={formContext} />
-									</FromGroupContainer>
-								</FromGroup>
-
-								<FromGroup>
-									<HeaderSection title="Tratamiento nutricional (si procede)" />
-									<FromGroupContainer>
-										<ObjetivosPlanteados context={formContext} />
-										<IniciaTratamientoNutricional context={formContext} />
-										<TipoTratamientoNutricionalIndicado context={formContext} />
-										<RefiereEndocrinologiaParaIniciarTratamientoNutricional context={formContext} />
-									</FromGroupContainer>
-								</FromGroup>
-								
-								<FromGroup>
-									<HeaderSection title="Actividad física - promoción" />
-									<FromGroupContainer>
-										<ActividadFisicaPrescripta context={formContext} />
-										<TiposDeEjercicios context={formContext} />
-									</FromGroupContainer>
-								</FromGroup>
-
-								<div className="">
-									<Button className="btn-lg text-base bg-primary border-primary text-white">Guardar</Button>
-								</div>
-							</div>
-
+						&& (<>
+							<FormFirst patient={patient}/>
 							<div ref={firstFooter} />
-						</form>)}
+						</>)}
 
 
 						{formType === 'initial' 
-						&& (<form onSubmit={handleSubmit}>
-							<HeaderForm title="Seguimiento 1" context={formContext} />
+						&& (<>
+							<FormInitial patient={patient} />
 							<div ref={initialFooter} />
-						</form>)}
+						</>)}
 
 					</div>
 				</div>
@@ -240,7 +127,8 @@ export default function Page(){
 						onClick={scrollToTheEnd}>
 						<i className="ri-arrow-down-line top-0.5 relative"></i>
 					</button>)}
-			
-		</formContext.Provider>
+
+		{loading && (<Loading />)}
+		
 	</>)
 }

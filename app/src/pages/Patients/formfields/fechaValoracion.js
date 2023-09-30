@@ -2,13 +2,13 @@ export default [
 	{ 
 		key: 'hospitalization',
 		name: 'hospitalization',
-		value: 'Hospitalización, expecifique motivo de ingreso', 
+		value: 'y', 
 		label: 'Hospitalización, expecifique motivo de ingreso' 
 	},
 	{ 
 		key: 'scheduled_visit',
 		name: 'scheduled_visit',
-		value: 'Visita programada en consulta externa/planta', 
+		value: 'y', 
 		label: 'Visita programada en consulta externa/planta'
 	}
 ]

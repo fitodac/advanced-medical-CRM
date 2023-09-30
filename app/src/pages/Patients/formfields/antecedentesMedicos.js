@@ -2,55 +2,55 @@ export default [
 	{ 
 		key: 'mh__diabetes',
 		name: 'mh__diabetes',
-		value: 'Diabetes', 
+		value: 'y',
 		label: 'Diabetes' 
 	},
 	{ 
 		key: 'mh__epoc',
 		name: 'mh__epoc',
-		value: 'EPOC', 
+		value: 'y',
 		label: 'EPOC' 
 	},
 	{ 
 		key: 'mh__heart_failure',
 		name: 'mh__heart_failure',
-		value: 'Insuficiencia cardíaca', 
+		value: 'y',
 		label: 'Insuficiencia cardíaca' 
 	},
 	{ 
 		key: 'mh__cancer',
 		name: 'mh__cancer',
-		value: 'Cáncer, incluyendo neoplasias hematológicas', 
+		value: 'y',
 		label: 'Cáncer, incluyendo neoplasias hematológicas' 
 	},
 	{ 
 		key: 'mh__neurological_disease',
 		name: 'mh__neurological_disease',
-		value: 'Enfermedad neurológica', 
+		value: 'y',
 		label: 'Enfermedad neurológica' 
 	},
 	{ 
 		key: 'mh__liver_diseases',
 		name: 'mh__liver_diseases',
-		value: 'Enfermedades hepáticas', 
+		value: 'y',
 		label: 'Enfermedades hepáticas' 
 	},
 	{ 
 		key: 'mh__inflammatory_bowel_disease',
 		name: 'mh__inflammatory_bowel_disease',
-		value: 'Enfermedad inflamatoria intestinal', 
+		value: 'y',
 		label: 'Enfermedad inflamatoria intestinal' 
 	},
 	{ 
 		key: 'mh__renal_failure',
 		name: 'mh__renal_failure',
-		value: 'Insuficiencia renal crónica', 
+		value: 'y',
 		label: 'Insuficiencia renal crónica' 
 	},
 	{ 
 		key: 'mh__other_chronic_diseases',
 		name: 'mh__other_chronic_diseases',
-		value: 'Otras enfermedades crónicas', 
+		value: 'y',
 		label: 'Otras enfermedades crónicas'
 		}
 ]

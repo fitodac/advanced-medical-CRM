@@ -2,7 +2,8 @@ import { NavLink } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 const itemClassName = `text-white text-opacity-60 text-[15px] pl-6 py-2 block hover:text-opacity-80`
-const itemActiveClassName = `border-r-4 border-r-white text-white text-[15px] pl-6 py-2 block`
+const itemActiveClassName = `border-r-4 border-r-white text-white text-[15px] pl-6 py-2 block 
+															before:content-['•'] before:relative before:-left-1 before:-ml-2 before:opacity-40`
 
 export const Navbar = () => {
 

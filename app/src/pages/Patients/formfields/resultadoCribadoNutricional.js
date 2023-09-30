@@ -2,13 +2,13 @@ export default [
 	{ 
 		key: 'ns__must_1',
 		name: 'ns__must',
-		value: 'No', 
+		value: '', 
 		label: 'No' 
 	},
 	{ 
 		key: 'ns__must_2',
 		name: 'ns__must',
-		value: 'Sí', 
+		value: 'y', 
 		label: 'Sí'
 	}
 ]

@@ -146,14 +146,14 @@ class UserController extends Controller
 
 		// Update doctors table
 		if( $request->specialty_id or $request->center_id ){
-            $doctor = $user->doctor;
+			$doctor = $user->doctor;
 
 			if( 'doctor' === $user->role ){
 				if( $doctor ){
 					$doctorData = array_merge($doctor->toArray(), [
 						'user_id' => $user->id,
 						'specialty_id' => $request->specialty_id ?? $doctor->specialty_id,
-						// 'center_id' => $request->center_id ?? $doctor->center_id
+						'center_id' => $request->center_id ?? $doctor->center_id
 					]);
 
 					$doctor->update($doctorData);

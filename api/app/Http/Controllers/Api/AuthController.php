@@ -31,9 +31,9 @@ class AuthController extends Controller
 
 		if( !Auth::attempt($credentials, false)) return $this->unauthorizedResponse();
 
-        if(!Auth::user()->email_verified_at ) {
-            return $this->unauthorizedResponse('Primero debe verificar su correo electrónico ');
-        }
+		if(!Auth::user()->email_verified_at ) {
+				return $this->unauthorizedResponse('Primero debe verificar su correo electrónico ');
+		}
 
 		$user = $request->user();
 		$token = $user->createToken('authToken')->plainTextToken;

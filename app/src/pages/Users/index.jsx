@@ -73,7 +73,9 @@ export default function Page(){
 					<Table header={thead} pager={response.data.links} context={pageContext}>
 						{ response?.data 
 							? response.data.data.map(({id, name, firstname, lastname, role, created_at}) => (<tr key={id}>
-								<td className="text-slate-300">{id}</td>
+								<td>
+									<span className="text-slate-300 text-xs">{id}</span>
+								</td>
 								<td>
 									{ firstname || lastname 
 									? (<div className="font-semibold leading-none">{`${firstname}${lastname ? ' '+ lastname : null}`}</div>)

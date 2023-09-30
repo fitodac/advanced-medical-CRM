@@ -5,15 +5,15 @@ export default {
 	},
 	options: [
 		{ 
-			key: 'ms__sarc_f_1',
-			name: 'ms__sarc_f',
-			value: 'No', 
+			key: 'ms__result_1',
+			name: 'ms__result',
+			value: '', 
 			label: 'No' 
 		},
 		{ 
-			key: 'ms__sarc_f_2',
-			name: 'ms__sarc_f',
-			value: 'Sí', 
+			key: 'ms__result_2',
+			name: 'ms__result',
+			value: 'y', 
 			label: 'Sí'
 		}
 	],

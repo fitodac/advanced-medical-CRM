@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Create, Update } from '../../api/medicalCenter'
 import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
@@ -29,42 +28,98 @@ export default function Page(){
 
 	const handleInputChange = e => onInputChange(e)
 
-	const getCenter = useAxios({
+	// Get center data on edition
+	const {
+		response, 
+		error, 
+		loading: getCenterLoading, 
+		refetch
+	} = useAxios({
 		url: `${API_URI}/center`,
 		method: 'POST',
 		body: {id},
-		token
+		token,
+		init: 0
+	})
+
+	// Create center
+	const { 
+		response: createCenterResponse, 
+		error: createCenterError, 
+		loading: createCenterLoading, 
+		refetch: createCenterRefetch 
+	} = useAxios({
+		url: `${API_URI}/center/create`,
+		method: 'POST',
+		body: {...formState},
+		token,
+		init: 0
+	})
+
+	// Upadate center
+	const { 
+		response: updateCenterResponse, 
+		error: updateCenterError, 
+		loading: updateCenterLoading, 
+		refetch: updateCenterRefetch 
+	} = useAxios({
+		url: `${API_URI}/center/update`,
+		method: 'PUT',
+		body: {...formState, id},
+		token,
+		init: 0
 	})
 
 	useEffect(() => {
-		if( id && getCenter.response?.success ){
-			const { name, code } = getCenter.response.data
+		if( response?.success ){
+			const { name, code } = response.data
 			setFormState({
 				...formState, 
 				name, 
 				code
 			})
-			getCenter.response.success = null
 		}
-		setLoading(false)
-	}, [getCenter])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [response])
+
+	useEffect(() => setLoading(getCenterLoading), [getCenterLoading])
+
+	useEffect(() => {
+		if( createCenterResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/medical-centers')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createCenterResponse])
+
+	useEffect(() => {
+		if( updateCenterResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/medical-centers')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateCenterResponse])
+
+	useEffect(() => {
+		if( id ){
+			refetch()
+		}else{
+			setLoading(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 
-	const handleSubmit = async e => {
+
+	const handleSubmit = e => {
 		e.preventDefault()
-		let resp
 		
 		try {
 			if( id ){
-				resp = await Update(token, {...formState, code: formState.code.toUpperCase(), id: parseInt(id)})
+				updateCenterRefetch()
 			}else{ 
-				resp = await Create(token, {...formState, code: formState.code.toUpperCase()})
+				createCenterRefetch()
 			}
-			
-			console.log('resp', resp)
-			onResetForm()
-			if(navigate) navigate('/medical-centers')
-
 		} catch (err) {
 			console.log('error', err)
 		}
@@ -89,15 +144,15 @@ export default function Page(){
 						<Input label="Nombre" name="name" context={formContext} />
 
 						<div className="w-32">
-							<Input label="Código" name="code" className="uppercase" maxlength={5} context={formContext} />
+							<Input label="Código" name="code" className="uppercase" maxlength={5} context={formContext} disabled={id ? true : false} />
 						</div>
 
 						<div className="flex gap-x-5 justify-between pt-4">
+							<ButtonLink link="/medical-centers">Cancelar</ButtonLink>
+							
 							<div className="w-32">
 								<Button className="bg-primary border-primary text-white w-full">{id ? 'Actualizar' : 'Guardar'}</Button>
 							</div>
-
-							<ButtonLink link="/medical-centers">Cancelar</ButtonLink>
 						</div>
 					</div> 
 				</form>

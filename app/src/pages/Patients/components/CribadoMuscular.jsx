@@ -14,9 +14,14 @@ export const CribadoMuscular = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Cribado muscular" />
 
-			<CheckboxList options={fields} />
+			<CheckboxList 
+				options={fields} 
+				context={context} />
 
-			<ConditionalInput label="Otros (especifique)" context={context} />
+			<ConditionalInput 
+				name="ms__other"
+				checkbox={{label: 'Otros (especifique)'}} 
+				context={context} />
 		</section>
 	</>)
 }

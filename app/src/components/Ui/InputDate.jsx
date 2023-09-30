@@ -1,4 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { 
+	useState, 
+	useEffect, 
+	useRef, 
+	useContext 
+} from 'react'
 import PropTypes from 'prop-types'
 import { Datepicker } from 'vanillajs-datepicker'
 
@@ -8,25 +13,38 @@ export const InputDate = ({
 	name,
 	label,
 	className,
-	value
+	value,
+	context
 }) => {
 
 	const [ modal, setModal ] = useState(false)
 	const datepickerModal = useRef(null)
 	const [ date, setDate ] = useState( value ?? '')
-
+	const formContext = useContext(context)
 
 
 	useEffect(() => {
-		const datepicker = new Datepicker(datepickerModal.current, {})
+		const el = datepickerModal.current
+		const datepicker = new Datepicker(el, {})
 
-		datepickerModal.current.addEventListener('changeDate', () => {
+		const handleChangeDate = () => {
+			// formContext.handleInputChange({target: {name, value: datepicker.getDate('dd/mm/y')}})
 			setDate(datepicker.getDate('dd/mm/y'))
-			datepickerModal.current.blur()
+			el.blur()
 			setModal(false)
-		})
+		}
+
+		el.addEventListener('changeDate', handleChangeDate)
+		
+		return () => el.removeEventListener('changeDate', handleChangeDate)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
+
+	useEffect(() => {
+		formContext.handleInputChange({target: {name, value: date}})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [date])
 
 	return (<div className="">
 		{ label && (<label className="select-none">{label}</label>) }
@@ -37,8 +55,8 @@ export const InputDate = ({
 				name={name}
 				id={`${name}datepickerModal`}
 				className={className ? `${className} max-w-[150px]`: 'max-w-[150px]'}
-				onFocus={() => setModal(true)}
-				onChange={() => setModal(false)}
+				onClick={() => setModal(true)}
+				onChange={() => {}}
 				value={date}
 				readOnly
 			/>
@@ -80,4 +98,5 @@ InputDate.propTypes = {
 	label: PropTypes.string,
 	className: PropTypes.string,
 	value: PropTypes.string,
+	context: PropTypes.object.isRequired
 }

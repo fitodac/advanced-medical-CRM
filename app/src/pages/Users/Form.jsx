@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Create, Update } from '../../api/user'
 import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
@@ -22,7 +21,7 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, user: {role}} = useAppContext()
 	const { id } = useLoaderData()
 	const [ centers, setCenters ] = useState(null)
 	const [ specialties, setSpecialties ] = useState(null)
@@ -112,18 +111,7 @@ export default function Page(){
 
 
 	useEffect(() => {
-		if( id ) getUserRefetch() 
-		getSpecialtiesRefetch()
-		getCentersRefetch()
-		setLoading(false)
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
-
-	useEffect(() => {
 		if( getUserResponse?.success ){
-			console.log(getUserResponse.data)
 			const { firstname, lastname, name, email, role, doctor } = getUserResponse.data
 			const center_id = doctor ? doctor.center_id : 0
 			const specialty_id = doctor ? doctor.specialty_id : 0
@@ -138,7 +126,7 @@ export default function Page(){
 				specialty_id
 			})
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [getUserResponse])
 
 
@@ -146,24 +134,51 @@ export default function Page(){
 		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
 	}, [getSpecialtiesResponse])
 
-
 	useEffect(() => {
 		if( getCentersResponse?.success ) setCenters([...getCentersResponse.data])
 	}, [getCentersResponse])
 
-useEffect(() => {
-	if( !getSpecialtiesLoading && !getCentersLoading ) setLoading(false)
-}, [ getSpecialtiesLoading, getCentersLoading ])
+	useEffect(() => {
+		if( createUserResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/users')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createUserResponse])
+
+	useEffect(() => {
+		if( updateUserResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/users')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateUserResponse])
+
+	useEffect(() => setLoading(getSpecialtiesLoading), [getSpecialtiesLoading])
+	useEffect(() => setLoading(getCentersLoading), [getCentersLoading])
+	useEffect(() => setLoading(createUserLoading), [createUserLoading])
+	useEffect(() => setLoading(updateUserLoading), [updateUserLoading])
+
+	useEffect(() => {
+		if( id ){
+			getUserRefetch()
+		}else{
+			setLoading(false)
+		}
+		getSpecialtiesRefetch()
+		getCentersRefetch()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 
 
-	const handleSubmit = async e => {
+
+	const handleSubmit = e => {
 		e.preventDefault()
 
 		try {
 			if( id ){
 				const { role, center_id, specialty_id } = formState
-
 
 				if( 'doctor' === role ){
 					const centerID = !center_id ? parseInt(centers[0].id) : center_id
@@ -176,20 +191,13 @@ useEffect(() => {
 				}
 
 				updateUserRefetch()
-				console.log('resp', updateUserResponse)
 			}else{ 
 				createUserRefetch()
-				console.log('resp', createUserResponse)
 			}
-
-			// onResetForm()
-			// if(navigate) navigate('/users')
 		} catch (err) {
 			console.log('error', err)
 		}
-
 	}
-
 
 	const contextValue = {formState, handleInputChange}
 
@@ -247,16 +255,19 @@ useEffect(() => {
 						</div>
 
 						<div className="flex gap-x-5 justify-between pt-4 col-span-2">
+							<ButtonLink link="/users">Cancelar</ButtonLink>
+							
 							<div className="w-32">
 								<Button className="bg-primary border-primary text-white w-full">{id ? 'Actualizar' : 'Guardar'}</Button>
 							</div>
-
-							<ButtonLink link="/users">Cancelar</ButtonLink>
 						</div>
 					</div>
 				</form>
 			</section>
 		</formContext.Provider>
+
+		{/* <pre>{JSON.stringify(specialties, null, 2)}</pre> */}
+		{/* <pre>{JSON.stringify(formState, null, 2)}</pre> */}
 
 		{loading && (<Loading />)}
 	</>)

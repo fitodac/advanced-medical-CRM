@@ -20,13 +20,15 @@ export const HeaderForm = ({
 		</div>
 
 		<div className="grid grid-cols-2 gap-x-6 gap-y-4">
-			<InputDate label="Fecha" name="date" context={context} />
+			<InputDate 
+				label="Fecha" 
+				name="date" 
+				context={context} />
 		</div>
 	</>)
 }
 
 HeaderForm.propTypes = {
 	title: PropTypes.string,
-	patient: PropTypes.object,
 	context: PropTypes.object
 }

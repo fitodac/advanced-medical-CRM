@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import { Create, Update } from '../../api/patients'
 import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../App'
 
@@ -17,7 +16,7 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, user } = useAppContext()
 	const { id } = useLoaderData()
 	const [ loading, setLoading ] = useState(true)
 	const navigate = useNavigate()
@@ -34,40 +33,138 @@ export default function Page(){
 	const handleInputChange = e => onInputChange(e)
 
 
-	const getPatient = useAxios({
+	// Get patient data on edition
+	const {
+		response,
+		error,
+		refetch
+	} = useAxios({
 		url: `${API_URI}/patient`,
 		method: 'POST',
 		body: {id},
-		token
+		token,
+		init: 0
+	})
+
+
+	// Get doctor data on edition
+	const {
+		response: getDoctorResponse,
+		error: getDoctorError,
+		loading: getDoctorLoading,
+		refetch: getDoctorRefetch
+	} = useAxios({
+		url: `${API_URI}/doctor/getInfo`,
+		method: 'POST',
+		body: {id: user.info.id},
+		token,
+		init: 0
+	})
+
+
+	// Create patient
+	const {
+		response: createPatientResponse,
+		error: createPatientError,
+		loading: createPatientLoading,
+		refetch: createPatientRefetch
+	} = useAxios({
+		url: `${API_URI}/patient/create`,
+		method: 'POST',
+		body: {...formState},
+		token,
+		init: 0
+	})
+
+	// Update patient
+	const {
+		response: updatePatientResponse,
+		error: updatePatientError,
+		loading: updatePatientLoading,
+		refetch: updatePatientRefetch
+	} = useAxios({
+		url: `${API_URI}/patient/update`,
+		method: 'PUT',
+		body: {...formState, id},
+		token,
+		init: 0
 	})
 
 
 	useEffect(() => {
-		if( getPatient.response?.success ){
+		if( response?.success ){
 			setFormState({
 				...formState, 
-				...getPatient.response.data
+				...response.data
 			})
 			setLoading(false)
-			getPatient.response.success = null
 		}
-	}, [getPatient])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [response])
 
 
-	const handleSubmit = async e => {
+	useEffect(() => {
+		if( getDoctorResponse?.success ){
+			const {
+				doctor: {
+					id: doctor_id, 
+					center_id, 
+					center:{
+						code
+					}
+				}
+			} = getDoctorResponse.data
+			setFormState({
+				...formState,
+				doctor_id,
+				center_id,
+				code
+			})
+			console.log(getDoctorResponse.data)
+		}
+	}, [getDoctorResponse])
+
+
+	useEffect(() => {
+		if( createPatientResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/patients')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createPatientResponse])
+	
+	useEffect(() => {
+		if( updatePatientResponse?.success ){
+			onResetForm()
+			if(navigate) navigate('/patients')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updatePatientResponse])
+
+	useEffect(() => setLoading(createPatientLoading), [createPatientLoading])
+	useEffect(() => setLoading(updatePatientLoading), [updatePatientLoading])
+
+	useEffect(() => {
+		if( id ){
+			refetch()
+		}else{
+			getDoctorRefetch()
+			setLoading(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+
+
+	const handleSubmit = e => {
 		e.preventDefault()
-		let resp
 
 		try {
 			if( id ){
-				resp = await Update(token, {...formState})
+				updatePatientRefetch()
 			}else{ 
-				resp = await Create(token, {...formState})
+				createPatientRefetch()
 			}
-
-			console.log('resp', resp)
-			onResetForm()
-			if(navigate) navigate('/patients')
 		} catch (err) {
 			console.log('error', err)
 		}
@@ -101,11 +198,11 @@ export default function Page(){
 						</div>
 
 						<div className="flex gap-x-5 justify-between pt-4 col-span-2">
+							<ButtonLink link="/patients">Cancelar</ButtonLink>
+
 							<div className="w-32">
 								<Button className="bg-primary border-primary text-white w-full">{id ? 'Actualizar' : 'Guardar'}</Button>
 							</div>
-
-							<ButtonLink link="/patients">Cancelar</ButtonLink>
 						</div>
 					</div>
 				</form>

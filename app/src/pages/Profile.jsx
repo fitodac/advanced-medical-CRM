@@ -1,10 +1,27 @@
 import { useEffect, createContext, useState } from 'react'
-import { Update, updateUserInLocalStorage } from '../api/user'
 import { useForm, useAxios } from '../hooks'
 import { useAppContext } from '../App'
 
-import { PageHeader } from '../components'
+import { 
+	Loading, 
+	PageHeader 
+} from '../components'
 import { Button, Input } from '../components/Ui'
+
+
+const updateUserInLocalStorage = data => {
+
+	const stored_user = JSON.parse(window.localStorage.getItem('user'))
+	const new_user = {
+		...stored_user,
+		info: {
+			...stored_user.info,
+			...data
+		}
+	}
+
+	window.localStorage.setItem('user', JSON.stringify(new_user))
+}
 
 
 export const formContext = createContext({})
@@ -28,51 +45,7 @@ export default function Page(){
 	
 	const [ specialties, setSpecialties ] = useState(null)
 	const [ center, setCenter ] = useState(null)
-
-
-	const { response, error, loading } = useAxios({
-		url: `${API_URI}/doctors/getInfo`,
-		method: 'POST',
-		body: {id},
-		token
-	})
-	
-	const getCenters = useAxios({
-		url: `${API_URI}/center/getAll`,
-		method: 'POST',
-		token
-	})
-	
-	const getSpecialties = useAxios({
-		url: `${API_URI}/specialties`,
-		method: 'POST',
-		token
-	})
-
-	useEffect(() => {
-		if( response?.data && 'doctor' === role ){
-			const {specialty_id, center} = response.data.doctor
-			setFormState({ ...formState, specialty_id })
-			setCenter({...center})
-		}
-	}, [response])
-
-
-	useEffect(() => {
-		if( getCenters?.response.success ){
-			getCenters.response.success = null
-		}
-	}, [getCenters])
-	
-
-	useEffect(() => {
-		if( getSpecialties?.response.success ){
-			setSpecialties([...getSpecialties.response.data])
-			getSpecialties.response.success = null
-		}
-	}, [getSpecialties])
-
-
+	const [ loading, setLoading ] = useState(true)
 
 	const {formState, setFormState, onInputChange} = useForm({
 		firstname,
@@ -84,23 +57,91 @@ export default function Page(){
 		specialty_id: 0
 	})
 
+
+	const { 
+		response: getDoctorResponse, 
+		error: getDoctorError, 
+		loading: getDoctorLoading,
+		refetch: getDoctorRefetch
+	} = useAxios({
+		url: `${API_URI}/doctor/getInfo`,
+		method: 'POST',
+		body: {id},
+		token,
+		init: 0
+	})
+
+	// Get specialties list
+	const {
+		response: getSpecialtiesResponse,
+		error: getSpecialtiesError,
+		loading: getSpecialtiesLoading,
+		refetch: getSpecialtiesRefetch
+	} = useAxios({
+		url: `${API_URI}/specialties`,
+		method: 'POST',
+		token,
+		init: 0
+	})
+
+	// Upadate profile
+	const { 
+		response: updateProfileResponse, 
+		error: updateProfileError, 
+		loading: updateProfileLoading, 
+		refetch: updateProfileRefetch 
+	} = useAxios({
+		url: `${API_URI}/user/update`,
+		method: 'PUT',
+		body: {...formState, id},
+		token,
+		init: 0
+	})
+
+	useEffect(() => {
+		if( getDoctorResponse?.success && 'doctor' === role ){
+			const {specialty_id, center} = getDoctorResponse.data.doctor
+			setFormState({ ...formState, specialty_id })
+			setCenter({...center})
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getDoctorResponse])
+
+	useEffect(() => {
+		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
+	}, [getSpecialtiesResponse])
+
+	useEffect(() => setLoading(getSpecialtiesLoading), [ getSpecialtiesLoading ])
+	useEffect(() => setLoading(updateProfileLoading), [updateProfileLoading])
+
+	useEffect(() => {
+		getDoctorRefetch()
+		'doctor' === role ? getSpecialtiesRefetch() : setLoading(false)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+
 	const handleInputChange = e => onInputChange(e)
 
 
 	const handleSubmit = async e => {
 		e.preventDefault()
-		let resp
 
 		try {
-			const form_state = {...formState, id}
-			const { center_id, specialty_id } = formState
-			if( center_id ) form_state.center_id = parseInt(form_state.center_id)
-			if( specialty_id ) form_state.specialty_id = parseInt(form_state.specialty_id) 
+			const { role, center_id, specialty_id } = formState
 
-			resp = await Update(`${token_type} ${token}`, {...form_state, id})
+			if( 'doctor' === role ){
+				setFormState({
+					...formState,
+					center_id: parseInt(center_id),
+					specialty_id: parseInt(specialty_id)
+				})
+			}
+
+			updateProfileRefetch()
 			updateUserInLocalStorage({...formState})
+			// console.log('response:', updateProfileResponse)
 
-			console.log('resp', resp)
 		} catch (err) {
 			console.log('error', err)
 		}
@@ -187,5 +228,6 @@ export default function Page(){
 			</section> 
 		</formContext.Provider>
 		
+		{loading && (<Loading />)}
 	</>)
 }

@@ -86,6 +86,7 @@ class PatientController extends Controller
 		$patient->update([
 			'name' => $request->name,
 			'lastname' => $request->lastname,
+			'gender' => $request->gender
 		]);
 
 		return $this->successResponse($patient, 'Hemos actualizado los datos del paciente');
@@ -161,6 +162,7 @@ class PatientController extends Controller
 
 		return $this->successResponse($resp);
 	}
+
 
 
 	// DELETE

@@ -10,6 +10,7 @@ export default [
 		{
 			key: 'dynamometry__not_possible',
 			name: 'dynamometry__not_possible',
+			value: 'y',
 			label: 'No es posible realizarlo',
 		}
 	],
@@ -24,6 +25,7 @@ export default [
 		{
 			key: 'test_chair__not_possible',
 			name: 'test_chair__not_possible',
+			value: 'y',
 			label: 'No es posible realizarlo',
 		}
 	]

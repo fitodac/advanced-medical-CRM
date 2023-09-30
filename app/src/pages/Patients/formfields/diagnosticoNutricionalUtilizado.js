@@ -2,19 +2,19 @@ export default [
 	{ 
 		key: 'nd__glim',
 		name: 'nd__glim',
-		value: 'GLIM', 
+		value: 'y', 
 		label: 'GLIM' 
 	},
 	{ 
 		key: 'nd__mna',
 		name: 'nd__mna',
-		value: 'MNA', 
+		value: 'y', 
 		label: 'MNA' 
 	},
 	{ 
 		key: 'nd__vgs',
 		name: 'nd__vgs',
-		value: 'VGS', 
+		value: 'y', 
 		label: 'VGS' 
 	}
 ]

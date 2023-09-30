@@ -9,12 +9,13 @@ export const Table = React.memo( function Table({
   context
 }){
 	return (<>
+	<section className="border border-slate-100 p-3 rounded-md">
 		<table className="table table-striped hoverable">
 
 			{ header && 
 			(<thead>
 				<tr>
-					{ header.map(e => (<th key={e.title} className="text-slate-700">
+					{ header.map(e => (<th key={e.title} className="text-slate-400 text-sm">
 						<div className={e.class}>{e.title}</div>
 					</th>)) }
 				</tr>
@@ -28,6 +29,7 @@ export const Table = React.memo( function Table({
 		</table>
 
 		{pager && (<Pagination links={pager} context={context} />)}
+	</section>
 	</>)
 })
 

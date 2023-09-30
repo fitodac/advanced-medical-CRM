@@ -42,7 +42,7 @@ export const Delete = ({
 
 	return (<>
 		<Button 
-			className="btn btn-sm bg-red-200 border-red-200 text-red-700" 
+			className="btn btn-sm bg-pink-100 border-pink-100 text-red-300 hover:bg-red-700 hover:border-red-700 hover:text-white" 
 			onClick={() => setModal(true)}>Borrar</Button>
 		
 		<input type="checkbox" id={`modal-${id}`} className="hidden" checked={modal} onChange={() => {}} />

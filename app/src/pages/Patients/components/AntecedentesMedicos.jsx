@@ -17,9 +17,18 @@ export const AntecedentesMedicos = ({context}) => {
 				title="Antecedentes médicos"
 				subtitle="(Especificar patología y estadío si procede)" />
 			
-			<CheckboxList options={fields} />
+			<CheckboxList 
+				options={fields} 
+				context={context} />
 
-			<ConditionalInput label="Otros (especifique)" context={context} />
+			<ConditionalInput 
+				name="mh__others" 
+				checkbox={{
+					name: '',
+					value: '',
+					label: 'Otros (especifique)'
+				}}
+				context={context} />
 		</section>
 	</>)
 

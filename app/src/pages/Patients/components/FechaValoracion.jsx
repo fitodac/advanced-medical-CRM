@@ -15,11 +15,22 @@ export const FechaValoracion = ({context}) => {
 	<section className="space-y-3" id={id}>
 		<HeaderFieldGroup title="Fecha de valoración" />
 		
-		<InputDate label="Fecha" name="valuation_date" context={context} />
+		<InputDate 
+			label="Fecha" 
+			name="valuation_date" 
+			context={context} />
 		
 		<div className="space-y-2 pt-4">
-			<ConditionalInput label={fields[0].label} context={context} />
-			<CheckboxList options={[{...fields[1]}]} />
+			<ConditionalInput 
+				name="hospitalization_reason" 
+				checkbox={{
+					...fields[0]
+				}}
+				context={context} />
+			
+			<CheckboxList 
+				options={[{...fields[1]}]} 
+				context={context} />
 		</div>
 	</section>
 	</>)

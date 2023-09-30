@@ -66,7 +66,9 @@ export default function Page(){
 					<Table header={thead} pager={response.data.links} context={pageContext}>
 						{ response?.data 
 							? response.data.data.map(({id, user, specialty, center}) => (<tr key={id}>
-								<td className="text-slate-300">{user.id}</td>
+								<td>
+									<span className="text-slate-300 text-xs">{id}</span>
+								</td>
 
 								<td>
 									{ user?.firstname || user?.lastname
@@ -76,7 +78,9 @@ export default function Page(){
 								</td>
 								
 								<td><span className="text-slate-500 text-sm">{specialty?.name}</span></td>
-								<td>{user?.name}</td>
+								<td>
+									<div className="text-slate-500 text-sm">{user?.name}</div>
+								</td>
 								<td>{center?.name}</td>
 								<td>
 									<div className="flex gap-x-2 justify-end h-full">

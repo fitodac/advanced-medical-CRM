@@ -91,7 +91,7 @@ const router = createBrowserRouter([
 				loader: loaderPatientForm
 			},
 			{
-				path: '/crd/:id/initial', 
+				path: '/crd/:id/crd', 
 				element: <Crd />,
 				loader: loaderCrd
 			},

@@ -31,7 +31,7 @@ export const ParametrosFuncionales = ({context}) => {
 						</div>
 					</div>
 
-					<CheckboxList options={[{...e[2]}]} />
+					<CheckboxList options={[{...e[2]}]} context={context} />
 					
 				</div>)) }
 			</div>

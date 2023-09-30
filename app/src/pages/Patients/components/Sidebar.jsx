@@ -22,7 +22,7 @@ export const Sidebar = ({setFormType}) => {
 
 	useEffect(() => setFormType(visit), [visit, setFormType])
 
-	return (<div className="hidden relative lg:block">
+	return (<div className="bg-slate-100 -ml-6 hidden relative lg:block">
 		<div className="tabs">
 			<input type="radio" name="tabsNav" id="first" onChange={() => setVisit('first')} checked={visit === 'first'} />
 			<input type="radio" name="tabsNav" id="initial" onChange={() => setVisit('initial')} checked={visit === 'initial'} />

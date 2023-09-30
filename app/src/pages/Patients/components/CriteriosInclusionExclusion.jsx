@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { CheckboxGroup } from '../../../components/Ui'
+import { RadioGroup } from '../../../components/Ui'
 import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/criteriosInclusionExclusion'
@@ -13,12 +13,16 @@ export const CriteriosInclusionExclusionExclusion = ({context}) => {
 		<section className="space-y-7" id={id}>
 			<div className="space-y-3">
 				<HeaderFieldGroup title="Criterios de inclusión" />
-				<CheckboxGroup options={fields.criteriosDeInclusion} />
+				<RadioGroup 
+					options={fields.criteriosDeInclusion} 
+					context={context} />
 			</div>
 			
 			<div className="space-y-3">
 				<HeaderFieldGroup title="Criterios de exclusión" />
-				<CheckboxGroup options={fields.criteriosDeExclusion} />
+				<RadioGroup 
+					options={fields.criteriosDeExclusion} 
+					context={context} />
 			</div>
 		</section>
 	</>)

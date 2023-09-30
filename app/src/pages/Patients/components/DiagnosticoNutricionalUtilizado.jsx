@@ -15,9 +15,16 @@ export const DiagnosticoNutricionalUtilizado = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Diagnóstico nutricional utilizado" />
 			
-			<CheckboxList options={fields} />
+			<CheckboxList 
+				options={fields} 
+				context={context} />
 
-			<ConditionalInput label="Otro (especifique)" context={context} />
+			<ConditionalInput 
+				checkbox={{
+					label: 'Otro (especifique)'
+				}} 
+				name="nd__other"
+				context={context} />
 		</section>
 	</>)
 

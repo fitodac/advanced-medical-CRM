@@ -6,6 +6,7 @@ use App\Models\Center;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +33,10 @@ class CenterController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
-		$center = Center::create($request->all());
+		$center = Center::create([
+			'name' => $request->name,
+			'code' => Str::upper($request->code)
+		]);
 
 		return $this->successResponse($center, 'Hemos creado un nuevo centro médico');
 
@@ -47,13 +51,13 @@ class CenterController extends Controller
 		$validate = Validator::make($request->all(), [
 			'id' => 'required|numeric',
 			'name' => 'required',
-			'code' => 'required|unique:centers'
+			// 'code' => 'required|unique:centers'
 		], [
 			'id.required' => 'Debes proveernos el ID del centro médico para continuar',
 			'id.numeric' => 'Formato incorrecto',
 			'name.required' => 'Debes incluír un nombre para el centro médico',
-			'code.required' => 'Debes proveer un código de 4 dígitos',
-			'code.unique' => 'Ya existe un centro médico con ese código',
+			// 'code.required' => 'Debes proveer un código de 4 dígitos',
+			// 'code.unique' => 'Ya existe un centro médico con ese código',
 		]);
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
@@ -64,7 +68,7 @@ class CenterController extends Controller
 
 		$center->update([
 			'name' => $request->name,
-			'code' => $request->code
+			// 'code' => Str::upper($request->code)
 		]);
 
 		return $this->successResponse($center, 'Hemos actualizado los datos del centro médico');
