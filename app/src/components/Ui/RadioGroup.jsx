@@ -15,8 +15,9 @@ export const RadioGroup = ({
 	const formContext = useContext(context)
 
 	const handleChange = e => {
-		// console.log('handleChange', e.target.name)
-		formContext.handleInputChange(e)
+		const { name, value } = e.target
+
+		formContext.handleInputChange({target: {name, value: value ? value : null}})
 	}
 
 	return (<div className="space-y-6">
@@ -28,7 +29,8 @@ export const RadioGroup = ({
 							type="radio" 
 							name={name} 
 							onChange={handleChange}
-							defaultValue={value} />
+							defaultValue={value}
+							checked={value === formContext.formState[name]} />
 						
 						<span>{label}</span>
 					

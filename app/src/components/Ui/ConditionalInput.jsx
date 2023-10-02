@@ -1,6 +1,7 @@
 import { 
 	useState, 
 	useEffect, 
+	// useMemo,
 	useContext 
 } from 'react'
 import PropTypes from 'prop-types'
@@ -15,48 +16,32 @@ export const ConditionalInput = ({
 }) => {
 
 	const formContext = useContext(context)
-	const [ input_visible, setInputVisible ] = useState(false)
 	const { 
-		name: chkName, 
-		value: chkValue, 
+		name: chkName,
+		defaultValue,
 		label 
 	} = checkbox
-	
-	const [ chkState, setChkState ] = useState(chkValue)
 
-	useEffect(() => {
-		if( chkName ){
-			formContext.handleInputChange({target: {name: chkName, value: chkState}})
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chkState])
-
-	const handleCheck = e => {
-		const { checked } = e.target
-
-		if( checked ){
-			setChkState(chkValue)
-		}else{
-			setChkState('')
-			formContext.handleInputChange({target: {name, value: ''}})
-		}
-
-		setInputVisible(!input_visible)
+	const handleChange = e => {
+		const {checked, value } = e.target
+		const val = checked ? value : null
+		formContext.handleInputChange({target: {name: chkName, value: val}})
 	}
-
 
 	return (<div className="flex gap-x-6 items-start">
 						<label className="input-checkbox">
 							<input 
 								type="checkbox" 
 								name={chkName} 
-								onChange={handleCheck}
-								defaultValue={chkValue} />
+								onChange={handleChange}
+								value={defaultValue}
+								checked={defaultValue === formContext.formState[chkName]} 
+								/>
 							<span>{label}</span>
 						</label>
 
 						<div className="flex-1 relative -top-1">
-							{ input_visible 
+							{ formContext.formState[chkName] 
 							&& (<div className={inputContainerClassName}>
 										<Input name={name} context={context} />
 									</div>)}

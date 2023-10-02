@@ -2,7 +2,7 @@ export default [
 	{ 
 		key: 'hospitalization',
 		name: 'hospitalization',
-		value: 'y', 
+		defaultValue: 'y', 
 		label: 'Hospitalización, expecifique motivo de ingreso' 
 	},
 	{ 

@@ -120,7 +120,8 @@ export default [
 		other: {
 			name: 'nti__en__other',
 			checkbox: {
-				label: 'Otras (especifique)'
+				label: 'Otras (especifique)',
+				defaultValue: 'y'
 			}
 		}
 	},

@@ -77,8 +77,8 @@ class CenterController extends Controller
 
 
 
-	// SHOW
-	public function show(Request $request)
+	// GET
+	public function get(Request $request)
 	{
 
 		$center = Center::find($request->id);

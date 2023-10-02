@@ -22,10 +22,10 @@ export const AntecedentesMedicos = ({context}) => {
 				context={context} />
 
 			<ConditionalInput 
-				name="mh__others" 
+				name="mh__others_description" 
 				checkbox={{
-					name: '',
-					value: '',
+					name: 'mh__others',
+					defaultValue: 'y',
 					label: 'Otros (especifique)'
 				}}
 				context={context} />

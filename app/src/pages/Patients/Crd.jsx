@@ -27,8 +27,9 @@ export default function Page(){
 	
 	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
-	const [ patient, setPatient ] = useState({name: '', gender: ''})
+	const [ patient, setPatient ] = useState({id: id, name: '', gender: ''})
 	const [ formType, setFormType ] = useState('first')
+	const [ formData, setFormData ] = useState(null)
 	const [ loading, setLoading ] = useState(true)
 	const firstFooter = useRef(null)
 	const initialFooter = useRef(null)
@@ -59,6 +60,8 @@ export default function Page(){
 		token,
 	})
 
+
+
 	useEffect(() => {
 		if( response?.success ){
 			const { name, lastname, gender } = response.data
@@ -68,6 +71,8 @@ export default function Page(){
 				name: `${name} ${lastname}`,
 				gender
 			})
+
+			setFormData([...response.data.visits])
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [response])
@@ -94,14 +99,14 @@ export default function Page(){
 					<div className="col-span-4 max-h-[80.5vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-4 pb-28 pr-10 xl:pr-14">
 						{formType === 'first' 
 						&& (<>
-							<FormFirst patient={patient}/>
+							<FormFirst patient={patient} formData={formData} />
 							<div ref={firstFooter} />
 						</>)}
 
 
 						{formType === 'initial' 
 						&& (<>
-							<FormInitial patient={patient} />
+							<FormInitial patient={patient} formData={formData} />
 							<div ref={initialFooter} />
 						</>)}
 

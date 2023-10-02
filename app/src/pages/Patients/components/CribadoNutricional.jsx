@@ -20,8 +20,10 @@ export const CribadoNutricional = ({context}) => {
 				context={context} />
 
 			<ConditionalInput 
-				name="ns__other"
+				name="ns__other_description"
 				checkbox={{
+					name: 'ns__other',
+					defaultValue: 'y',
 					label: 'Otros (especifique)'
 				}}
 				context={context} />

@@ -195,23 +195,11 @@ class UserController extends Controller
 	}
 
 
-	// SHOW
-	public function show(Request $request)
+	// GET
+	public function get(Request $request)
 	{
 
 		$user = User::with('doctor')->find($request->id);
-
-		// if( 'doctor' === $user->role ){
-			// $user = User::width('doctor')->find($request->id);
-			// $doctor = $user->doctor();
-
-			// $user = array_merge($user->toArray(), [
-			// 	'specialty_id' => $doctor->specialty_id,
-			// 	'center_id' => $doctor->center_id
-			// ]);
-		// }else{
-		// 	$user = User::find($request->id);
-		// }
 
 		if( !$user ){ return $this->errorResponse('El usuario que estás buscando no existe en nuestra base de datos', 404); }
 		if( 'superadmin' === $user->role ){ return $this->errorResponse('El Super Admin no puede ser editado', 404); }

@@ -9,16 +9,10 @@ const id = 'resultadoDeLaValoracionMuscular'
 export const ResultadoValoracionMuscular = ({context}) => {
 
 	const formContext = useContext(context)
-	const [ chkState, setChkState ] = useState('')
-
-	useEffect(() => {
-		formContext.handleInputChange({target: {name: fields[0].name, value: chkState}})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chkState])
 
 	const handleChange = e => {
-		const {value, checked} = e.target
-		setChkState(checked ? value : '')
+		const {name, value} = e.target
+		formContext.handleInputChange({target: {name, value}})
 	}
 
 	return (<>
@@ -35,8 +29,9 @@ export const ResultadoValoracionMuscular = ({context}) => {
 						<input 
 							type="radio"
 							name={name} 
+							onChange={handleChange}
 							defaultValue={value}
-							onChange={handleChange} />
+							checked={value === formContext.formState[name]} />
 
 						<span>{label}</span>
 
@@ -44,7 +39,6 @@ export const ResultadoValoracionMuscular = ({context}) => {
 				</div>))}
 			</div>
 			
-			{/* <CheckboxList options={fields} context={context} /> */}
 		</section>
 	</>)
 

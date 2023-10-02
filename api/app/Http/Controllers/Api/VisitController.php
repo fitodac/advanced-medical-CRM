@@ -69,28 +69,49 @@ class VisitController extends Controller
 
 	}
 
-    // DELETE
+
+	// GET
+	public function get(Request $request)
+	{
+		$validate = Validator::make($request->all(), [
+			'id' => 'required|numeric'
+		], [
+			'id.required' => 'Debes proveernos el ID de la visita para continuar',
+			'id.numeric' => 'Formato incorrecto'
+		]);
+
+		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
+
+		$visit = Visit::find($request->id);
+
+		if( !$visit ) return $this->errorResponse('La visita que estás buscando no existe o ha sido eliminada', 404);
+
+		return $this->successResponse($visit);
+	}
+
+
+	// DELETE
 	public function delete(Visit $visit)
 	{
-        /**
-         * Lo elimina cualquier rol. Si el rol es doctor,
-         * hay que validar que la visita le pertenece al paciente,
-         * que a su vez le pertenece al doctor.
-         */
+		/**
+		 * Lo elimina cualquier rol. Si el rol es doctor,
+		 * hay que validar que la visita le pertenece al paciente,
+		 * que a su vez le pertenece al doctor.
+		 */
 
-        if( !$visit ) return $this->errorResponse('La visita que tratas de eliminar no existe', 200);
+		if( !$visit ) return $this->errorResponse('La visita que tratas de eliminar no existe', 200);
 
-        $user = Auth::user();
+		$user = Auth::user();
 
-        $visit->load('patient');
+		$visit->load('patient');
 
 		if( $user->role == 'doctor') {
-            $doctor = $visit->patient->doctorRelation;
+			$doctor = $visit->patient->doctorRelation;
 
-            if ($doctor && $doctor->user_id !== $user->id) {
-                return $this->errorResponse('No puedes eliminar la visita seleccionada', 200);
-            }
-        }
+			if ($doctor && $doctor->user_id !== $user->id) {
+				return $this->errorResponse('No puedes eliminar la visita seleccionada', 200);
+			}
+		}
 
 		$visit->delete();
 

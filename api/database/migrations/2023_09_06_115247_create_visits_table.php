@@ -39,7 +39,8 @@ return new class extends Migration
 			$table->enum('mh__inflammatory_bowel_disease', ['y'])->nullable()->comment('Enfermedad inflamatoria intestinal');
 			$table->enum('mh__renal_failure', ['y'])->nullable()->comment('Insuficiencia renal crónica');
 			$table->enum('mh__other_chronic_diseases', ['y'])->nullable()->comment('Otras enfermedades crónicas');
-			$table->text('mh__others')->nullable()->comment('Otras enfermedades');
+			$table->enum('mh__others', ['y'])->nullable()->comment('Otras enfermedades');
+			$table->text('mh__others_description')->nullable()->comment('Otras enfermedades (descripción)');
 			// Ámbito asistencial
 			$table->date('valuation_date')->nullable()->comment('Fecha de valoración');
 			$table->enum('hospitalization', ['y'])->nullable()->comment('Hospitalización');
@@ -61,17 +62,20 @@ return new class extends Migration
 			$table->enum('ns__mis', ['y'])->nullable()->comment('MIS');
 			$table->enum('ns__snaq', ['y'])->nullable()->comment('SNAQ');
 			$table->enum('ns__conut', ['y'])->nullable()->comment('CONUT');
-			$table->text('ns__other')->nullable()->comment('Otros');
+			$table->enum('ns__other', ['y'])->nullable()->comment('Otros');
+			$table->text('ns__other_description')->nullable()->comment('Otros (descripción)');
 			$table->enum('ns__result', ['y'])->nullable()->comment('Resultado del cribado nutricional: ¿Está el paciente en riesgo de desnutrición?');
 			// Cribado muscular
 			$table->enum('ms__sarc_f', ['y'])->nullable()->comment('SARC-F');
-			$table->text('ms__other')->nullable()->comment('Otros');
+			$table->enum('ms__other', ['y'])->nullable()->comment('Otros');
+			$table->text('ms__other_description')->nullable()->comment('Otros');
 			$table->enum('ms__result', ['y'])->nullable()->comment('Resultado del cribado muscular: ¿Está el paciente en riesgo de sarcopenia?');
 			// Diagnóstico nutricional utilizado
 			$table->enum('nd__glim', ['y'])->nullable()->comment('GLIM');
 			$table->enum('nd__mna', ['y'])->nullable()->comment('MNA');
 			$table->enum('nd__vgs', ['y'])->nullable()->comment('VGS');
-			$table->text('nd__other')->nullable()->comment('Otros');
+			$table->enum('nd__other', ['y'])->nullable()->comment('Otros');
+			$table->text('nd__other_description')->nullable()->comment('Otros');
 			$table->enum('patient_malnourished', ['no', 'si', 'en riesgo'])->nullable()->comment('¿Está el paciente desnutrido?');
 			$table->string('patient_malnourished__code', 10)->nullable()->comment('Desnutrición del paciente según CIE 10');
 			// Parámetros funcionales 

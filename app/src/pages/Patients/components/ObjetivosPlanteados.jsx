@@ -20,7 +20,8 @@ export const ObjetivosPlanteados = ({context}) => {
 
 			<ConditionalInput 
 				checkbox={{
-					label: 'Otro (especifique)'
+					label: 'Otro (especifique)',
+					defaultValue: 'y',
 				}} 
 				name="nt__planted_objectives__other"
 				context={context} />

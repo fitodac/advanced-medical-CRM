@@ -96,8 +96,8 @@ class PatientController extends Controller
 
 
 
-	// SHOW
-	public function show(Request $request)
+	// GET
+	public function get(Request $request)
 	{
 
 		$auth = Auth::user();
@@ -111,11 +111,11 @@ class PatientController extends Controller
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
 
-		$patient = Patient::select(['id', 'code', 'doctor_id', 'center_id', 'name', 'lastname', 'gender'])->find($request->id);
+		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id', 'name', 'lastname', 'gender'])->find($request->id);
 
 
 		if( 'doctor' === $auth->role ){
-            $doctor = Doctor::where('user_id', $auth->id)->first();
+			$doctor = Doctor::where('user_id', $auth->id)->first();
 			if( $patient->doctor_id !== $doctor->id ) return $this->unauthorizedResponse('No estás autorizado a ver los datos de este paciente');
 			return $this->successResponse($patient);
 		}else{

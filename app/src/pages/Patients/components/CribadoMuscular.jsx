@@ -19,8 +19,12 @@ export const CribadoMuscular = ({context}) => {
 				context={context} />
 
 			<ConditionalInput 
-				name="ms__other"
-				checkbox={{label: 'Otros (especifique)'}} 
+				name="ms__other_description"
+				checkbox={{
+					label: 'Otros (especifique)',
+					name: 'ms__other',
+					defaultValue: 'y',
+				}} 
 				context={context} />
 		</section>
 	</>)

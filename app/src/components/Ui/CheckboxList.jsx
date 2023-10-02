@@ -14,7 +14,7 @@ export const CheckboxList = ({
 
 	const handleChange = e => {
 		const {name, value, checked} = e.target
-		const val = checked ? value : ''
+		const val = checked ? value : null
 		formContext.handleInputChange({target: {name, value: val}})
 	}
 
@@ -27,7 +27,8 @@ export const CheckboxList = ({
 						type="checkbox" 
 						name={name} 
 						onChange={handleChange} 
-						defaultValue={value} />
+						defaultValue={value}
+						checked={value === formContext.formState[name]} />
 					
 					<span>{label}</span>
 				

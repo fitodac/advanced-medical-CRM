@@ -13,7 +13,7 @@ export default {
 				{
 					key: 'inclusion_q1_2',
 					name: 'inclusion_q1',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -31,7 +31,7 @@ export default {
 				{
 					key: 'inclusion_q2_2',
 					name: 'inclusion_q2',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -49,7 +49,7 @@ export default {
 				{
 					key: 'inclusion_q3_2',
 					name: 'inclusion_q3',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -70,7 +70,7 @@ export default {
 				{
 					key: 'exclusion_q1_2',
 					name: 'exclusion_q1',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -88,7 +88,7 @@ export default {
 				{
 					key: 'exclusion_q2_2',
 					name: 'exclusion_q2',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -106,7 +106,7 @@ export default {
 				{
 					key: 'exclusion_q3_2',
 					name: 'exclusion_q3',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -124,7 +124,7 @@ export default {
 				{
 					key: 'exclusion_q4_2',
 					name: 'exclusion_q4',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]
@@ -142,7 +142,7 @@ export default {
 				{
 					key: 'exclusion_q5_2',
 					name: 'exclusion_q5',
-					value: 'n', 
+					value: null, 
 					label: 'No'
 				}
 			]

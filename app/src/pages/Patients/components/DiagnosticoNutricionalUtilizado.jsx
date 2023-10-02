@@ -20,10 +20,12 @@ export const DiagnosticoNutricionalUtilizado = ({context}) => {
 				context={context} />
 
 			<ConditionalInput 
+				name="nd__other_description"
 				checkbox={{
-					label: 'Otro (especifique)'
-				}} 
-				name="nd__other"
+					label: 'Otro (especifique)',
+					name: 'nd__other',
+					defaultValue: 'y',
+				}}
 				context={context} />
 		</section>
 	</>)

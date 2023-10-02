@@ -87,7 +87,7 @@ export default function Page(){
 							
 							<td>
 								<div className="flex gap-x-2 justify-end h-full">
-									{ 'doctor' === role && <ButtonLink className="btn-sm bg-secondary border-secondary text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
+									{ 'doctor' === role && <ButtonLink className="btn-sm bg-teal border-teal text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
 									<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
 									<Delete 
 											id={id} 

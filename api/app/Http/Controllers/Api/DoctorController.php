@@ -45,7 +45,8 @@ class DoctorController extends Controller
 
 
 
-	public function show(Request $request)
+	// GET
+	public function get(Request $request)
 	{
 
 		$validate = Validator::make($request->all(), [
