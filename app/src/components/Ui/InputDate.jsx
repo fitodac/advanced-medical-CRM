@@ -7,8 +7,6 @@ import {
 import PropTypes from 'prop-types'
 import { Datepicker } from 'vanillajs-datepicker'
 
-
-
 export const InputDate = ({
 	name,
 	label,
@@ -19,7 +17,7 @@ export const InputDate = ({
 
 	const [ modal, setModal ] = useState(false)
 	const datepickerModal = useRef(null)
-	const [ date, setDate ] = useState( value ?? '')
+	const [ date, setDate ] = useState('')
 	const formContext = useContext(context)
 
 
@@ -55,11 +53,10 @@ export const InputDate = ({
 				name={name}
 				id={`${name}datepickerModal`}
 				className={className ? `${className} max-w-[150px]`: 'max-w-[150px]'}
+				defaultValue={formContext.formState[name]}
 				onClick={() => setModal(true)}
 				onChange={() => {}}
-				value={date}
-				readOnly
-			/>
+				readOnly />
 
 
 			<input 
@@ -68,8 +65,7 @@ export const InputDate = ({
 				value={date}
 				className="hidden" 
 				onChange={() => {}} 
-				checked={modal} 
-				/>
+				checked={modal} />
 
 
 			<div className="overlay">
@@ -97,6 +93,5 @@ InputDate.propTypes = {
 	name: PropTypes.string.isRequired,
 	label: PropTypes.string,
 	className: PropTypes.string,
-	value: PropTypes.string,
 	context: PropTypes.object.isRequired
 }

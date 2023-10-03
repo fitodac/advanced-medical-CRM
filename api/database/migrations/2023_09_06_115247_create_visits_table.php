@@ -122,7 +122,8 @@ return new class extends Migration
 			$table->enum('nt__planted_objectives__weight_gain', ['y'])->nullable()->comment('Tratamiento nutricional: Ganancia ponderal');
 			$table->enum('nt__planted_objectives__muscle_gain', ['y'])->nullable()->comment('Tratamiento nutricional: Ganancia muscular / fuerza / mejoría de la funcionalidad');
 			$table->enum('nt__planted_objectives__preservation_status', ['y'])->nullable()->comment('Tratamiento nutricional: Preservación del estado nutricional y/o muscular');
-			$table->text('nt__planted_objectives__other')->nullable()->comment('Tratamiento nutricional: Otro');
+			$table->enum('nt__planted_objectives__other', ['y'])->nullable()->comment('Tratamiento nutricional: Otro');
+			$table->text('nt__planted_objectives__other_description')->nullable()->comment('Tratamiento nutricional: Otro');
 			// Inicia tratamiento nutricional
 			$table->enum('nt__start', ['y'])->nullable()->comment('Inicia tratamiento nutricional');
 			$table->text('nt__specify')->nullable()->comment('Inicia tratamiento nutricional, especifique');
@@ -137,7 +138,8 @@ return new class extends Migration
 			$table->enum('nti__son__normal_normoprotein_without_msi', ['y'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
 			$table->enum('nti__son__peptide_formulas', ['y'])->nullable()->comment('SON: Fórmulas peptídicas');
 			$table->enum('nti__son__snp', ['y'])->nullable()->comment('SON: Específica para paciente nefrópata');
-			$table->text('nti__son__other')->nullable()->comment('SON: otras');
+			$table->enum('nti__son__other', ['y'])->nullable()->comment('SON: otras');
+			$table->text('nti__son__other_description')->nullable()->comment('SON: otras');
 			$table->enum('nti__en', ['y'])->nullable()->comment('Nutrición enteral, tipo de fórmula');
 			$table->enum('nti__en__hypercaloric_with_msi', ['y'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica con ingrediente Músculo Especifico (HMB y/o Leucina)');
 			$table->enum('nti__en__hypercaloric_without_msi', ['y'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
@@ -146,7 +148,8 @@ return new class extends Migration
 			$table->enum('nti__en__normal_calorie_without_smi', ['y'])->nullable()->comment('Nutrición enteral: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
 			$table->enum('nti__en__peptide_formulas', ['y'])->nullable()->comment('Nutrición enteral: Fórmulas peptídicas');
 			$table->enum('nti__en__snp', ['y'])->nullable()->comment('Nutrición enteral: Específica para paciente nefrópata');
-			$table->text('nti__en__other')->nullable()->comment('Nutrición enteral: otras');
+			$table->enum('nti__en__other', ['y'])->nullable()->comment('Nutrición enteral: otras');
+			$table->text('nti__en__other_description')->nullable()->comment('Nutrición enteral: otras');
 			// Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional
 			$table->enum('refers_patient_to_begin_nutritional_treatment', ['y'])->nullable()->comment('Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)');
 			// ¿El paciente ha seguido la recomendación nutricional prescrita?

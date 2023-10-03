@@ -168,13 +168,13 @@ export const FormFirst = ({
 					</FromGroupContainer>
 				</FromGroup>
 
-				{/* <FromGroup>
+				<FromGroup>
 					<HeaderSection title="Actividad física - promoción" />
 					<FromGroupContainer>
 						<ActividadFisicaPrescripta context={formContext} />
 						<TiposDeEjercicios context={formContext} />
 					</FromGroupContainer>
-				</FromGroup> */}
+				</FromGroup>
 
 				<div className="">
 					<Button className="btn-lg text-base bg-primary border-primary text-white">Guardar</Button>
@@ -182,7 +182,7 @@ export const FormFirst = ({
 			</div>
 		</form>
 
-		<pre className="bg-black bg-opacity-70 text-white text-sm w-1/3 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(formState, null, 2)}</pre>
+		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/3 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(formState, null, 2)}</pre> */}
 	</formContext.Provider>
 	</>)
 }

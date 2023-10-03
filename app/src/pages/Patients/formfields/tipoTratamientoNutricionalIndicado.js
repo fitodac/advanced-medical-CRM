@@ -62,9 +62,11 @@ export default [
 			}
 		],
 		other: {
-			name: 'nti__son__other',
+			name: 'nti__son__other_description',
 			checkbox: {
-				label: 'Otras (especifique)'
+				label: 'Otras (especifique)',
+				name: 'nti__son__other',
+				defaultValue: 'y'
 			}
 		}
 	},
@@ -118,9 +120,10 @@ export default [
 			},
 		],
 		other: {
-			name: 'nti__en__other',
+			name: 'nti__en__other_description',
 			checkbox: {
 				label: 'Otras (especifique)',
+				name: 'nti__en__other',
 				defaultValue: 'y'
 			}
 		}
