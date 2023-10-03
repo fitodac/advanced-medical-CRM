@@ -20,7 +20,7 @@ const updateUserInLocalStorage = data => {
 		}
 	}
 
-	window.localStorage.setItem('user', JSON.stringify(new_user))
+	window.localStorage.setItem('advancedUser', JSON.stringify(new_user))
 }
 
 
@@ -140,7 +140,6 @@ export default function Page(){
 
 			updateProfileRefetch()
 			updateUserInLocalStorage({...formState})
-			// console.log('response:', updateProfileResponse)
 
 		} catch (err) {
 			console.log('error', err)

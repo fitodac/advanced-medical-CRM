@@ -1,6 +1,7 @@
 import { useState, createContext } from 'react'
 import { useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
+import { FilterProvider, PatientsFilter } from '../../components/Filters'
 
 import {
 	Loading,
@@ -32,7 +33,7 @@ export default function Page(){
 
 	const { response, error, loading, refetch } = useAxios({
 		url: request,
-		method: 'POST',
+		method: 'GET',
 		token
 	})
 
@@ -62,7 +63,11 @@ export default function Page(){
 
 
 				{ !loading && !error && 
-				(<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
+				(<>
+					<FilterProvider>
+						<PatientsFilter filter={requestUpdate} />
+					</FilterProvider>
+
 					<Table header={'doctor' === role ? [...thead].filter(i => i.title !== 'Doctor') : thead} pager={response.data.links} context={pageContext}>
 						{ response?.data 
 						? response.data.data.map(({id, code, name, lastname, gender, doctor, center}) => (<tr key={id}>
@@ -98,7 +103,7 @@ export default function Page(){
 						</tr>))
 						: null }
 					</Table>
-				</div>)}
+				</>)}
 
 			</section>
 		</pageContext.Provider>

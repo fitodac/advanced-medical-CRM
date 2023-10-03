@@ -7,7 +7,7 @@ const AuthContext = createContext('')
 
 export const AuthProvider = ({children}) => {
 
-	const [user, setUser] = useLocalStorage('user', null)
+	const [user, setUser] = useLocalStorage('advancedUser', null)
 	const navigate = useNavigate()
 
 	// call this function when you want to authenticate the user
@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
 	// call this function to sign out logged in user
 	const logout = () => {
 		setUser(null)
-		window.localStorage.removeItem('user')
+		window.localStorage.removeItem('advancedUser')
 		if (navigate) navigate('/login', { replace: true })
 	}
 
@@ -48,7 +48,7 @@ export const useAuth = () => useContext(AuthContext)
 export const usekickOut = resp => {
 	const { message } = resp
 	if( 'Unauthenticated.' === message ){
-		window.localStorage.removeItem('user')
+		window.localStorage.removeItem('advancedUser')
 		window.location.reload()
 		return true
 	}else{

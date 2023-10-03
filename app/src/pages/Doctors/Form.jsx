@@ -41,8 +41,8 @@ export default function Page(){
 	// Get doctor data on edition
 	const {
 		response: getDoctorResponse,
-		error: getDoctorError,
-		loading: getDoctorLoading,
+		// error: getDoctorError,
+		// loading: getDoctorLoading,
 		refetch: getDoctorRefetch
 	} = useAxios({
 		url: `${API_URI}/doctor/getInfo`,
@@ -55,7 +55,7 @@ export default function Page(){
 	// Get specialties list
 	const {
 		response: getSpecialtiesResponse,
-		error: getSpecialtiesError,
+		// error: getSpecialtiesError,
 		loading: getSpecialtiesLoading,
 		refetch: getSpecialtiesRefetch
 	} = useAxios({
@@ -68,7 +68,7 @@ export default function Page(){
 	// Get centers list
 	const {
 		response: getCentersResponse,
-		error: getCentersError,
+		// error: getCentersError,
 		loading: getCentersLoading,
 		refetch: getCentersRefetch
 	} = useAxios({
@@ -81,7 +81,7 @@ export default function Page(){
 	// Create doctor
 	const { 
 		response: createDoctorResponse, 
-		error: createDoctorError, 
+		// error: createDoctorError, 
 		loading: createDoctorLoading, 
 		refetch: createDoctorRefetch 
 	} = useAxios({

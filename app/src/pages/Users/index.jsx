@@ -1,6 +1,7 @@
 import { useState, createContext } from 'react'
 import { useAxios } from '../../hooks'
 import { useAppContext } from '../../App'
+import { FilterProvider, UsersFilter } from '../../components/Filters'
 
 import {
 	Loading,
@@ -38,11 +39,17 @@ export default function Page(){
 	const { API_URI, token } = useAppContext()
 	const [ request, setRequest ] = useState(`${API_URI}/user/list/`)
 
-	const { response, error, loading, refetch } = useAxios({
+	const { 
+		response, 
+		error, 
+		loading, 
+		refetch 
+	} = useAxios({
 		url: request,
-		method: 'POST',
+		method: 'GET',
 		token
 	})
+
 
 	const requestUpdate = url => {
 		setRequest(url)
@@ -69,7 +76,12 @@ export default function Page(){
 				{ !loading && error && <Alert type="error" data={error} /> }
 
 				{ !loading && !error && 
-				(<div className="max-w-full h-full overflow-x-auto scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100">
+				(<>
+					<FilterProvider>
+						<UsersFilter filter={requestUpdate} />
+					</FilterProvider>
+
+
 					<Table header={thead} pager={response.data.links} context={pageContext}>
 						{ response?.data 
 							? response.data.data.map(({id, name, firstname, lastname, role, created_at}) => (<tr key={id}>
@@ -97,7 +109,7 @@ export default function Page(){
 							</tr>))
 						: null }
 					</Table>
-				</div>)}
+				</>)}
 
 			</section>
 		</pageContext.Provider>

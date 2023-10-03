@@ -24,7 +24,7 @@ export const Input = ({
 		<input 
 			type={type ?? 'text'} 
 			name={name} 
-			defaultValue={formContext.formState[name]}
+			defaultValue={formContext?.formState[name]}
 			onChange={handleChange}
 			placeholder={placeholder}
 			readOnly={readonly}

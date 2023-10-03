@@ -43,8 +43,8 @@ export default function Page(){
 	// Get user data on edition
 	const { 
 		response: getUserResponse, 
-		error: getUserError, 
-		loading: getUserLoading, 
+		// error: getUserError, 
+		// loading: getUserLoading, 
 		refetch: getUserRefetch 
 	} = useAxios({
 		url: `${API_URI}/user`,
@@ -57,7 +57,7 @@ export default function Page(){
 	// Get specialties list
 	const {
 		response: getSpecialtiesResponse,
-		error: getSpecialtiesError,
+		// error: getSpecialtiesError,
 		loading: getSpecialtiesLoading,
 		refetch: getSpecialtiesRefetch
 	} = useAxios({
@@ -70,7 +70,7 @@ export default function Page(){
 	// Get centers list
 	const {
 		response: getCentersResponse,
-		error: getCentersError,
+		// error: getCentersError,
 		loading: getCentersLoading,
 		refetch: getCentersRefetch
 	} = useAxios({
@@ -84,7 +84,7 @@ export default function Page(){
 	// Create user
 	const { 
 		response: createUserResponse, 
-		error: createUserError, 
+		// error: createUserError, 
 		loading: createUserLoading, 
 		refetch: createUserRefetch 
 	} = useAxios({
@@ -98,7 +98,7 @@ export default function Page(){
 	// Upadate user
 	const { 
 		response: updateUserResponse, 
-		error: updateUserError, 
+		// error: updateUserError, 
 		loading: updateUserLoading, 
 		refetch: updateUserRefetch 
 	} = useAxios({
@@ -265,9 +265,6 @@ export default function Page(){
 				</form>
 			</section>
 		</formContext.Provider>
-
-		{/* <pre>{JSON.stringify(specialties, null, 2)}</pre> */}
-		{/* <pre>{JSON.stringify(formState, null, 2)}</pre> */}
 
 		{loading && (<Loading />)}
 	</>)
