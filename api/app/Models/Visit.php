@@ -148,14 +148,14 @@ class Visit extends Model
 		'ans__anthropometry__calf_circumference',
 	];
 
-    // protected $casts = [
-	// 	'date' => 'datetime:d-m-Y H:i:s',
-	// 	'birth_date' => 'datetime:d-m-Y H:i:s',
-	// 	'valuation_date' => 'datetime:d-m-Y H:i:s',
-	// 	'discharged_date' => 'datetime:d-m-Y H:i:s',
-    //     'readmission_date' => 'datetime:d-m-Y H:i:s',
-    //     'death_date' => 'datetime:d-m-Y H:i:s',
-	// ];
+    protected $casts = [
+		'date' => 'date:d/m/Y',
+		'birth_date' => 'date:d/m/Y',
+		'valuation_date' => 'datetime:d/m/Y H:i:s',
+		'discharged_date' => 'datetime:d/m/Y H:i:s',
+        'readmission_date' => 'datetime:d/m/Y H:i:s',
+        'death_date' => 'datetime:d/m/Y H:i:s',
+	];
 
 	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'name', 'lastname', 'gender', 'doctor_id']); }
 
