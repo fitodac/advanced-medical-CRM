@@ -52,7 +52,6 @@ trait VisitMessageTrait
 
         $checks = [
             'current_body_weight' => fn($value) => ($value < 30 || $value > 150) ? "fuera de rango" : null,
-            'height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null,
             'BMI' => fn($value) => ($value < 15 || $value > 35) ? "fuera de rango" : null,
             'calf_circumference' => fn($value) => ($value < 20 || $value > 50) ? "fuera de rango" : null,
             'bi__hydratation' => fn($value) => ($value < 50 || $value > 80) ? "fuera de rango" : null,
@@ -68,15 +67,17 @@ trait VisitMessageTrait
             'mu__axes_xax' => fn($value) => ($value > 12) ? "fuera de rango" : null,
             'mu__axes_yax' => fn($value) => ($value > 12) ? "fuera de rango" : null,
             'mu__adipose_tissue' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-            'ans__anthropometry__current_weight' => fn($value) => ($value < 30 || $value > 150) ? "fuera de rango" : null,
-            'ans__anthropometry__current_bmi' => fn($value) => ($value < 15 || $value > 35) ? "fuera de rango" : null,
-            'ans__anthropometry__calf_circumference' => fn($value) => ($value < 20 || $value > 50) ? "fuera de rango" : null,
         ];
+
+        if($data['visit_type'] === 'initial')
+        {
+            array_push($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
+        }
 
         foreach ($checks as $key => $checkFn) {
             $result = $checkFn($data[$key] ?? null);
             if ($result) {
-                $warnings[] = "$key ({$data[$key]}) $result.";
+                $warnings[$key] = "({$data[$key]}) $result.";
             }
         }
 
