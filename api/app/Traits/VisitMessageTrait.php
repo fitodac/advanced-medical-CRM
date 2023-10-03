@@ -71,7 +71,7 @@ trait VisitMessageTrait
 
         if($data['visit_type'] === 'initial')
         {
-            array_push($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
+            $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
         }
 
         foreach ($checks as $key => $checkFn) {
