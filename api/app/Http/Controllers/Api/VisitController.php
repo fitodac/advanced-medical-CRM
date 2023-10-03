@@ -9,19 +9,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Visit;
+use App\Traits\VisitMessageTrait;
 
 class VisitController extends Controller
 {
 
-	use ApiResponse;
+	use ApiResponse, VisitMessageTrait;
 
 
 	// CREATE
 	public function create(Request $request)
 	{
-
-		$auth = Auth::user();
-
 		$validate = Validator::make($request->all(), [
 			'patient_id' => 'required|numeric',
 			'visit_type' => 'required'
@@ -33,13 +31,16 @@ class VisitController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
+        $messages = $this->normalRangeMessageNotification($request->all());
+        // dd($request->all());
 		$visit = Visit::create($request->all());
 
-		return $this->successResponse($visit, 'Hemos registrado una nueva visita');
+		return $this->successResponse(
+            ['visit' => $visit, 'message' => $messages],
+            'Hemos registrado una nueva visita'
+        );
 
 	}
-
-
 
 	// UPDATE
 	public function update(Request $request)
@@ -59,13 +60,14 @@ class VisitController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
+        $messages = $this->normalRangeMessageNotification($request->all());
 		$visit = Visit::find($request->id);
 
 		if( !$visit ) return $this->errorResponse('La visita que estás buscando no existe o ha sido eliminada', 404);
 
 		return $visit->modelUpdate($request->all());
 
-		return $this->successResponse($visit, 'Hemos actualizado los datos de la visita');
+		return $this->successResponse(['visit' => $visit, 'message' => $messages], 'Hemos actualizado los datos de la visita');
 
 	}
 
