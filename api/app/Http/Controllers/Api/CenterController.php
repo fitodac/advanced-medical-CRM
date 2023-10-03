@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Center;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 
@@ -95,13 +96,14 @@ class CenterController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-        $query = Center::query();
+		// name
+		$query = Center::query();
 
-        if ($request->has('center_id') && $request->center_id != 0) {
-            $query->where('center_id', $request->center_id);
-        }
+		if ($request->has('name') && !empty($request->name)) {
+			$query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+		}
 
-        $list = $query->latest()->paginate(10);
+		$list = $query->latest()->paginate(10)->withQueryString();
 
 		return $this->successResponse($list);
 	}

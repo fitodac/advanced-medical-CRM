@@ -177,20 +177,22 @@ class UserController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-        $query = User::whereNot('role', 'superadmin');
 
-        if ($request->has('name') && !empty($request->name)) {
-            $query->where(function($query) use ($request) {
-                $query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
-                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
-            });
-        }
+		$query = User::whereNot('role', 'superadmin');
 
-        if ($request->has('role') && !empty($request->role)) {
-            $query->where('role', $request->role);
-        }
+		if ($request->has('name') && !empty($request->name)) {
+			$query->where(function($query) use ($request) {
+				$query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+					->orWhere(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+					->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+			});
+		}
 
-        $resp = $query->latest()->paginate(10);
+		if ($request->has('role') && !empty($request->role)) {
+			$query->where('role', $request->role);
+		}
+
+		$resp = $query->latest()->paginate(10)->withQueryString();
 		return $this->successResponse($resp);
 	}
 

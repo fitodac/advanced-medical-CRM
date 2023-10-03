@@ -131,6 +131,7 @@ class PatientController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
+	
 		$auth = Auth::user();
 		$resp = [];
 
@@ -141,7 +142,7 @@ class PatientController extends Controller
 		}
 
 		if ($request->has('code') && !empty($request->code)) {
-			$query->where(DB::raw('UPPER(code)'), 'like',  strtoupper($request->code));
+			$query->where(DB::raw('UPPER(code)'), 'LIKE', '%' . strtoupper($request->code) . '%');
 		}
 
 		if ($request->has('doctor') && !empty($request->doctor)) {
@@ -158,7 +159,7 @@ class PatientController extends Controller
 			});
 		}
 
-		$resp = $query->latest()->paginate(10);
+		$resp = $query->latest()->paginate(10)->withQueryString();
 
 		return $this->successResponse($resp);
 	}

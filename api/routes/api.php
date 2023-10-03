@@ -36,20 +36,21 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::post('/user/create', 			    			[UserController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('user.create');
 	Route::put('/user/update',									[UserController::class, 'update'])->name('user.update');
 	Route::post('/user', 												[UserController::class, 'get'])->middleware('restrictRole:superadmin,admin')->name('user.show');
-	Route::post('/user/list', 				    			[UserController::class, 'list'])->middleware('restrictRole:superadmin')->name('user.list');
+	Route::get('/user/list', 				    				[UserController::class, 'list'])->middleware('restrictRole:superadmin')->name('user.list');
 	Route::delete('/user/delete/{user}', 				[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
 
 	// Centers
 	Route::post('/center/create', 		        	[CenterController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('center.create');
 	Route::put('/center/update', 			    			[CenterController::class, 'update'])->middleware('restrictRole:superadmin,admin')->name('center.update');
 	Route::post('/center', 											[CenterController::class, 'get'])->middleware('restrictRole:superadmin,admin')->name('center.get');
-	Route::post('/center/list', 			    			[CenterController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('center.list');
+	Route::get('/center/list', 			    				[CenterController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('center.list');
 	Route::post('/center/getAll', 		        	[CenterController::class, 'getFullList'])->name('center.getAll');
 	Route::delete('/center/delete/{center}', 		[CenterController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('center.delete');
 
 	// Doctors
-	Route::post('/doctor', 											[DoctorController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('doctor.list');
+	Route::get('/doctor', 											[DoctorController::class, 'list'])->middleware('restrictRole:superadmin,admin')->name('doctor.list');
 	Route::post('/doctor/getInfo', 	        		[DoctorController::class, 'get'])->name('doctor.get');
+	Route::post('/doctor/getAll', 	        		[DoctorController::class, 'getFullList'])->name('doctor.getAll');
 	Route::delete('/doctor/delete/{doctor}',		[DoctorController::class, 'delete'])->name('doctor.delete');
 
 	// Specialties
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::post('/patient/create',		        	[PatientController::class, 'create'])->name('patient.create');
 	Route::put('/patient/update',			    			[PatientController::class, 'update'])->name('patient.update');
 	Route::post('/patient',											[PatientController::class, 'get'])->name('patient.get');
-	Route::post('/patient/list',			    			[PatientController::class, 'list'])->name('patient.list');
+	Route::get('/patient/list',			    				[PatientController::class, 'list'])->name('patient.list');
 	Route::delete('/patient/delete/{patient}',	[PatientController::class, 'delete'])->name('patient.delete');
 
     // Visits

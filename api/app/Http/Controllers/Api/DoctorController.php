@@ -21,28 +21,36 @@ class DoctorController extends Controller
 
   public function list(Request $request)
 	{
-        $query = Doctor::with(['center', 'user', 'specialty']);
 
-        if ($request->has('name') && !empty($request->name)) {
-            $query->whereHas('user', function ($query) use ($request) {
-                $query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->name) . '%')
-                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
-            });
-        }
+		$query = Doctor::with(['center', 'user', 'specialty']);
 
-        if ($request->has('center_id') && $request->center_id != 0) {
-            $query->where('center_id', $request->center_id);
-        }
+		if ($request->has('name') && !empty($request->name)) {
+			$query->whereHas('user', function ($query) use ($request) {
+				$query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+						->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+			});
+		}
 
-        if ($request->has('specialty_id') && $request->specialty_id != 0) {
-            $query->where('specialty_id', $request->specialty_id);
-        }
+		if ($request->has('center_id') && $request->center_id != 0) {
+			$query->where('center_id', $request->center_id);
+		}
 
-        $resp = $query->latest()->paginate(10);
+		if ($request->has('specialty_id') && $request->specialty_id != 0) {
+			$query->where('specialty_id', $request->specialty_id);
+		}
+
+		$resp = $query->latest()->paginate(10)->withQueryString();
 
 		return $this->successResponse($resp);
 	}
 
+
+	// GET FULL LIST
+	public function getFullList(Request $request)
+	{
+		$list = Doctor::with('user')->get();
+		return $this->successResponse($list);
+	}
 
 
 	// GET
