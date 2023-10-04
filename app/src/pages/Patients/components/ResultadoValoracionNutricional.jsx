@@ -57,7 +57,7 @@ export const ResultadoValoracionNutricional = ({context}) => {
 						</label>
 
 						{ input_visible 
-						&& (<div className="w-28 realtive -top-1">
+						&& (<div className="w-28 relative -top-1">
 									<Input name="patient_malnourished__code" context={context} />
 								</div>)}
 						

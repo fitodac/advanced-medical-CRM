@@ -5,7 +5,8 @@ import { InputDate } from '../../../components/Ui'
 
 export const HeaderForm = ({ 
 	title, 
-	context 
+	context,
+	dateFieldLabel
 }) => {
 
 	const formContext = useContext(context)
@@ -21,7 +22,7 @@ export const HeaderForm = ({
 
 		<div className="grid grid-cols-2 gap-x-6 gap-y-4">
 			<InputDate 
-				label="Fecha" 
+				label={dateFieldLabel} 
 				name="date" 
 				context={context} />
 		</div>
@@ -30,5 +31,6 @@ export const HeaderForm = ({
 
 HeaderForm.propTypes = {
 	title: PropTypes.string,
+	dateFieldLabel: PropTypes.string,
 	context: PropTypes.object
 }

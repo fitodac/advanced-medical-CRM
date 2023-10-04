@@ -188,13 +188,21 @@ class VisitFactory extends Factory
             'pa__reason' => $this->faker->text,
             // DATOS DE LA VISITA 1
             // Situación actual del paciente
-            'discharged' => $this->faker->randomElement(['y', null]),
-            'discharged_date' => $this->faker->date,
-            'readmission' => $this->faker->randomElement(['y', null]),
-            'readmission_date' => $this->faker->date,
-            'death' => $this->faker->randomElement(['y', null]),
-            'death_date' => $this->faker->date,
-            'not_come_for_control' => $this->faker->randomElement(['y', null]),
+						'patient_current_situation' => $this->faker->randomElement([
+							'Alta', 
+							'Reingreso', 
+							'Deceso', 
+							'No acude a control', 
+							null
+						]),
+						'patient_current_situation_date' => $this->faker->date,
+            // 'discharged' => $this->faker->randomElement(['y', null]),
+            // 'discharged_date' => $this->faker->date,
+            // 'readmission' => $this->faker->randomElement(['y', null]),
+            // 'readmission_date' => $this->faker->date,
+            // 'death' => $this->faker->randomElement(['y', null]),
+            // 'death_date' => $this->faker->date,
+            // 'not_come_for_control' => $this->faker->randomElement(['y', null]),
             // Valoración del estado nutricional
             // Antropometría
             'ans__anthropometry__current_weight' => $this->faker->randomFloat(2, 0, 999.99),
@@ -202,6 +210,11 @@ class VisitFactory extends Factory
             'ans__anthropometry__difference_percentage' => $this->faker->randomFloat(2, 0, 100),
             'ans__anthropometry__current_bmi' => $this->faker->randomFloat(2, 0, 999.99),
             'ans__anthropometry__calf_circumference' => $this->faker->randomFloat(2, 0, 999.99),
+            'hfnr__followed_prescribed_nutritional_recommendation' => $this->faker->randomElement(['y', null]),
+            'hfnr__percentage_of_adherece_to_recommendations' => $this->faker->randomFloat(2, 0, 999.99),
+            'hfnr__not_followed_prescribed_recommendation' => $this->faker->text,
+            'rng__has_reached_nutritional_goal' => $this->faker->randomElement(['y', null]),
+            'rng__has_reached_nutritional_goal_reasons' => $this->faker->text,
         ];
     }
 }

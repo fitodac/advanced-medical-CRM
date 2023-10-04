@@ -1,16 +1,15 @@
 import { 
-	createContext, 
+	createContext,
 	useEffect,
 	useMemo,
-	useState
+	// useState
 } from 'react'
 import { 
 	useForm,
-	useAxios
+	// useAxios
 } from '../../../hooks'
-import PropTypes from 'prop-types'
-import crdState from '../crdState'
-import { useAppContext } from '../../../App'
+import { PropTypes } from 'prop-types'
+// import { useAppContext } from '../../../App'
 import {
 	getVisitFormDataByType
 } from '../../../helpers'
@@ -20,35 +19,17 @@ import {
 	HeaderSection,
 	FromGroup,
 	FromGroupContainer,
-	CriteriosInclusionExclusionExclusion,
-	FechaNacimiento,
-	AntecedentesMedicos,
-	FechaValoracion,
-	Antropometria,
-	CribadoNutricional,
-	ResultadoCribadoNutricional,
-	CribadoMuscular,
-	ResultadoCribadoMuscular,
-	DiagnosticoNutricionalUtilizado,
-	ResultadoValoracionNutricional,
+	SituacionActualDelPaciente,
+	AntropometriaSeguimiento1,
 	ParametrosFuncionales,
 	OtrasMedicionesDeComposicionCorporal,
-	ResultadoValoracionMuscular,
-	ObjetivosPlanteados,
-	IniciaTratamientoNutricional,
-	TipoTratamientoNutricionalIndicado,
-	RefiereEndocrinologiaParaIniciarTratamientoNutricional,
-	ActividadFisicaPrescripta,
-	TiposDeEjercicios
+	PacienteHaSeguidoTratamientoNutricional,
+	HaConseguidoElPacienteElObjetivoNutricional
 } from '../components'
 import { Button } from '../../../components/Ui'
 
-
 // eslint-disable-next-line react-refresh/only-export-components
 export const formContext = createContext({})
-
-// const persistent = {}
-
 
 
 export const FormFirst = ({
@@ -56,7 +37,7 @@ export const FormFirst = ({
 	formData
 }) => {
 
-	const { API_URI, token } = useAppContext()
+	// const { API_URI, token } = useAppContext()
 	// const [ loadingState, setLoadingState ] = useState(false)
 	const {
 		formState, 
@@ -78,6 +59,7 @@ export const FormFirst = ({
 		if(formData) return getVisitFormDataByType('first', formData)
 	}, [formData])
 
+
 	useEffect(() => {
 		setFormState({
 			...formState,
@@ -86,95 +68,76 @@ export const FormFirst = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [existentFormData])
 
-	// useEffect(() => {
-	// 	console.log('formState')
-	// 	Object.assign(persistent, {...formState})
-	// 	console.log({persistent})
-	// }, [formState])
-
-
-	// const {
-	// 	response,
-	// 	error,
-	// 	loading,
-	// 	refetch
-	// } = useAxios({
-	// 	url: `${API_URI}`,
-	// 	method: 'POST',
-	// 	token,
-	// 	init: 0
-	// })
-
-
 	const handleInputChange = e => onInputChange(e)
 	
-	const handleSubmit = async e => {
+	const handleSubmit = e => {
 		e.preventDefault()
 		console.log('formState', formState)
 	}
-	
-	
+
+
+
 	const contextValue = {
 		patient,
 		formState, 
 		handleInputChange
 	}
 
-
+	
 	return (<>
 	<formContext.Provider value={contextValue}>
 		<form onSubmit={handleSubmit}>
-			<HeaderForm title="Visita inicial" context={formContext} />
+			<HeaderForm 
+				title="Visita Seguimiento 1" 
+				dateFieldLabel="Fecha de la visita (≈3 meses de la visita basal)"
+				context={formContext} />
 
-			<div className="space-y-14 mt-14">
+			<div className="mt-3 space-y-4 text-sm">
+				<p>
+					La visita de seguimiento se realizará en todos los 
+					pacientes cribados, tanto los diagnosticados de desnutrición 
+					en la visita basal como los que no presentaron riesgo de 
+					desnutrición en visita basal.
+				</p>
+
+				<p className="italic">
+					En aquellos pacientes que en visita basal no presentaran 
+					riesgo o presencia de desnutrición, se plantea realizar 
+					llamada de seguimiento realizado cribado en remoto con 
+					herramienta R-MAPP (acceso a través de 
+					<a 
+						href="https://rmappnutrition.com/es" 
+						target="_blank"
+						rel="noreferrer">https://rmappnutrition.com/es</a>)
+					y la automedición de circunferencia de pantorrilla por 
+					parte del propio paciente, en línea con uno de los objetivos 
+					del proyecto. Si sale en riesgo, se activarán las líneas
+					habituales de valoración de cada centro (directamente citar 
+					en consultas, remitir desde atención primaria, etc.)
+				</p>
+			</div>
+
+			<div className="space-y-14 mt-8">
 				<FromGroup>
-					<HeaderSection title="Criterios de inclusión y exclusión" />
-					<CriteriosInclusionExclusionExclusion context={formContext} />
+					<SituacionActualDelPaciente context={formContext} /> 
 				</FromGroup>
 				
 				<FromGroup>
-					<HeaderSection title="Datos sociodemográficos" />
+					<HeaderSection title="Valoración del estado nutricional" />
+					
 					<FromGroupContainer>
-						<></>
-						<FechaNacimiento context={formContext} />
-						<AntecedentesMedicos context={formContext} />
+						<AntropometriaSeguimiento1 context={formContext} /> 
+						<ParametrosFuncionales context={formContext} /> 
+						<OtrasMedicionesDeComposicionCorporal context={formContext} /> 
 					</FromGroupContainer>
 				</FromGroup>
 
 				<FromGroup>
-					<HeaderSection title="Ámbito asistencial" />
-					<FromGroupContainer>
-						<FechaValoracion context={formContext} />
-						<Antropometria context={formContext} />
-						<CribadoNutricional context={formContext} />
-						<ResultadoCribadoNutricional context={formContext} />
-						<CribadoMuscular context={formContext} />
-						<ResultadoCribadoMuscular context={formContext} />
-						<DiagnosticoNutricionalUtilizado context={formContext} />
-						<ResultadoValoracionNutricional context={formContext} />
-						<ParametrosFuncionales context={formContext} />
-						<OtrasMedicionesDeComposicionCorporal context={formContext} />
-						<ResultadoValoracionMuscular context={formContext} />
-					</FromGroupContainer>
+					<HeaderSection title="Tratamiento nutricional" />
+					<PacienteHaSeguidoTratamientoNutricional context={formContext} />
+					<HaConseguidoElPacienteElObjetivoNutricional context={formContext} />
 				</FromGroup>
 
-				<FromGroup>
-					<HeaderSection title="Tratamiento nutricional (si procede)" />
-					<FromGroupContainer>
-						<ObjetivosPlanteados context={formContext} />
-						<IniciaTratamientoNutricional context={formContext} />
-						<TipoTratamientoNutricionalIndicado context={formContext} />
-						<RefiereEndocrinologiaParaIniciarTratamientoNutricional context={formContext} />
-					</FromGroupContainer>
-				</FromGroup>
-
-				<FromGroup>
-					<HeaderSection title="Actividad física - promoción" />
-					<FromGroupContainer>
-						<ActividadFisicaPrescripta context={formContext} />
-						<TiposDeEjercicios context={formContext} />
-					</FromGroupContainer>
-				</FromGroup>
 
 				<div className="">
 					<Button className="btn-lg text-base bg-primary border-primary text-white">Guardar</Button>

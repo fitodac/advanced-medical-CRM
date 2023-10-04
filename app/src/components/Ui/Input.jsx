@@ -20,7 +20,7 @@ export const Input = ({
 	const handleChange = e => formContext.handleInputChange(e)
 
 	return (<div className="">
-		{ label && (<label className="select-none">{label}</label>) }
+		{ label && (<label className="select-none leading-tight block">{label}</label>) }
 		<input 
 			type={type ?? 'text'} 
 			name={name} 

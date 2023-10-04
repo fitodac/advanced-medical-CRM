@@ -53,7 +53,7 @@ export const InputDate = ({
 				name={name}
 				id={`${name}datepickerModal`}
 				className={className ? `${className} max-w-[150px]`: 'max-w-[150px]'}
-				defaultValue={formContext.formState[name]}
+				defaultValue={formContext?.formState[name]}
 				onClick={() => setModal(true)}
 				onChange={() => {}}
 				readOnly />

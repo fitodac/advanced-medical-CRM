@@ -55,7 +55,7 @@ export const ActividadFisicaPrescripta = ({context}) => {
 						</label>
 
 						{ input_visible 
-						&& (<div className="w-full realtive -top-1 flex-1">
+						&& (<div className="w-full relative -top-1 flex-1">
 									<Input name="pa__prescribed_reasons" context={context} />
 								</div>)}
 						

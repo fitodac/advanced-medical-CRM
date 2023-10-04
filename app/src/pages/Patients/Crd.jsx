@@ -10,7 +10,7 @@ import { useAppContext } from '../../App'
 
 import { Loading, PageHeader } from '../../components'
 import { Sidebar } from './components'
-import { FormFirst, FormInitial } from './forms'
+import { FormInitial, FormFirst } from './forms'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const formContext = createContext({})
@@ -28,7 +28,7 @@ export default function Page(){
 	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
 	const [ patient, setPatient ] = useState({id: id, name: '', gender: ''})
-	const [ formType, setFormType ] = useState('first')
+	const [ formType, setFormType ] = useState('initial')
 	const [ formData, setFormData ] = useState(null)
 	const [ loading, setLoading ] = useState(true)
 	const firstFooter = useRef(null)
@@ -97,27 +97,30 @@ export default function Page(){
 					<Sidebar setFormType={val => { setFormType(val) }} />
 
 					<div className="col-span-4 max-h-[80.5vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-4 pb-28 pr-10 xl:pr-14">
+
+						{/* {formType === 'initial'  */}
 						{formType === 'first' 
-						&& (<>
-							<FormFirst patient={patient} formData={formData} />
-							<div ref={firstFooter} />
-						</>)}
-
-
-						{formType === 'initial' 
 						&& (<>
 							<FormInitial patient={patient} formData={formData} />
 							<div ref={initialFooter} />
 						</>)}
 
-					</div>
+
+						{/* {formType === 'first'  */}
+						{formType === 'initial' 
+						&& (<>
+							<FormFirst patient={patient} formData={formData} />
+							<div ref={firstFooter} />
+						</>)}
+
+					</div> 
 				</div>
 
 			</section>
 
 
-			{/* Scroll to the end of the "first" form */}
-			{formType === 'first' 
+			{/* Scroll to the end of the "initial" form */}
+			{formType === 'initial' 
 			&& (<button 
 						className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
 						onClick={scrollToTheEnd}>
@@ -125,8 +128,8 @@ export default function Page(){
 					</button>)}
 			
 			
-			{/* Scroll to the end of the "initial" form */}
-			{formType === 'initial'
+			{/* Scroll to the end of the "first" form */}
+			{formType === 'first'
 			&& (<button
 						className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
 						onClick={scrollToTheEnd}>

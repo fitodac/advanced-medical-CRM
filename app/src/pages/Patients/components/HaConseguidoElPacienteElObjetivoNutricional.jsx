@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
 import { HeaderFieldGroup } from '.'
 
-import fields from '../formfields/iniciaTratamientoNutricional'
+import fields from '../formfields/haConseguidoElPacienteElObjetivoNutricional'
 
 const id = 'iniciaTratamientoNutricional'
 
-export const IniciaTratamientoNutricional = ({context}) => {
+export const HaConseguidoElPacienteElObjetivoNutricional = ({context}) => {
 
 	const formContext = useContext(context)
 	const [ input_visible, setInputVisible ] = useState(false)
@@ -21,13 +21,13 @@ export const IniciaTratamientoNutricional = ({context}) => {
 	const handleChange = e => {
 		const {value, checked} = e.target
 		setChkState(checked ? value : '')
-		if( 'y' !== value ) formContext.handleInputChange({target: {name: 'nt__specify', value: ''}})
+		if( 'y' !== value ) formContext.handleInputChange({target: {name: 'rng__has_reached_nutritional_goal', value: ''}})
 		setInputVisible('y' === value)
 	}
 
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup	title="Inicia tratamiento nutricional" />
+			<HeaderFieldGroup	title="¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?" />
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (<div key={key} className="flex gap-6 items-start">
@@ -67,6 +67,6 @@ export const IniciaTratamientoNutricional = ({context}) => {
 }
 
 
-IniciaTratamientoNutricional.propTypes = {
+HaConseguidoElPacienteElObjetivoNutricional.propTypes = {
 	context: PropTypes.object.isRequired
 }

@@ -175,13 +175,22 @@ return new class extends Migration
 
 			// DATOS DE LA VISITA 1
 			// Situación actual del paciente
-			$table->enum('discharged', ['y'])->nullable()->comment('Paciente dado de alta');
-			$table->date('discharged_date')->nullable()->comment('Fecha del alta del paciente');
-			$table->enum('readmission', ['y'])->nullable()->comment('Reingreso del paciente');
-			$table->date('readmission_date')->nullable()->comment('Fecha de reingreso del paciente');
-			$table->enum('death', ['y'])->nullable()->comment('Deceso del paciente');
-			$table->date('death_date')->nullable()->comment('Fecha de deceso del paciente');
-			$table->enum('not_come_for_control', ['y'])->nullable()->comment('El paciente no acude a control');
+			$table->enum('patient_current_situation', [
+				'Alta',
+				'Reingreso',
+				'Deceso',
+				'No acude a control'
+			])->nullable()->comment('Situación actual del paciente');
+			$table->date('patient_current_situation_date')->nullable()->comment('Situación actual del paciente - Fecha');
+			
+			// $table->enum('discharged', ['y'])->nullable()->comment('Paciente dado de alta');
+			// $table->date('discharged_date')->nullable()->comment('Fecha del alta del paciente');
+			// $table->enum('readmission', ['y'])->nullable()->comment('Reingreso del paciente');
+			// $table->date('readmission_date')->nullable()->comment('Fecha de reingreso del paciente');
+			// $table->enum('death', ['y'])->nullable()->comment('Deceso del paciente');
+			// $table->date('death_date')->nullable()->comment('Fecha de deceso del paciente');
+			// $table->enum('not_come_for_control', ['y'])->nullable()->comment('El paciente no acude a control');
+			
 			// Valoración del estado nutricional
 			// Antropometría
 			$table->unsignedDecimal('ans__anthropometry__current_weight', 5, 2)->nullable()->comment('Peso corporal actual | kg');
@@ -189,6 +198,13 @@ return new class extends Migration
 			$table->unsignedDecimal('ans__anthropometry__difference_percentage', 5, 2)->nullable()->comment('Porcentaje de diferencia | %');
 			$table->unsignedDecimal('ans__anthropometry__current_bmi', 5, 2)->nullable()->comment('IMC actual | kg/m2');
 			$table->unsignedDecimal('ans__anthropometry__calf_circumference', 5, 2)->nullable()->comment('Perímetro de pantorrilla | cm');
+			// ¿El paciente ha seguido la recomendación nutricional prescrita?
+			$table->enum('hfnr__followed_prescribed_nutritional_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
+			$table->unsignedDecimal('hfnr__percentage_of_adherece_to_recommendations', 5, 2)->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
+			$table->text('hfnr__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación nutricional prescrita');
+			
+			$table->enum('rng__has_reached_nutritional_goal', ['y'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
+			$table->text('rng__has_reached_nutritional_goal_reasons')->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal? motivos');
 
 			$table->timestamps();
 		});

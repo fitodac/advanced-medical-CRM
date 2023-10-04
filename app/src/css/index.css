@@ -22,8 +22,8 @@ form .input-search{
 	flex
 	gap-x-2
 	rounded-md;
+}
 
-	> input{
-		border: none;
-	}
+form .input-search > input{
+	border: none;
 }
