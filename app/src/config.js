@@ -1,1 +1,1 @@
-export const API_URI = 'https://estudio-advance.server2.preproduccion.xyz/api'
+export const API_URI = 'https://api.advancedexpertprogram.com/'
