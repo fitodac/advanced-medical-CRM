@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useAuth, useLogin } from '../hooks'
-// import cookies from 'js-cookies'
 
 import { API_URI } from '../config.dev'
 // import { API_URI } from '../config'
@@ -35,7 +34,6 @@ export default function Page(){
 	const loginSubmit = async (e) => {
 		e.preventDefault()
 		await formLogin()
-		// console.log('csrf', cookies.keys())
 	}
 
 
