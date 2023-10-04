@@ -13,4 +13,9 @@ class Center extends Model
 		'name',
 		'code'
 	];
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
 }
