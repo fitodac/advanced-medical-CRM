@@ -28,8 +28,6 @@ class PatientFactory extends Factory
             'code' => Str::upper($this->randomAlphaNum(5)),
             'doctor_id' => $doctor->id,
             'center_id' => $doctor->center->id,
-            'name' => $this->faker->firstName,
-            'lastname' => $this->faker->lastName,
             'gender' => $this->faker->randomElement($genders),
         ];
     }

@@ -28,8 +28,6 @@ class PatientController extends Controller
 			'code' => 'required',
 			'doctor_id' => 'required|numeric',
 			'center_id' => 'required|numeric',
-			'name' => 'required',
-			'lastname' => 'required',
 			'gender' => 'required',
 		], [
 			'code.required' => 'Debes incluír un código de paciente',
@@ -37,8 +35,6 @@ class PatientController extends Controller
 			'doctor_id.numeric' => 'Formato incorrecto',
 			'center_id.required' => 'El ID del centro médico es requerido',
 			'center_id.numeric' => 'Formato incorrecto',
-			'name.required' => 'Debes incluír un nombre para el paciente',
-			'lastname.required' => 'Debes incluír un apellido para el paciente',
 			'gender.required' => 'Debes incluír un género'
 		]);
 
@@ -60,8 +56,6 @@ class PatientController extends Controller
 			'id' => 'required|numeric',
 			'doctor_id' => 'required|numeric',
 			'center_id' => 'required|numeric',
-			'name' => 'required',
-			'lastname' => 'required',
 			'gender' => 'required',
 			'gender.required' => 'Debes incluír un género'
 		], [
@@ -71,8 +65,6 @@ class PatientController extends Controller
 			'doctor_id.numeric' => 'Formato incorrecto',
 			'center_id.required' => 'El ID del centro médico es requerido',
 			'center_id.numeric' => 'Formato incorrecto',
-			'name.required' => 'Debes incluír un nombre para el paciente',
-			'lastname.required' => 'Debes incluír un apellido para el paciente',
 			'gender.required' => 'Debes incluír un género'
 		]);
 
@@ -84,8 +76,6 @@ class PatientController extends Controller
 		if( $request->doctor_id !== $patient->doctor_id ) return $this->unauthorizedResponse('Tu usuario no puede modificar este paciente');
 
 		$patient->update([
-			'name' => $request->name,
-			'lastname' => $request->lastname,
 			'gender' => $request->gender
 		]);
 
@@ -111,7 +101,7 @@ class PatientController extends Controller
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
 
-		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id', 'name', 'lastname', 'gender'])->find($request->id);
+		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id', 'gender'])->find($request->id);
 
 
 		if( 'doctor' === $auth->role ){
@@ -145,19 +135,19 @@ class PatientController extends Controller
 			$query->where(DB::raw('UPPER(code)'), 'LIKE', '%' . strtoupper($request->code) . '%');
 		}
 
-		if ($request->has('doctor') && !empty($request->doctor)) {
-			$query->whereHas('doctor.user', function ($query) use ($request) {
-				$query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%')
-						->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%');
-			});
-		}
+		// if ($request->has('doctor') && !empty($request->doctor)) {
+		// 	$query->whereHas('doctor.user', function ($query) use ($request) {
+		// 		$query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%')
+		// 				->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->doctor) . '%');
+		// 	});
+		// }
 
-		if ($request->has('name') && !empty($request->name)) {
-			$query->where(function($query) use ($request) {
-				$query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
-						->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
-			});
-		}
+		// if ($request->has('name') && !empty($request->name)) {
+		// 	$query->where(function($query) use ($request) {
+		// 		$query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+		// 				->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+		// 	});
+		// }
 
 		$resp = $query->latest()->paginate(10)->withQueryString();
 
