@@ -142,18 +142,18 @@ class Visit extends Model
         'pa__hpftppar',
         'pa__hpftppar_percent',
         'pa__reason',
-        'discharged',
-        'discharged_date',
-        'readmission',
-        'readmission_date',
-        'death',
-        'death_date',
-        'not_come_for_control',
+        'patient_current_situation',
+        'patient_current_situation_date',
         'ans__anthropometry__current_weight',
         'ans__anthropometry__initial_weight',
         'ans__anthropometry__difference_percentage',
         'ans__anthropometry__current_bmi',
-        'ans__anthropometry__calf_circumference'
+        'ans__anthropometry__calf_circumference',
+        'hfnr__followed_prescribed_nutritional_recommendation',
+        'hfnr__percentage_of_adherece_to_recommendations',
+        'hfnr__not_followed_prescribed_recommendation',
+        'rng__has_reached_nutritional_goal',
+        'rng__has_reached_nutritional_goal_reasons'
     ];
 
     protected $casts = [
@@ -175,6 +175,4 @@ class Visit extends Model
 		]);
 		// return array_merge($req);
 	}
-
-
 }

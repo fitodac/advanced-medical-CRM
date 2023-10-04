@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Specialty extends Model
 {
 	use HasFactory;
-	
+
 	public $timestamps = false;
 
 	protected $fillable = [
 		'name'
 	];
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
 }
