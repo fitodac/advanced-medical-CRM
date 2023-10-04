@@ -25,8 +25,6 @@ export default function Page(){
 		code: '',
 		doctor_id: '',
 		center_id: '',
-		name: '',
-		lastname: '',
 		gender: 'mujer'
 	})
 
@@ -186,8 +184,6 @@ export default function Page(){
 			<section className="max-w-3xl pt-5">
 				<form onSubmit={handleSubmit}>
 					<div className="grid grid-cols-2 gap-x-5 gap-y-4">
-						<Input label="Nombre" name="name" context={formContext} />
-						<Input label="Apellido" name="lastname" context={formContext} />
 
 						<div className="">
 							<label>Género</label>

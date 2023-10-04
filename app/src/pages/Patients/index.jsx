@@ -17,7 +17,6 @@ import { Table } from '../../components/Table'
 const thead = [
 	{ title: '#' },
 	{ title: 'ID' },
-	{ title: 'Nombre' },
 	{ title: 'Género', class: 'text-center' },
 	{ title: 'Doctor' },
 	{ title: 'Acciones', class: 'text-end' },
@@ -70,7 +69,7 @@ export default function Page(){
 
 					{response?.data && (
 						<Table header={'doctor' === role ? [...thead].filter(i => i.title !== 'Doctor') : thead} pager={response.data.links} context={pageContext}>
-							{response.data.data.map(({id, code, name, lastname, gender, doctor, center}) => (
+							{response.data.data.map(({id, code, gender, doctor, center}) => (
 							<tr key={id}>
 								<td>
 									<span className="text-slate-300 text-xs">{id}</span>
@@ -78,7 +77,6 @@ export default function Page(){
 								<td>
 									<span className="text-slate-500 text-sm font-bold">{code}</span>
 								</td>
-								<td className="font-semibold">{`${name} ${lastname}`}</td>
 								<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
 								{ 'doctor' !== role 
 								&& (<td className="leading-none">
