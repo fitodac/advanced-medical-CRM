@@ -6,8 +6,9 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Traits\VisitMessageTrait;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PatientResource;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 class PatientController extends Controller
 {
 
-	use ApiResponse;
+	use ApiResponse, VisitMessageTrait;
 
 
 	// CREATE
@@ -91,6 +92,7 @@ class PatientController extends Controller
 	{
 
 		$auth = Auth::user();
+        $messages = '';
 
 		$validate = Validator::make($request->all(), [
 			'id' => 'required|numeric',
@@ -103,11 +105,14 @@ class PatientController extends Controller
 
 		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id', 'gender'])->find($request->id);
 
+        if ($patient->visits) {
+            $messages = $this->normalRangeMessageNotification($patient->visits->keyBy('visit_type')->toArray(), true);
+        }
 
 		if( 'doctor' === $auth->role ){
 			$doctor = Doctor::where('user_id', $auth->id)->first();
 			if( $patient->doctor_id !== $doctor->id ) return $this->unauthorizedResponse('No estás autorizado a ver los datos de este paciente');
-			return $this->successResponse($patient);
+			return $this->successResponse(compact('patient', 'messages'));
 		}else{
 			return $this->successResponse($patient);
 		}
@@ -121,7 +126,7 @@ class PatientController extends Controller
 	// LIST
 	public function list(Request $request)
 	{
-	
+
 		$auth = Auth::user();
 		$resp = [];
 

@@ -76,6 +76,8 @@ class VisitController extends Controller
 	// GET
 	public function get(Request $request)
 	{
+        $messages = "";
+
 		$validate = Validator::make($request->all(), [
 			'id' => 'required|numeric'
 		], [
@@ -89,7 +91,9 @@ class VisitController extends Controller
 
 		if( !$visit ) return $this->errorResponse('La visita que estás buscando no existe o ha sido eliminada', 404);
 
-        $messages = $this->normalRangeMessageNotification($visit->toArray());
+        if ($visit) {
+            $messages = $this->normalRangeMessageNotification($visit->keyBy('visit_type')->toArray(), true);
+        }
 
 		return $this->successResponse(['visit' => $visit, 'messages' => $messages]);
 	}

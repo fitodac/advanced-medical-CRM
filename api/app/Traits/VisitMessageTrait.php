@@ -46,7 +46,7 @@ trait VisitMessageTrait
 	 * @param  array  $data
 	 * @return array $warning
 	 */
-	public function normalRangeMessageNotification($data)
+	public function normalRangeMessageNotification($data, $list = false)
 	{
         $warnings = [];
 
@@ -69,15 +69,32 @@ trait VisitMessageTrait
             'mu__adipose_tissue' => fn($value) => ($value > 12) ? "fuera de rango" : null,
         ];
 
-        if($data['visit_type'] === 'initial')
-        {
-            $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
-        }
+        if($list) {
+            foreach ($data as $visit_type => $value) {
 
-        foreach ($checks as $key => $checkFn) {
-            $result = $checkFn($data[$key] ?? null);
-            if ($result) {
-                $warnings[$key] = "({$data[$key]}) $result.";
+                if($visit_type === 'initial')
+                {
+                    $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
+                }
+
+                foreach ($checks as $key => $checkFn) {
+                    $result = $checkFn($value[$key] ?? null);
+                    if ($result) {
+                        $warnings[$visit_type][$key] = "({$value[$key]}) $result.";
+                    }
+                }
+            }
+        } else {
+            if($data['visit_type'] === 'initial')
+            {
+                $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
+            }
+
+            foreach ($checks as $key => $checkFn) {
+                $result = $checkFn($data[$key] ?? null);
+                if ($result) {
+                    $warnings[$key] = "({$data[$key]}) $result.";
+                }
             }
         }
 
