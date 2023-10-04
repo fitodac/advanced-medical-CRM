@@ -1,0 +1,1 @@
+export const API_URI = 'https://estudio-advance.server2.preproduccion.xyz/api'

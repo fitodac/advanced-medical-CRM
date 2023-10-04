@@ -3,6 +3,7 @@ import { Outlet, useNavigation, useLocation } from 'react-router-dom'
 
 import { useAuth } from './hooks'
 import { API_URI } from './config.dev'
+// import { API_URI } from './config'
 import {
 	Loading,
 	Navbar,

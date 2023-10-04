@@ -68,41 +68,43 @@ export default function Page(){
 						<PatientsFilter filter={requestUpdate} />
 					</FilterProvider>
 
-					<Table header={'doctor' === role ? [...thead].filter(i => i.title !== 'Doctor') : thead} pager={response.data.links} context={pageContext}>
-						{ response?.data 
-						? response.data.data.map(({id, code, name, lastname, gender, doctor, center}) => (<tr key={id}>
-							<td>
-								<span className="text-slate-300 text-xs">{id}</span>
-							</td>
-							<td>
-								<span className="text-slate-500 text-sm font-bold">{code}</span>
-							</td>
-							<td className="font-semibold">{`${name} ${lastname}`}</td>
-							<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
-							{ 'doctor' !== role 
-							&& (<td className="leading-none">
-										{ doctor 
-											? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor?.user.firstname} {doctor?.user.lastname}</div>) : (<div>{doctor?.user.name}</div>)
-											: (<div className="text-slate-300">sin datos</div>) }
-										
-										{ center 
-										? (<small className="text-slate-500 text-xs font-light">{center?.name}</small>)
-										: (<small className="text-slate-300 text-xs font-light">sin datos</small>) }
-									</td>)}
-							
-							<td>
-								<div className="flex gap-x-2 justify-end h-full">
-									{ 'doctor' === role && <ButtonLink className="btn-sm bg-teal border-teal text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
-									<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
-									<Delete 
-											id={id} 
-											url={`${API_URI}/patient/delete/${id}`}
-											context={pageContext} />
-								</div>
-							</td>
-						</tr>))
-						: null }
-					</Table>
+					{response?.data && (
+						<Table header={'doctor' === role ? [...thead].filter(i => i.title !== 'Doctor') : thead} pager={response.data.links} context={pageContext}>
+							{response.data.data.map(({id, code, name, lastname, gender, doctor, center}) => (
+							<tr key={id}>
+								<td>
+									<span className="text-slate-300 text-xs">{id}</span>
+								</td>
+								<td>
+									<span className="text-slate-500 text-sm font-bold">{code}</span>
+								</td>
+								<td className="font-semibold">{`${name} ${lastname}`}</td>
+								<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
+								{ 'doctor' !== role 
+								&& (<td className="leading-none">
+											{ doctor 
+												? doctor.user.firstname || doctor.user.lastname ? (<div className="text-slate-500 whitespace-nowrap text-ellipsis">{doctor?.user.firstname} {doctor?.user.lastname}</div>) : (<div>{doctor?.user.name}</div>)
+												: (<div className="text-slate-300">sin datos</div>) }
+											
+											{ center 
+											? (<small className="text-slate-500 text-xs font-light">{center?.name}</small>)
+											: (<small className="text-slate-300 text-xs font-light">sin datos</small>) }
+										</td>)}
+								
+								<td>
+									<div className="flex gap-x-2 justify-end h-full">
+										{ 'doctor' === role && <ButtonLink className="btn-sm bg-teal border-teal text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
+										<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
+										<Delete 
+												id={id} 
+												url={`${API_URI}/patient/delete/${id}`}
+												context={pageContext} />
+									</div>
+								</td>
+							</tr>
+							))}
+						</Table>
+					)}
 				</>)}
 
 			</section>

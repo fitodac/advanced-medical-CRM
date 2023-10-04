@@ -98,16 +98,16 @@ export default function Page(){
 
 					<div className="col-span-4 max-h-[80.5vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-4 pb-28 pr-10 xl:pr-14">
 
-						{/* {formType === 'initial'  */}
-						{formType === 'first' 
+						{formType === 'initial' 
+						// {formType === 'first' 
 						&& (<>
 							<FormInitial patient={patient} formData={formData} />
 							<div ref={initialFooter} />
 						</>)}
 
 
-						{/* {formType === 'first'  */}
-						{formType === 'initial' 
+						{formType === 'first' 
+						// {formType === 'initial' 
 						&& (<>
 							<FormFirst patient={patient} formData={formData} />
 							<div ref={firstFooter} />
