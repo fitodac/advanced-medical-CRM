@@ -37,7 +37,7 @@ export const pageContext = createContext({})
 export default function Page(){
 
 	const { API_URI, token } = useAppContext()
-	const [ request, setRequest ] = useState(`${API_URI}/user/list/`)
+	const [ request, setRequest ] = useState(`${API_URI}/user/list`)
 
 	const { 
 		response, 

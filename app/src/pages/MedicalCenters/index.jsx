@@ -29,7 +29,7 @@ export const pageContext = createContext({})
 export default function Page(){
 
 	const { API_URI, token } = useAppContext()
-	const [ request, setRequest ] = useState(`${API_URI}/center/list/`)
+	const [ request, setRequest ] = useState(`${API_URI}/center/list`)
 
 	const { response, error, loading, refetch } = useAxios({
 		url: request,
