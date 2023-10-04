@@ -43,16 +43,16 @@ export const DoctorsFilter = ({filter}) => {
 
 	const handleSubmit = e => {
 		e.preventDefault()
-		filter(`${API_URI}/user/list/?${objectToQueryString(filterContext.formState)}`)
+		filter(`${API_URI}/doctor?${objectToQueryString(filterContext.formState)}`)
 	}
 
 	return (
 		<>
-		<form 
+		<form
 			onSubmit={handleSubmit}
 			className="w-full space-y-2 md:flex md:space-0 md:gap-x-3 md:items-end">
 
-			<InputSearch 
+			<InputSearch
 				label="Nombre / Apellido"
 				name="name"
 				context={FilterContext} />
@@ -61,7 +61,7 @@ export const DoctorsFilter = ({filter}) => {
 				<div className="">
 					<label>Especialidad</label>
 
-					<select 
+					<select
 						name="specialty_id"
 						onChange={handleChange}>
 						{getSpecialtiesResponse?.data.map(({id, name}) => (
@@ -70,12 +70,12 @@ export const DoctorsFilter = ({filter}) => {
 					</select>
 				</div>
 			)}
-			
+
 			{getCentersResponse?.success && (
 				<div className="">
 					<label>Centro médico</label>
 
-					<select 
+					<select
 						name="center_id"
 						onChange={handleChange}>
 						{getCentersResponse?.data.map(({id, name}) => (
