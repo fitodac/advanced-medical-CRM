@@ -19,7 +19,19 @@ export const useLogin = ({ url, body }) => {
 		try {
 			setLoading(true)
 
-			axios.post(url, body)
+			axios.get('https://api.advancedexpertprogram.com/sanctum/csrf-cookie')
+
+			axios.post(
+				url, 
+				body,
+				{
+					headers: {
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+						"Access-Control-Allow-Origin": "*"
+					}
+				}
+			)
 			.then(resp => {
 				login({...resp.data})
 			})

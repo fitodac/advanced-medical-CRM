@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuth, useLogin } from '../hooks'
+// import cookies from 'js-cookies'
 
 import { API_URI } from '../config.dev'
+// import { API_URI } from '../config'
 import { Button, Alert } from '../components/Ui'
 import {
 	Loading
@@ -14,6 +16,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( user ) login(user)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 
@@ -32,6 +35,7 @@ export default function Page(){
 	const loginSubmit = async (e) => {
 		e.preventDefault()
 		await formLogin()
+		// console.log('csrf', cookies.keys())
 	}
 
 

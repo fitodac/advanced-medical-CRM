@@ -1,1 +1,1 @@
-export const API_URI = 'https://api.advancedexpertprogram.com/'
+export const API_URI = 'https://api.advancedexpertprogram.com/api'

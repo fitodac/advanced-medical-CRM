@@ -33,7 +33,14 @@ export const useAxios = ({
 					url,
 					method,
 					data: body, 
-					headers: {...headers, Authorization: token}
+					headers: {
+						...headers, 
+						Authorization: token,
+						'Content-Type': 'application/json',
+						Accept: 'application/json',
+						'Access-Control-Allow-Origin': '*'
+					},
+					// withCredentials: true
 				})
 				.then(resp => setResponse(resp.data))
 				.catch(err => {

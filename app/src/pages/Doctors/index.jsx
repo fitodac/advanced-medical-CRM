@@ -68,9 +68,10 @@ export default function Page(){
 						<DoctorsFilter filter={requestUpdate} />
 					</FilterProvider>
 
-					<Table header={thead} pager={response.data.links} context={pageContext}>
-						{ response?.data 
-							? response.data.data.map(({id, user, specialty, center}) => (<tr key={id}>
+					{response?.data ?? (
+						<Table header={thead} pager={response?.data?.links} context={pageContext}>
+							{response.data.data.map(({id, user, specialty, center}) => (
+							<tr key={id}>
 								<td>
 									<span className="text-slate-300 text-xs">{id}</span>
 								</td>
@@ -96,9 +97,10 @@ export default function Page(){
 											context={pageContext} />
 									</div>
 								</td>
-							</tr>))
-							: null }
-					</Table>
+							</tr>
+							))}
+						</Table>
+					)}
 				</>)}
 				
 			</section>
