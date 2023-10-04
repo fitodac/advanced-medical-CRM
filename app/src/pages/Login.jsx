@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth, useLogin } from '../hooks'
 
-import { API_URI } from '../config.dev'
-// import { API_URI } from '../config'
+import { API_URI } from '../config'
 import { Button, Alert } from '../components/Ui'
 import {
 	Loading
