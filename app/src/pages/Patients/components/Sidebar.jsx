@@ -59,6 +59,6 @@ export const Sidebar = ({setFormType}) => {
 }
 
 
-Sidebar.prototype = {
+Sidebar.propTypes = {
 	setFormType: PropTypes.func
 }

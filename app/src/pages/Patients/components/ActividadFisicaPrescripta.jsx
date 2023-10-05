@@ -5,7 +5,7 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/actividadFisicaPrescrita'
 
-const id = 'haPrescritoActividadFisica'
+const id = 'R8S9T0'
 
 export const ActividadFisicaPrescripta = ({context}) => {
 

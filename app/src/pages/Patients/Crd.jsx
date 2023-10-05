@@ -1,7 +1,6 @@
 import { 
 	useState, 
 	useEffect, 
-	createContext,
 	useRef 
 } from 'react'
 import { useLoaderData } from 'react-router-dom'
@@ -12,8 +11,6 @@ import { Loading, PageHeader } from '../../components'
 import { Sidebar } from './components'
 import { FormInitial, FormFirst } from './forms'
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const formContext = createContext({})
 
 export async function loader({params}){ 
 	return {
@@ -64,18 +61,20 @@ export default function Page(){
 
 	useEffect(() => {
 		if( response?.success ){
-			const { name, lastname, gender } = response.data
-			
-			setPatient({
-				...patient, 
-				name: `${name} ${lastname}`,
-				gender
-			})
+			const { code, gender } = response.data.patient
 
-			setFormData([...response.data.visits])
+			console.log('response', response)
+			
+			setPatient(patient => ({
+				...patient, 
+				code,
+				gender
+			}))
+
+			setFormData([...response.data.patient.visits])
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [response])
+
 
 	useEffect(() => setLoading(getPatientLoading), [getPatientLoading])
 	// Get patient
@@ -90,51 +89,42 @@ export default function Page(){
 				{title: 'CRD', current: true}
 			]} />
 
-			<div className="border-t -mx-6 mt-6"></div>
+		<div className="border-t -mx-6 mt-6"></div>
 
-			<section className="max-w-7xl -mb-5 xl:mr-0">
-				<div className="lg:grid lg:grid-cols-5 lg:gap-x-10">
-					<Sidebar setFormType={val => { setFormType(val) }} />
+		<section className="max-w-7xl -mb-5 xl:mr-0">
+			<div className="lg:grid lg:grid-cols-5 lg:gap-x-10">
+				<Sidebar setFormType={val => { setFormType(val) }} />
 
-					<div className="col-span-4 max-h-[80.5vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-4 pb-28 pr-10 xl:pr-14">
+				<div className="col-span-4 max-h-[80.5vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pt-4 pb-28 pr-10 xl:pr-14">
 
-						{formType === 'initial' 
-						// {formType === 'first' 
-						&& (<>
+					{formType === 'initial' 
+					&& (
+						<>
 							<FormInitial patient={patient} formData={formData} />
 							<div ref={initialFooter} />
-						</>)}
+						</>
+					)}
 
 
-						{formType === 'first' 
-						// {formType === 'initial' 
-						&& (<>
+					{formType === 'first' 
+					&& (
+						<>
 							<FormFirst patient={patient} formData={formData} />
 							<div ref={firstFooter} />
-						</>)}
+						</>
+					)}
 
-					</div> 
-				</div>
+				</div> 
+			</div>
 
-			</section>
+		</section>
 
 
-			{/* Scroll to the end of the "initial" form */}
-			{formType === 'initial' 
-			&& (<button 
-						className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
-						onClick={scrollToTheEnd}>
-						<i className="ri-arrow-down-line top-0.5 relative"></i>
-					</button>)}
-			
-			
-			{/* Scroll to the end of the "first" form */}
-			{formType === 'first'
-			&& (<button
-						className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
-						onClick={scrollToTheEnd}>
-						<i className="ri-arrow-down-line top-0.5 relative"></i>
-					</button>)}
+		<button
+			className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
+			onClick={scrollToTheEnd}>
+			<i className="ri-arrow-down-line top-0.5 relative"></i>
+		</button>
 
 		{loading && (<Loading />)}
 		

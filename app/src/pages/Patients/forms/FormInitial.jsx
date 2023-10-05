@@ -1,8 +1,9 @@
 import { 
-	createContext, 
+	// useState,
 	useEffect,
+	createContext, 
 	useMemo,
-	// useState
+	useCallback
 } from 'react'
 import { 
 	useForm,
@@ -10,9 +11,9 @@ import {
 } from '../../../hooks'
 import PropTypes from 'prop-types'
 // import { useAppContext } from '../../../App'
-import {
-	getVisitFormDataByType
-} from '../../../helpers'
+import { getVisitFormDataByType } from '../../../helpers'
+
+import { Loading } from '../../../components'
 
 import {
 	HeaderForm,
@@ -42,10 +43,7 @@ import {
 } from '../components'
 import { Button } from '../../../components/Ui'
 
-
-// eslint-disable-next-line react-refresh/only-export-components
-export const formContext = createContext({})
-
+const formContext = createContext({})
 
 export const FormInitial = ({
 	patient,
@@ -60,6 +58,7 @@ export const FormInitial = ({
 		onInputChange, 
 		// onResetForm
 	} = useForm({})
+
 
 	useEffect(() => {
 		setFormState({
@@ -82,12 +81,6 @@ export const FormInitial = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [existentFormData])
 
-	// useEffect(() => {
-	// 	console.log('formState')
-	// 	Object.assign(persistent, {...formState})
-	// 	console.log({persistent})
-	// }, [formState])
-
 
 	// const {
 	// 	response,
@@ -101,13 +94,25 @@ export const FormInitial = ({
 	// 	init: 0
 	// })
 
-
 	const handleInputChange = e => onInputChange(e)
 	
-	const handleSubmit = e => {
-		e.preventDefault()
+	const handleSubmit = useCallback(e => {
+		if(e) e.preventDefault()
 		console.log('formState', formState)
-	}
+	}, [formState])
+
+	const fn = useCallback(() => {
+		if( Object.keys(formState).length){
+		console.log('asdasdasd')
+		handleSubmit()
+		}
+	}, [
+		formState,
+		handleSubmit
+	])
+
+	// Se guardan los datos al navegar a otro formulario
+	useEffect(() => fn, [fn])
 	
 	
 	const contextValue = {
@@ -125,7 +130,7 @@ export const FormInitial = ({
 				dateFieldLabel="Fecha"
 				context={formContext} />
 
-			<div className="space-y-14 mt-14">
+			<div className="space-y-14 mt-8">
 				<FromGroup>
 					<HeaderSection title="Criterios de inclusión y exclusión" />
 					<CriteriosInclusionExclusionExclusion context={formContext} />
@@ -134,7 +139,6 @@ export const FormInitial = ({
 				<FromGroup>
 					<HeaderSection title="Datos sociodemográficos" />
 					<FromGroupContainer>
-						<></>
 						<FechaNacimiento context={formContext} />
 						<AntecedentesMedicos context={formContext} />
 					</FromGroupContainer>
@@ -183,6 +187,9 @@ export const FormInitial = ({
 
 		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/3 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(formState, null, 2)}</pre> */}
 	</formContext.Provider>
+
+	{/* {loading && (<Loading />)} */}
+	{/* <Loading /> */}
 	</>)
 }
 

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
 import { HeaderFieldGroup } from '.'
 
-import fields from '../formfields/pacienteHaSeguidoTratamientoNutricional'
+import fields from '../formfields/pacienteHaSeguidoActividadFisica'
 
-const id = 'H2I3J4'
+const id = 'E9F0G1'
 
-export const PacienteHaSeguidoTratamientoNutricional = ({context}) => {
+export const PacienteHaSeguidoActividadFisica = ({context}) => {
 
 	const formContext = useContext(context)
 	const [ input_visible, setInputVisible ] = useState('')
@@ -27,7 +27,7 @@ export const PacienteHaSeguidoTratamientoNutricional = ({context}) => {
 
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup	title="¿El paciente ha seguido la recomendación nutricional prescrita?" />
+			<HeaderFieldGroup	title="¿El paciente ha seguido la recomendación de actividad física prescrita?" />
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (
@@ -45,23 +45,23 @@ export const PacienteHaSeguidoTratamientoNutricional = ({context}) => {
 						</label>
 
 						{(
-							'nt__followed_prescribed_nutritional_recommendation_1' === key && 
-							'nt__followed_prescribed_nutritional_recommendation_1' === input_visible
+							'hfppar_followed_prescribed_physical_activity_recommendation_1' === key && 
+							'hfppar_followed_prescribed_physical_activity_recommendation_1' === input_visible
 						) && (
 							<div className="w-90 relative -top-1">
 								<Input 
 									label="Especifique % de adherencia a las recomendaciones"
-									name="nt__percentage_of_adherece_to_recommendations" 
+									name="hfppar_percentage_of_adherece_to_recommendations" 
 									context={context} />
 							</div>
 						)}
 
 						{(
-							'nt__followed_prescribed_nutritional_recommendation_2' === key &&
-							'nt__followed_prescribed_nutritional_recommendation_2' === input_visible
+							'hfppar_followed_prescribed_physical_activity_recommendation_2' === key &&
+							'hfppar_followed_prescribed_physical_activity_recommendation_2' === input_visible
 						) && (
 							<div className="w-full relative -top-1">
-								<Input name="nt__not_followed_prescribed_recommendation" context={context} />
+								<Input name="hfppar__not_followed_prescribed_recommendation" context={context} />
 							</div>
 						)}
 
@@ -73,6 +73,6 @@ export const PacienteHaSeguidoTratamientoNutricional = ({context}) => {
 }
 
 
-PacienteHaSeguidoTratamientoNutricional.propTypes = {
+PacienteHaSeguidoActividadFisica.propTypes = {
 	context: PropTypes.object.isRequired
 }

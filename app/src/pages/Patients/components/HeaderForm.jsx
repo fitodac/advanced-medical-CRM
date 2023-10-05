@@ -10,14 +10,14 @@ export const HeaderForm = ({
 }) => {
 
 	const formContext = useContext(context)
-	const { name } = formContext.patient
+	const { code } = formContext.patient
 
 	return (<>
 		<div className="text-lg font-bold">{title}</div>
 
 		<div className="leading-none mt-4">
 			<label htmlFor="">Paciente</label>
-			<div className="text-xl font-semibold">{name}</div>
+			<div className="text-xl font-semibold">{code}</div>
 		</div>
 
 		<div className="grid grid-cols-2 gap-x-6 gap-y-4">

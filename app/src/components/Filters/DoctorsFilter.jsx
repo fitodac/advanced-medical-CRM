@@ -64,6 +64,7 @@ export const DoctorsFilter = ({filter}) => {
 					<select
 						name="specialty_id"
 						onChange={handleChange}>
+						<option value=""></option>
 						{getSpecialtiesResponse?.data.map(({id, name}) => (
 							<option key={id} value={id}>{name}</option>
 						))}
@@ -78,6 +79,7 @@ export const DoctorsFilter = ({filter}) => {
 					<select
 						name="center_id"
 						onChange={handleChange}>
+						<option value=""></option>
 						{getCentersResponse?.data.map(({id, name}) => (
 							<option key={id} value={id}>{name}</option>
 						))}

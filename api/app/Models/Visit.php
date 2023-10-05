@@ -153,16 +153,21 @@ class Visit extends Model
         'hfnr__percentage_of_adherece_to_recommendations',
         'hfnr__not_followed_prescribed_recommendation',
         'rng__has_reached_nutritional_goal',
-        'rng__has_reached_nutritional_goal_reasons'
+        'rng__has_reached_nutritional_goal_reasons',
+				'cppi__considers_that_patient_perceives_improvement',
+				'cppi__considers_that_patient_perceives_improvement_reasons',
+				'hfppar_followed_prescribed_physical_activity_recommendation',
+				'hfppar_percentage_of_adherece_to_recommendations',
+				'hfppar__not_followed_prescribed_recommendation'
     ];
 
     protected $casts = [
 		'date' => 'date:d/m/Y',
 		'birth_date' => 'date:d/m/Y',
 		'valuation_date' => 'datetime:d/m/Y H:i:s',
-		'discharged_date' => 'datetime:d/m/Y H:i:s',
-        'readmission_date' => 'datetime:d/m/Y H:i:s',
-        'death_date' => 'datetime:d/m/Y H:i:s',
+		// 'discharged_date' => 'datetime:d/m/Y H:i:s',
+		// 'readmission_date' => 'datetime:d/m/Y H:i:s',
+		// 'death_date' => 'datetime:d/m/Y H:i:s',
 	];
 
 	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'name', 'lastname', 'gender', 'doctor_id']); }

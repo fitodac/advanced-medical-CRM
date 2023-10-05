@@ -34,6 +34,7 @@ export const UsersFilter = ({filter}) => {
 					name="role"
 					defaultValue="doctor"
 					onChange={handleChange}>
+					<option value=""></option>
 					<option value="doctor">Doctor</option>
 					<option value="admin">Admin</option>
 				</select>

@@ -4,7 +4,7 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/refiereEndocrinologiaParaIniciarTratamientoNutricional'
 
-const id = 'refiereAlServicioDeEndocrinologiaParaIniciarTratamiento'
+const id = 'N8O9P0'
 
 export const RefiereEndocrinologiaParaIniciarTratamientoNutricional = ({context}) => {
 

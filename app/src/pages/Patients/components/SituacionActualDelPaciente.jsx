@@ -5,7 +5,7 @@ import { InputDate } from '../../../components/Ui'
 
 import fields from '../formfields/situacionActualDelPaciente'
 
-const id = 'resultadoCribadoNutricional'
+const id = 'C3D4E5'
 
 export const SituacionActualDelPaciente = ({context}) => {
 

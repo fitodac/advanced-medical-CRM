@@ -202,9 +202,13 @@ return new class extends Migration
 			$table->enum('hfnr__followed_prescribed_nutritional_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
 			$table->unsignedDecimal('hfnr__percentage_of_adherece_to_recommendations', 5, 2)->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
 			$table->text('hfnr__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación nutricional prescrita');
-			
 			$table->enum('rng__has_reached_nutritional_goal', ['y'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
 			$table->text('rng__has_reached_nutritional_goal_reasons')->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal? motivos');
+			$table->enum('cppi__considers_that_patient_perceives_improvement', ['y'])->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?');
+			$table->text('cppi__considers_that_patient_perceives_improvement_reasons')->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado? especifique motivos');
+			$table->enum('hfppar_followed_prescribed_physical_activity_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
+			$table->unsignedDecimal('hfppar_percentage_of_adherece_to_recommendations', 5, 2)->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
+			$table->text('hfppar__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación de actividad física prescrita');
 
 			$table->timestamps();
 		});

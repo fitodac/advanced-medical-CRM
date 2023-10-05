@@ -24,13 +24,13 @@ import {
 	ParametrosFuncionales,
 	OtrasMedicionesDeComposicionCorporal,
 	PacienteHaSeguidoTratamientoNutricional,
-	HaConseguidoElPacienteElObjetivoNutricional
+	HaConseguidoElPacienteElObjetivoNutricional,
+	ConsideraQuePacientePercibeMejoria,
+	PacienteHaSeguidoActividadFisica
 } from '../components'
 import { Button } from '../../../components/Ui'
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const formContext = createContext({})
-
+const formContext = createContext({})
 
 export const FormFirst = ({
 	patient,
@@ -92,7 +92,7 @@ export const FormFirst = ({
 				dateFieldLabel="Fecha de la visita (≈3 meses de la visita basal)"
 				context={formContext} />
 
-			<div className="mt-3 space-y-4 text-sm">
+			<div className="text-sm mt-8 space-y-4">
 				<p>
 					La visita de seguimiento se realizará en todos los 
 					pacientes cribados, tanto los diagnosticados de desnutrición 
@@ -134,8 +134,13 @@ export const FormFirst = ({
 
 				<FromGroup>
 					<HeaderSection title="Tratamiento nutricional" />
-					<PacienteHaSeguidoTratamientoNutricional context={formContext} />
-					<HaConseguidoElPacienteElObjetivoNutricional context={formContext} />
+
+					<FromGroupContainer>
+						<PacienteHaSeguidoTratamientoNutricional context={formContext} />
+						<HaConseguidoElPacienteElObjetivoNutricional context={formContext} />
+						<ConsideraQuePacientePercibeMejoria context={formContext} />
+						<PacienteHaSeguidoActividadFisica context={formContext} />
+					</FromGroupContainer>
 				</FromGroup>
 
 

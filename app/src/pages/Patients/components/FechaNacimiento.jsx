@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { InputDate } from '../../../components/Ui'
 
-const id = 'fechaNacimiento'
+const id = 'M1N2O3'
 
 export const FechaNacimiento = ({context}) => {
 

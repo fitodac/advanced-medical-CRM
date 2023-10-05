@@ -7,7 +7,7 @@ import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/parametrosFuncionales'
 
-const id = 'parametrosFuncionales'
+const id = 'K5L6M7'
 
 export const ParametrosFuncionales = ({context}) => {
 

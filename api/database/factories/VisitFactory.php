@@ -215,6 +215,11 @@ class VisitFactory extends Factory
             'hfnr__not_followed_prescribed_recommendation' => $this->faker->text,
             'rng__has_reached_nutritional_goal' => $this->faker->randomElement(['y', null]),
             'rng__has_reached_nutritional_goal_reasons' => $this->faker->text,
+            'cppi__considers_that_patient_perceives_improvement' => $this->faker->randomElement(['y', null]),
+            'cppi__considers_that_patient_perceives_improvement_reasons' => $this->faker->text,
+						'hfppar_followed_prescribed_physical_activity_recommendation' => $this->faker->randomElement(['y', null]),
+            'hfppar_percentage_of_adherece_to_recommendations' => $this->faker->randomFloat(2, 0, 999.99),
+            'hfppar__not_followed_prescribed_recommendation' => $this->faker->text,
         ];
     }
 }

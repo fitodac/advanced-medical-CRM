@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
 
 const menu = [
-	{
-		toId: 'criteriosInclusionExclusion',
-		label: 'Criterios de inclusión y exclusión'
-	},
-	{
-		toId: 'datosSociodemograficos',
-		label: 'Datos sociodemográficos'
-	}
+	{ toId: 'C3D4E5', label: 'Situación actual del paciente' },
+	{ toId: 'U3V4W5', label: 'Antropometría' },
+	{ toId: 'K5L6M7', label: 'Parámetros funcionales' },
+	{ toId: 'B6C7D8', label: 'Otras medidas de composición corporal' },
+	{ toId: 'H2I3J4', label: '¿El paciente ha seguido la recomendación nutricional prescrita?' },
+	{ toId: 'S7T8U9', label: '¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?' },
+	{ toId: 'X6Y7Z8', label: '¿Tras la entravista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?' },
+	{ toId: 'E9F0G1', label: '¿El paciente ha seguido la recomendación de actividad físiaca prescrita?' },
 ]
 
 

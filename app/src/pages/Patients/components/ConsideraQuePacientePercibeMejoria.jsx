@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
 import { HeaderFieldGroup } from '.'
 
-import fields from '../formfields/haConseguidoElPacienteElObjetivoNutricional'
+import fields from '../formfields/consideraQuePacientePercibeMejoria'
 
-const id = 'S7T8U9'
+const id = 'X6Y7Z8'
 
-export const HaConseguidoElPacienteElObjetivoNutricional = ({context}) => {
+export const ConsideraQuePacientePercibeMejoria = ({context}) => {
 
 	const formContext = useContext(context)
 	const [ input_visible, setInputVisible ] = useState(false)
@@ -21,18 +21,18 @@ export const HaConseguidoElPacienteElObjetivoNutricional = ({context}) => {
 	const handleChange = e => {
 		const {value, checked} = e.target
 		setChkState(checked ? value : '')
-		if( 'y' === value ) formContext.handleInputChange({target: {name: 'rng__has_reached_nutritional_goal_reasons', value: ''}})
+		if( 'y' === value ) formContext.handleInputChange({target: {name: 'cppi__considers_that_patient_perceives_improvement_reasons', value: ''}})
 		setInputVisible('' === value)
 	}
 
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup	title="¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?" />
+			<HeaderFieldGroup	title="¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?" />
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (
 					<div key={key} className="flex gap-6 items-start">
-						{ key === 'rng__has_reached_nutritional_goal_1' 
+						{ key === 'cppi__considers_that_patient_perceives_improvement_1' 
 						? (<label className="input-checkbox">
 								<input 
 									type="radio" 
@@ -57,7 +57,7 @@ export const HaConseguidoElPacienteElObjetivoNutricional = ({context}) => {
 
 							{ input_visible 
 							&& (<div className="w-full relative -top-1">
-										<Input name="rng__has_reached_nutritional_goal_reasons" context={context} />
+										<Input name="cppi__considers_that_patient_perceives_improvement_reasons" context={context} />
 									</div>)}
 							
 						</>)}
@@ -69,6 +69,6 @@ export const HaConseguidoElPacienteElObjetivoNutricional = ({context}) => {
 }
 
 
-HaConseguidoElPacienteElObjetivoNutricional.propTypes = {
+ConsideraQuePacientePercibeMejoria.propTypes = {
 	context: PropTypes.object.isRequired
 }
