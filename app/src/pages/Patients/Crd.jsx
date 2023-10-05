@@ -1,7 +1,8 @@
 import { 
 	useState, 
 	useEffect, 
-	useRef 
+	useRef,
+	useCallback
 } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { useAxios } from '../../hooks'
@@ -10,6 +11,7 @@ import { useAppContext } from '../../App'
 import { Loading, PageHeader } from '../../components'
 import { Sidebar } from './components'
 import { FormInitial, FormFirst } from './forms'
+import { visitSessionStorage } from '../../helpers'
 
 
 export async function loader({params}){ 
@@ -17,6 +19,10 @@ export async function loader({params}){
 		...params,
 		id: parseInt(params.id)
 	}
+}
+
+export async function action({params, request}){
+
 }
 
 
@@ -62,8 +68,6 @@ export default function Page(){
 	useEffect(() => {
 		if( response?.success ){
 			const { code, gender } = response.data.patient
-
-			console.log('response', response)
 			
 			setPatient(patient => ({
 				...patient, 
@@ -79,6 +83,10 @@ export default function Page(){
 	useEffect(() => setLoading(getPatientLoading), [getPatientLoading])
 	// Get patient
 
+
+	useEffect(() => {
+		return () => sessionStorage.clear()
+	}, [])
 
 
 	return (<>

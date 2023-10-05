@@ -47,8 +47,8 @@ class VisitController extends Controller
 	// UPDATE
 	public function update(Request $request)
 	{
+		//Y-m-d
 
-		// return 1;
 		$auth = Auth::user();
 
 		$validate = Validator::make($request->all(), [
@@ -63,13 +63,14 @@ class VisitController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
-        $messages = $this->normalRangeMessageNotification($request->all());
+		$messages = $this->normalRangeMessageNotification($request->all());
 
-        $visit = Visit::find($request->id);
+		$visit = Visit::find($request->id);
 
 		if( !$visit ) return $this->errorResponse('La visita que estás buscando no existe o ha sido eliminada', 404);
 
-		$visit->modelUpdate($request->all());
+		$resp = $visit->modelUpdate($request->all());
+		$visit->update($resp);
 
 		return $this->successResponse(['visit' => $visit, 'message' => $messages], 'Hemos actualizado los datos de la visita');
 

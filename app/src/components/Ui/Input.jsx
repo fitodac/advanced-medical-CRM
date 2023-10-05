@@ -17,7 +17,14 @@ export const Input = ({
 
 	const formContext = useContext(context)
 
-	const handleChange = e => formContext.handleInputChange(e)
+	const handleChange = e => {
+		return formContext.handleInputChange({
+			target: {
+				name: e.target.name,
+				value: e.target.value.trim()
+			}
+		})
+	}
 
 	return (<div className="">
 		{ label && (<label className="select-none leading-tight block">{label}</label>) }

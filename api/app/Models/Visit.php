@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Visit extends Model
 {
@@ -164,18 +165,23 @@ class Visit extends Model
     protected $casts = [
 		'date' => 'date:d/m/Y',
 		'birth_date' => 'date:d/m/Y',
-		'valuation_date' => 'datetime:d/m/Y H:i:s',
+		'valuation_date' => 'date:d/m/Y',
+		'patient_current_situation_date' => 'date:d/m/Y',
 		// 'discharged_date' => 'datetime:d/m/Y H:i:s',
 		// 'readmission_date' => 'datetime:d/m/Y H:i:s',
 		// 'death_date' => 'datetime:d/m/Y H:i:s',
 	];
 
-	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'name', 'lastname', 'gender', 'doctor_id']); }
+	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'gender', 'doctor_id']); }
 
 
 	public function modelUpdate($req){
+		$req['date'] = isset($req['date']) ? Carbon::createFromFormat('d/m/Y', $req['date'])->format('Y-m-d') : null;
+		$req['birth_date'] = isset($req['birth_date']) ? Carbon::createFromFormat('d/m/Y', $req['birth_date'])->format('Y-m-d') : null;
+		$req['patient_current_situation_date'] = isset($req['patient_current_situation_date']) ? Carbon::createFromFormat('d/m/Y', $req['patient_current_situation_date'])->format('Y-m-d') : null;
+		$req['valuation_date'] = isset($req['valuation_date']) ? Carbon::createFromFormat('d/m/Y', $req['valuation_date'])->format('Y-m-d') : null;
 
-		return array_merge($this->toArray(), [
+		return array_merge($req, [
 			'patient' => $this->patient
 		]);
 		// return array_merge($req);

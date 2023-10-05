@@ -1,5 +1,4 @@
 import { 
-	// useState,
 	useEffect,
 	createContext, 
 	useMemo,
@@ -7,13 +6,15 @@ import {
 } from 'react'
 import { 
 	useForm,
-	// useAxios
+	useAxios
 } from '../../../hooks'
 import PropTypes from 'prop-types'
-// import { useAppContext } from '../../../App'
-import { getVisitFormDataByType } from '../../../helpers'
+import { useAppContext } from '../../../App'
+import { 
+	getVisitFormDataByType,
+	visitSessionStorage
+} from '../../../helpers'
 
-import { Loading } from '../../../components'
 
 import {
 	HeaderForm,
@@ -42,6 +43,7 @@ import {
 	TiposDeEjercicios
 } from '../components'
 import { Button } from '../../../components/Ui'
+import { Loading } from '../../../components'
 
 const formContext = createContext({})
 
@@ -50,8 +52,8 @@ export const FormInitial = ({
 	formData
 }) => {
 
-	// const { API_URI, token } = useAppContext()
-	// const [ loadingState, setLoadingState ] = useState(false)
+	const { API_URI, token } = useAppContext()
+
 	const {
 		formState, 
 		setFormState, 
@@ -60,61 +62,78 @@ export const FormInitial = ({
 	} = useForm({})
 
 
+	const {
+		// response: updateResponse,
+		// error,
+		loading: updateLoading,
+		refetch: updateRefetch
+	} = useAxios({
+		url: `${API_URI}/visit/update`,
+		method: 'PUT',
+		body: {...formState},
+		token,
+		init: 0
+	})
+
+
+	const {
+		// response: createResponse,
+		// error,
+		loading: createLoading,
+		refetch: createRefetch
+	} = useAxios({
+		url: `${API_URI}/visit/create`,
+		method: 'POST',
+		body: {...formState},
+		token,
+		init: 0
+	})
+
+
 	useEffect(() => {
 		setFormState({
 			...formState,
 			patient_id: patient.id,
-			visit_type: 'first'
+			visit_type: 'initial'
 		})
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const existentFormData = useMemo(() => {
-		if(formData) return getVisitFormDataByType('first', formData)
+		if(formData){
+			const v = getVisitFormDataByType('initial', formData)
+			return v.id ? v : null
+		}
 	}, [formData])
 
 	useEffect(() => {
-		setFormState({
-			...formState,
-			...existentFormData
-		})
+		if( existentFormData ){
+			setFormState({
+				...formState,
+				...existentFormData
+			})
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [existentFormData])
 
 
-	// const {
-	// 	response,
-	// 	error,
-	// 	loading,
-	// 	refetch
-	// } = useAxios({
-	// 	url: `${API_URI}`,
-	// 	method: 'POST',
-	// 	token,
-	// 	init: 0
-	// })
-
 	const handleInputChange = e => onInputChange(e)
-	
-	const handleSubmit = useCallback(e => {
-		if(e) e.preventDefault()
-		console.log('formState', formState)
+
+	useEffect(() => {
+		if( Object.keys(formState).length ) visitSessionStorage.set('initial', formState)
 	}, [formState])
 
-	const fn = useCallback(() => {
-		if( Object.keys(formState).length){
-		console.log('asdasdasd')
-		handleSubmit()
-		}
-	}, [
-		formState,
-		handleSubmit
-	])
+	const handleSubmit = useCallback(e => {
+		if(e) e.preventDefault()
 
-	// Se guardan los datos al navegar a otro formulario
-	useEffect(() => fn, [fn])
-	
-	
+		if( formState.id ){
+			updateRefetch()
+		}else{
+			createRefetch()
+		}
+	}, [formState, createRefetch, updateRefetch])
+
+
 	const contextValue = {
 		patient,
 		formState, 
@@ -188,8 +207,7 @@ export const FormInitial = ({
 		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/3 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(formState, null, 2)}</pre> */}
 	</formContext.Provider>
 
-	{/* {loading && (<Loading />)} */}
-	{/* <Loading /> */}
+	{(createLoading || updateLoading) && (<Loading />)}
 	</>)
 }
 

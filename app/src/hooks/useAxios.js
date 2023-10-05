@@ -20,7 +20,7 @@ export const useAxios = ({
 }) => {
 
 	const [response, setResponse] = useState({})
-	const [loading, setLoading] = useState(true)
+	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(false)
 	const [reload, setReload] = useState(init)
 
@@ -29,6 +29,8 @@ export const useAxios = ({
 	useEffect(() => {
 		if( reload ){
 			const fetchData = () => {
+				setLoading(true)
+				
 				axios.request({
 					url,
 					method,
