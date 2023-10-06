@@ -155,11 +155,11 @@ class Visit extends Model
         'hfnr__not_followed_prescribed_recommendation',
         'rng__has_reached_nutritional_goal',
         'rng__has_reached_nutritional_goal_reasons',
-				'cppi__considers_that_patient_perceives_improvement',
-				'cppi__considers_that_patient_perceives_improvement_reasons',
-				'hfppar_followed_prescribed_physical_activity_recommendation',
-				'hfppar_percentage_of_adherece_to_recommendations',
-				'hfppar__not_followed_prescribed_recommendation'
+        'cppi__considers_that_patient_perceives_improvement',
+        'cppi__considers_that_patient_perceives_improvement_reasons',
+        'hfppar_followed_prescribed_physical_activity_recommendation',
+        'hfppar_percentage_of_adherece_to_recommendations',
+        'hfppar__not_followed_prescribed_recommendation'
     ];
 
     protected $casts = [
@@ -176,14 +176,19 @@ class Visit extends Model
 
 
 	public function modelUpdate($req){
-		$req['date'] = isset($req['date']) ? Carbon::createFromFormat('d/m/Y', $req['date'])->format('Y-m-d') : null;
+		$formatted = $this->formatRequestDate($req);
+
+		return array_merge($formatted, [
+			'patient' => $this->patient
+		]);
+	}
+
+    public function formatRequestDate($req) {
+        $req['date'] = isset($req['date']) ? Carbon::createFromFormat('d/m/Y', $req['date'])->format('Y-m-d') : null;
 		$req['birth_date'] = isset($req['birth_date']) ? Carbon::createFromFormat('d/m/Y', $req['birth_date'])->format('Y-m-d') : null;
 		$req['patient_current_situation_date'] = isset($req['patient_current_situation_date']) ? Carbon::createFromFormat('d/m/Y', $req['patient_current_situation_date'])->format('Y-m-d') : null;
 		$req['valuation_date'] = isset($req['valuation_date']) ? Carbon::createFromFormat('d/m/Y', $req['valuation_date'])->format('Y-m-d') : null;
 
-		return array_merge($req, [
-			'patient' => $this->patient
-		]);
-		// return array_merge($req);
-	}
+        return $req;
+    }
 }
