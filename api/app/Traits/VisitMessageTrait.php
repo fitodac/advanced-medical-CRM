@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Arr;
+
 trait VisitMessageTrait
 {
     /**
@@ -78,22 +80,27 @@ trait VisitMessageTrait
                 }
 
                 foreach ($checks as $key => $checkFn) {
-                    $result = $checkFn($value[$key] ?? null);
-                    if ($result) {
-                        $warnings[$visit_type][$key] = "({$value[$key]}) $result.";
+                    if(Arr::exists($value, $key)) {
+                        $result = $checkFn($value[$key] ?? null);
+                        if ($result) {
+                            $warnings[$visit_type][$key] = "({$value[$key]}) $result.";
+                        }
                     }
                 }
             }
         } else {
+
             if($data['visit_type'] === 'initial')
             {
                 $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
             }
 
             foreach ($checks as $key => $checkFn) {
-                $result = $checkFn($data[$key] ?? null);
-                if ($result) {
-                    $warnings[$key] = "({$data[$key]}) $result.";
+                if(Arr::exists($data, $key)) {
+                    $result = $checkFn($data[$key] ?? null);
+                    if ($result) {
+                        $warnings[$key] = "({$data[$key]}) $result.";
+                    }
                 }
             }
         }
