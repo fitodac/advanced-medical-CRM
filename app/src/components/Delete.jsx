@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from './Ui'
 import { useAxios } from '../hooks/'
-import { useAppContext } from '../App'
+import { useAppContext } from '../hooks'
 import { Loading } from '.'
 
 

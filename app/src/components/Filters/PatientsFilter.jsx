@@ -4,7 +4,7 @@ import {
 import { PropTypes } from 'prop-types'
 import { FilterContext } from './context'
 import { InputSearch, Button } from '../Ui'
-import { useAppContext } from '../../App'
+import { useAppContext } from '../../hooks'
 import { objectToQueryString } from '../../helpers'
 
 export const PatientsFilter = ({filter}) => {

@@ -1,5 +1,6 @@
-import { createContext, useContext } from 'react'
+// import { createContext, useContext } from 'react'
 import { Outlet, useNavigation, useLocation } from 'react-router-dom'
+import { AppProvider } from './context'
 
 import { useAuth } from './hooks'
 import { API_URI } from './config'
@@ -11,7 +12,7 @@ import {
 } from './components'
 
 
-export const appContext = createContext({})
+// export const appContext = createContext({})
 
 function App() {
 
@@ -24,48 +25,49 @@ function App() {
 	const contextValue = {
 		API_URI,
 		user,
-		token: `${token_type} ${token}`
+		token: `${token_type} ${token}`,
 	}
 
   return (
-		<appContext.Provider value={contextValue}>
+		<AppProvider>
 			{ navigation.state === 'loading' && (<Loading />) }
 
 
-			{ navigation.state === 'idle' 
-			&& (<div className="grid grid-cols-12">
-						<div 
-							className="bg-teal w-screen min-h-screen -left-full fixed 
-													sm:w-auto sm:relative sm:left-auto sm:col-span-3 
-													lg:col-span-2">
-							<Navbar />
-						</div>
+			{ navigation.state === 'idle' && (
+			<div className="grid grid-cols-12">
+				<div 
+					className="bg-teal w-screen min-h-screen -left-full fixed 
+											sm:w-auto sm:relative sm:left-auto sm:col-span-3 
+											lg:col-span-2">
+					<Navbar />
+				</div>
 
-						<section 
-							className="col-span-12 w-full min-h-screen overflow-hidden 
-												sm:col-span-9 lg:col-span-10">
+				<section 
+					className="col-span-12 w-full min-h-screen overflow-hidden 
+										sm:col-span-9 lg:col-span-10">
 
-							<div className="max-w-full">
-								<div className="grid max-w-full">
-									<Header />
-									
-									<div className="row-span-2 px-6 py-5 overflow-x-auto">
-										<Outlet />
-									</div>
-
-									{!location.pathname.includes('/crd/') && (<Footer />)}
-								</div>
+					<div className="max-w-full">
+						<div className="grid max-w-full">
+							<Header />
+							
+							<div className="row-span-2 px-6 py-5 overflow-x-auto">
+								<Outlet />
 							</div>
 
-						</section>
+							<pre className="text-sm p-10">{JSON.stringify(contextValue.testContext, null, 2)}</pre>
+							{!location.pathname.includes('/crd/') && (<Footer />)}
+						</div>
+					</div>
 
-					</div>) }
+				</section>
+			</div>
+			)}
 			
-		</appContext.Provider>
+		</AppProvider>
   )
 }
 
 
-export const useAppContext = () => useContext(appContext)
+// export const useAppContext = () => useContext(appContext)
 
 export default App

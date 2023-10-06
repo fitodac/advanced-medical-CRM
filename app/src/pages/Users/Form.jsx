@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useAxios, useForm } from '../../hooks'
-import { useAppContext } from '../../App'
+import { useAppContext } from '../../hooks'
 
 import {
 	Loading,
@@ -21,7 +21,7 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token, user: {role}} = useAppContext()
+	const { API_URI, token, notify } = useAppContext()
 	const { id } = useLoaderData()
 	const [ centers, setCenters ] = useState(null)
 	const [ specialties, setSpecialties ] = useState(null)
@@ -140,6 +140,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( createUserResponse?.success ){
+			notify(createUserResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/users')
 		}
@@ -148,6 +149,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( updateUserResponse?.success ){
+			notify(updateUserResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/users')
 		}
@@ -220,7 +222,7 @@ export default function Page(){
 						<Input label="Email" name="email" context={formContext} />
 						
 						<div className="">
-							<label>Rol de usuario</label>
+							<label className="select-none">Rol de usuario</label>
 							<select name="role" value={formState.role} onChange={onInputChange}>
 								<option value="admin">Admin</option>
 								<option value="doctor">Doctor</option>
@@ -234,7 +236,7 @@ export default function Page(){
 
 									{ specialties 
 									? (<div className="">
-											<label>Especialidad</label>
+											<label className="select-none">Especialidad</label>
 											<select name="specialty_id" value={formState.specialty_id} onChange={onInputChange}>
 												{ specialties.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
 											</select>
@@ -243,7 +245,7 @@ export default function Page(){
 
 									{ centers 
 									? (<div className="">
-											<label>Centro médico</label>
+											<label className="select-none">Centro médico</label>
 											<select name="center_id" value={formState.center_id} onChange={onInputChange}>
 												{ centers.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
 											</select>

@@ -1,13 +1,13 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useAxios, useForm } from '../../hooks'
-import { useAppContext } from '../../App'
+import { useAppContext } from '../../hooks'
 
 import {
 	Loading,
 	PageHeader
 } from '../../components'
-import { Input, Button, ButtonLink } from '../../components/Ui'
+import { Button, ButtonLink } from '../../components/Ui'
 
 
 export const formContext = createContext({})
@@ -16,7 +16,7 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token, user } = useAppContext()
+	const { API_URI, token, user, notify } = useAppContext()
 	const { id } = useLoaderData()
 	const [ loading, setLoading ] = useState(true)
 	const navigate = useNavigate()
@@ -34,7 +34,7 @@ export default function Page(){
 	// Get patient data on edition
 	const {
 		response,
-		error,
+		// error,
 		refetch
 	} = useAxios({
 		url: `${API_URI}/patient`,
@@ -48,8 +48,8 @@ export default function Page(){
 	// Get doctor data on edition
 	const {
 		response: getDoctorResponse,
-		error: getDoctorError,
-		loading: getDoctorLoading,
+		// error: getDoctorError,
+		// loading: getDoctorLoading,
 		refetch: getDoctorRefetch
 	} = useAxios({
 		url: `${API_URI}/doctor/getInfo`,
@@ -63,7 +63,7 @@ export default function Page(){
 	// Create patient
 	const {
 		response: createPatientResponse,
-		error: createPatientError,
+		// error: createPatientError,
 		loading: createPatientLoading,
 		refetch: createPatientRefetch
 	} = useAxios({
@@ -77,7 +77,7 @@ export default function Page(){
 	// Update patient
 	const {
 		response: updatePatientResponse,
-		error: updatePatientError,
+		// error: updatePatientError,
 		loading: updatePatientLoading,
 		refetch: updatePatientRefetch
 	} = useAxios({
@@ -118,13 +118,14 @@ export default function Page(){
 				center_id,
 				code
 			})
-			console.log(getDoctorResponse.data)
+			// console.log(getDoctorResponse.data)
 		}
 	}, [getDoctorResponse])
 
 
 	useEffect(() => {
 		if( createPatientResponse?.success ){
+			notify(createPatientResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/patients')
 		}
@@ -133,6 +134,7 @@ export default function Page(){
 	
 	useEffect(() => {
 		if( updatePatientResponse?.success ){
+			notify(updatePatientResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/patients')
 		}

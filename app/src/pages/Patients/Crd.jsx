@@ -6,7 +6,7 @@ import {
 } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { useAxios } from '../../hooks'
-import { useAppContext } from '../../App'
+import { useAppContext } from '../../hooks'
 
 import { Loading, PageHeader } from '../../components'
 import { Sidebar } from './components'

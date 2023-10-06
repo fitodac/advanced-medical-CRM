@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useAxios, useForm } from '../../hooks'
-import { useAppContext } from '../../App'
+import { useAppContext } from '../../hooks'
 
 import {
 	Loading,
@@ -16,7 +16,7 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, notify } = useAppContext()
 	const { id } = useLoaderData()
 	const [ loading, setLoading ] = useState(true)
 	const navigate = useNavigate()
@@ -31,7 +31,7 @@ export default function Page(){
 	// Get center data on edition
 	const {
 		response, 
-		error, 
+		// error, 
 		loading: getCenterLoading, 
 		refetch
 	} = useAxios({
@@ -45,8 +45,8 @@ export default function Page(){
 	// Create center
 	const { 
 		response: createCenterResponse, 
-		error: createCenterError, 
-		loading: createCenterLoading, 
+		// error: createCenterError, 
+		// loading: createCenterLoading, 
 		refetch: createCenterRefetch 
 	} = useAxios({
 		url: `${API_URI}/center/create`,
@@ -59,8 +59,8 @@ export default function Page(){
 	// Upadate center
 	const { 
 		response: updateCenterResponse, 
-		error: updateCenterError, 
-		loading: updateCenterLoading, 
+		// error: updateCenterError, 
+		// loading: updateCenterLoading, 
 		refetch: updateCenterRefetch 
 	} = useAxios({
 		url: `${API_URI}/center/update`,
@@ -86,6 +86,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( createCenterResponse?.success ){
+			notify(createCenterResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/medical-centers')
 		}
@@ -94,6 +95,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( updateCenterResponse?.success ){
+			notify(updateCenterResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/medical-centers')
 		}

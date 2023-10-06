@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useForm, useAxios } from '../../hooks'
-import { useAppContext } from '../../App'
+import { useAppContext } from '../../hooks'
 
 import {
 	Loading,
@@ -20,7 +20,7 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, notify } = useAppContext()
 	const { id } = useLoaderData()
 	const [centers, setCenters] = useState(null)
 	const [specialties, setSpecialties] = useState(null)
@@ -95,7 +95,7 @@ export default function Page(){
 	// Upadate doctor
 	const { 
 		response: updateDoctorResponse, 
-		error: updateDoctorError, 
+		// error: updateDoctorError, 
 		loading: updateDoctorLoading, 
 		refetch: updateDoctorRefetch 
 	} = useAxios({
@@ -139,6 +139,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( createDoctorResponse?.success ){
+			notify(createDoctorResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/doctors')
 		}
@@ -147,6 +148,7 @@ export default function Page(){
 
 	useEffect(() => {
 		if( updateDoctorResponse?.success ){
+			notify(updateDoctorResponse.message, 'success')
 			onResetForm()
 			if(navigate) navigate('/doctors')
 		}

@@ -91,10 +91,10 @@ trait VisitMessageTrait
             }
 
             foreach ($checks as $key => $checkFn) {
-                $result = $checkFn($data[$key] ?? null);
-                if ($result) {
-                    $warnings[$key] = "({$data[$key]}) $result.";
-                }
+							$result = $checkFn($data[$key] ?? null);
+							if ($result) {
+								$warnings[$key] = "({$data[$key]}) $result.";
+							}
             }
         }
 
