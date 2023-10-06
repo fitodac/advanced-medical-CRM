@@ -52,7 +52,7 @@ export const FormInitial = ({
 	formData
 }) => {
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, notify } = useAppContext()
 
 	const {
 		formState, 
@@ -63,7 +63,7 @@ export const FormInitial = ({
 
 
 	const {
-		// response: updateResponse,
+		response: updateResponse,
 		// error,
 		loading: updateLoading,
 		refetch: updateRefetch
@@ -77,7 +77,7 @@ export const FormInitial = ({
 
 
 	const {
-		// response: createResponse,
+		response: createResponse,
 		// error,
 		loading: createLoading,
 		refetch: createRefetch
@@ -106,6 +106,7 @@ export const FormInitial = ({
 		}
 	}, [formData])
 
+
 	useEffect(() => {
 		if( existentFormData ){
 			setFormState({
@@ -119,9 +120,24 @@ export const FormInitial = ({
 
 	const handleInputChange = e => onInputChange(e)
 
+
 	useEffect(() => {
 		if( Object.keys(formState).length ) visitSessionStorage.set('initial', formState)
 	}, [formState])
+
+
+	useEffect(() => {
+		if( createResponse?.success ) notify(createResponse.message, 'success')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createResponse])
+	
+
+
+	useEffect(() => {
+		if( updateResponse?.success ) notify(updateResponse.message, 'success')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateResponse])
+
 
 	const handleSubmit = useCallback(e => {
 		if(e) e.preventDefault()

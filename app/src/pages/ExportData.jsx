@@ -8,8 +8,15 @@ export default function Page(){
 				{title: 'Exportar datos', current: true}
 			]} />
 
-		<div className="h-96 grid place-content-center">
-			<div className="text-slate-200 text-3xl leading-none">En construcción...</div>
+		<div className="py-10 items-center max-w-4xl">
+			<div className="bg-white border border-slate-100 p-6 rounded-xl shadow-lg">
+				<a href="/" target="_blank" className="btn btn-lg bg-green-600 border-green-600 text-white space-x-2">
+					<span className="text-3xl">
+						<i className="ri-file-excel-2-line"></i>
+					</span>
+					<span>Descargar XLS</span>
+				</a>
+			</div>
 		</div>
 	</>)
 }

@@ -39,7 +39,7 @@ export const FormFirst = ({
 	formData
 }) => {
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, notify } = useAppContext()
 
 	const {
 		formState, 
@@ -50,7 +50,7 @@ export const FormFirst = ({
 
 
 	const {
-		// response: updateResponse,
+		response: updateResponse,
 		// error,
 		loading: updateLoading,
 		refetch: updateRefetch
@@ -64,7 +64,7 @@ export const FormFirst = ({
 
 
 	const {
-		// response: createResponse,
+		response: createResponse,
 		// error,
 		loading: createLoading,
 		refetch: createRefetch
@@ -86,12 +86,14 @@ export const FormFirst = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
+
 	const existentFormData = useMemo(() => {
 		if(formData){
 			const v = getVisitFormDataByType('initial', formData)
 			return v.id ? v : null
 		}
 	}, [formData])
+
 
 	useEffect(() => {
 		if( existentFormData ){
@@ -103,11 +105,25 @@ export const FormFirst = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [existentFormData])
 
+
 	const handleInputChange = e => onInputChange(e)
+
 
 	useEffect(() => {
 		if( Object.keys(formState).length ) visitSessionStorage.set('first', formState)
 	}, [formState])
+
+
+	useEffect(() => {
+		if( createResponse?.success ) notify(createResponse.message, 'success')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createResponse])
+	
+
+	useEffect(() => {
+		if( updateResponse?.success ) notify(updateResponse.message, 'success')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateResponse])
 
 
 	const handleSubmit = useCallback(e => {

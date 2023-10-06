@@ -31,18 +31,18 @@ class VisitController extends Controller
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
 
-        $data = $request->all();
+		$data = $request->all();
 
-        $messages = $this->normalRangeMessageNotification($data);
+		$messages = $this->normalRangeMessageNotification($data);
 
-        $data = (new Visit)->formatRequestDate($data);
+		$data = (new Visit)->formatRequestDate($data);
 
-        $visit = Visit::create($data);
+		$visit = Visit::create($data);
 
 		return $this->successResponse(
-            ['visit' => $visit, 'message' => $messages],
-            'Hemos registrado una nueva visita'
-        );
+			['visit' => $visit, 'message' => $messages],
+			'Hemos registrado una nueva visita'
+		);
 	}
 
 
