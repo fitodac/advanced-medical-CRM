@@ -1,4 +1,5 @@
 import { 
+	useState,
 	useEffect,
 	createContext, 
 	useMemo,
@@ -36,7 +37,8 @@ const formContext = createContext({})
 
 export const FormFirst = ({
 	patient,
-	formData
+	formData,
+	formMessages
 }) => {
 
 	const { API_URI, token, notify } = useAppContext()
@@ -48,6 +50,8 @@ export const FormFirst = ({
 		// onResetForm
 	} = useForm({})
 
+	const [ messages, setMessage ] = useState({})
+	useEffect(() => setMessage(formMessages), [formMessages])
 
 	const {
 		response: updateResponse,
@@ -89,7 +93,7 @@ export const FormFirst = ({
 
 	const existentFormData = useMemo(() => {
 		if(formData){
-			const v = getVisitFormDataByType('initial', formData)
+			const v = getVisitFormDataByType('first', formData)
 			return v.id ? v : null
 		}
 	}, [formData])
@@ -118,7 +122,7 @@ export const FormFirst = ({
 		if( createResponse?.success ) notify(createResponse.message, 'success')
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [createResponse])
-	
+
 
 	useEffect(() => {
 		if( updateResponse?.success ) notify(updateResponse.message, 'success')
@@ -140,6 +144,7 @@ export const FormFirst = ({
 	const contextValue = {
 		patient,
 		formState, 
+		messages,
 		handleInputChange
 	}
 
@@ -220,5 +225,6 @@ export const FormFirst = ({
 
 FormFirst.propTypes = {
 	patient: PropTypes.object.isRequired,
-	formData: PropTypes.array
+	formData: PropTypes.array,
+	formMessages: PropTypes.object
 }

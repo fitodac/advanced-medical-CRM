@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/consideraQuePacientePercibeMejoria'
 
@@ -31,37 +34,42 @@ export const ConsideraQuePacientePercibeMejoria = ({context}) => {
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (
-					<div key={key} className="flex gap-6 items-start">
-						{ key === 'cppi__considers_that_patient_perceives_improvement_1' 
-						? (<label className="input-checkbox">
-								<input 
-									type="radio" 
-									name={name} 
-									onChange={handleChange}
-									defaultValue={value} />
+					<AlertMessage key={key} name={name} context={context}>
 
-								<span>{label}</span>
+						<div className="flex gap-6 items-start">
+							{ key === 'cppi__considers_that_patient_perceives_improvement_1' 
+							? (<label className="input-checkbox">
+									<input 
+										type="radio" 
+										name={name} 
+										onChange={handleChange}
+										defaultValue={value}
+										checked={formContext.formState[name] === value} />
 
-							</label>)
-						: (<>
-							<label className="input-checkbox">
-								<input 
-									type="radio"
-									name={name}
-									onChange={handleChange}
-									defaultValue={value} />
+									<span>{label}</span>
+
+								</label>)
+							: (<>
+								<label className="input-checkbox">
+									<input 
+										type="radio"
+										name={name}
+										onChange={handleChange}
+										defaultValue={value}
+										checked={formContext.formState[name] === value} />
+									
+									<span className="w-52">{label}</span>
 								
-								<span className="w-52">{label}</span>
-							
-							</label>
+								</label>
 
-							{ input_visible 
-							&& (<div className="w-full relative -top-1">
-										<Input name="cppi__considers_that_patient_perceives_improvement_reasons" context={context} />
-									</div>)}
-							
-						</>)}
-					</div>
+								{ input_visible 
+								&& (<div className="w-full relative -top-1">
+											<Input name="cppi__considers_that_patient_perceives_improvement_reasons" context={context} />
+										</div>)}
+								
+							</>)}
+						</div>
+					</AlertMessage>
 				))}
 			</div>
 		</section>

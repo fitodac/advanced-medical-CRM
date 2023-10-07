@@ -3,19 +3,17 @@ import { visitSessionStorage } from '.'
 export const getVisitFormDataByType = (type, formData) => {
 
 	if( !type ){
-		console.error('Debes proveer un tipo de formulario')
-		return null
+		throw new Error('Debes proveer un tipo de formulario')
 	}
-	
+
 	if( !formData ){
-		console.error('El objeto formData es obligatorio')
-		return null
+		throw new Error('El objeto formData es obligatorio')
 	}
 
 	// Si el formulario está guardado en sessionStorage
 	// lo recupera de ahí...
 	const storedFormData = visitSessionStorage.get(type)
-	if( storedFormData ) return storedFormData
+	if( storedFormData?.id ) return storedFormData
 
 	// ... si no, lo recupera del request
 	const idx = Object.keys(formData).filter(i => formData[i].visit_type === type)[0]

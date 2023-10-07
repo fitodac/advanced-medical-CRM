@@ -1,6 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/refiereEndocrinologiaParaIniciarTratamientoNutricional'
 
@@ -26,19 +29,24 @@ export const RefiereEndocrinologiaParaIniciarTratamientoNutricional = ({context}
 			<HeaderFieldGroup	title="Refiere al Servicio de Endocrinología y Nutrición para iniciar tratamiento nutricional" />
 
 			<div className="flex gap-x-4">
-				{ fields && fields.map(({key, name, value, label}) => (<div key={key} className="flex gap-6 items-start">
-					<label className="input-checkbox">
-			
-						<input 
-							type="radio" 
-							name={name} 
-							defaultValue={value}
-							onChange={handleChange} />
-						
-						<span>{label}</span>
-			
-					</label>
-				</div>))}
+				{ fields && fields.map(({key, name, value, label}) => (
+				<AlertMessage key={key} name={name} context={context}>
+					<div className="flex gap-6 items-start">
+						<label className="input-checkbox">
+				
+							<input 
+								type="radio" 
+								name={name} 
+								defaultValue={value}
+								onChange={handleChange}
+								checked={formContext.formState[name] === value} />
+							
+							<span>{label}</span>
+				
+						</label>
+					</div>
+				</AlertMessage>
+				))}
 			</div>
 		</section>
 	</>)

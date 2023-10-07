@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/pacienteHaSeguidoActividadFisica'
 
@@ -31,41 +34,45 @@ export const PacienteHaSeguidoActividadFisica = ({context}) => {
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (
-					<div key={key} className="flex gap-6 items-start">
-						<label className="input-checkbox">
-							<input 
-								type="radio" 
-								name={name} 
-								id={key}
-								onChange={handleChange}
-								defaultValue={value} />
+					<AlertMessage key={key} name={name} context={context}>
 
-							<span className="w-52">{label}</span>
+						<div className="flex gap-6 items-start">
+							<label className="input-checkbox">
+								<input 
+									type="radio" 
+									name={name} 
+									id={key}
+									onChange={handleChange}
+									defaultValue={value}
+									checked={formContext.formState[name] === value} />
 
-						</label>
+								<span className="w-52">{label}</span>
 
-						{(
-							'hfppar_followed_prescribed_physical_activity_recommendation_1' === key && 
-							'hfppar_followed_prescribed_physical_activity_recommendation_1' === input_visible
-						) && (
-							<div className="w-90 relative -top-1">
-								<Input 
-									label="Especifique % de adherencia a las recomendaciones"
-									name="hfppar_percentage_of_adherece_to_recommendations" 
-									context={context} />
-							</div>
-						)}
+							</label>
 
-						{(
-							'hfppar_followed_prescribed_physical_activity_recommendation_2' === key &&
-							'hfppar_followed_prescribed_physical_activity_recommendation_2' === input_visible
-						) && (
-							<div className="w-full relative -top-1">
-								<Input name="hfppar__not_followed_prescribed_recommendation" context={context} />
-							</div>
-						)}
+							{(
+								'hfppar_followed_prescribed_physical_activity_recommendation_1' === key && 
+								'hfppar_followed_prescribed_physical_activity_recommendation_1' === input_visible
+							) && (
+								<div className="w-90 relative -top-1">
+									<Input 
+										label="Especifique % de adherencia a las recomendaciones"
+										name="hfppar_percentage_of_adherece_to_recommendations" 
+										context={context} />
+								</div>
+							)}
 
-					</div>
+							{(
+								'hfppar_followed_prescribed_physical_activity_recommendation_2' === key &&
+								'hfppar_followed_prescribed_physical_activity_recommendation_2' === input_visible
+							) && (
+								<div className="w-full relative -top-1">
+									<Input name="hfppar__not_followed_prescribed_recommendation" context={context} />
+								</div>
+							)}
+
+						</div>
+					</AlertMessage>
 				))}
 			</div>
 		</section>

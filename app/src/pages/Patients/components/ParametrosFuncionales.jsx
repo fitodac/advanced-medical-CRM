@@ -3,7 +3,10 @@ import {
 	Input, 
 	CheckboxList
 } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/parametrosFuncionales'
 
@@ -18,22 +21,26 @@ export const ParametrosFuncionales = ({context}) => {
 				subtitle="(Detalle de los valores obtenidos)" />
 
 			<div className="space-y-5">
-				{ fields.map(e => (<div key={e[0]} className="space-y-2">
-					<div className="grid grid-cols-9 gap-x-2">
-						<div className="col-span-4 flex items-center">
-							<label className="text-sm font-normal select-none">{e[1].label}</label>
+				{ fields.map(e => (
+				<AlertMessage key={e[0]} name={name} context={context}>
+					<div className="space-y-2">
+						<div className="grid grid-cols-9 gap-x-2">
+							<div className="col-span-4 flex items-center">
+								<label className="text-sm font-normal select-none">{e[1].label}</label>
+							</div>
+							<div className="col-span-1">
+								<Input name={e[1].name} context={context} />
+							</div>
+							<div className="col-span-1 flex items-center">
+								<label className="text-sm font-normal select-none">{e[1].append}</label>
+							</div>
 						</div>
-						<div className="col-span-1">
-							<Input name={e[1].name} context={context} />
-						</div>
-						<div className="col-span-1 flex items-center">
-							<label className="text-sm font-normal select-none">{e[1].append}</label>
-						</div>
-					</div>
 
-					<CheckboxList options={[{...e[2]}]} context={context} />
-					
-				</div>)) }
+						<CheckboxList options={[{...e[2]}]} context={context} />
+						
+					</div>
+				</AlertMessage>
+				)) }
 			</div>
 		</section>
 	</>)

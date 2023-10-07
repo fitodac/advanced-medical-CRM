@@ -54,7 +54,6 @@ function App() {
 								<Outlet />
 							</div>
 
-							<pre className="text-sm p-10">{JSON.stringify(contextValue.testContext, null, 2)}</pre>
 							{!location.pathname.includes('/crd/') && (<Footer />)}
 						</div>
 					</div>

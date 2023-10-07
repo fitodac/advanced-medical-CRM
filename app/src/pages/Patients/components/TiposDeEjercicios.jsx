@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import { CheckboxList } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup
+} from '.'
 
 import fields from '../formfields/tiposDeEjercicios'
 

@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/iniciaTratamientoNutricional'
 
@@ -30,37 +33,43 @@ export const IniciaTratamientoNutricional = ({context}) => {
 			<HeaderFieldGroup	title="Inicia tratamiento nutricional" />
 
 			<div className="space-y-3">
-				{fields.map(({key, name, value, label}) => (<div key={key} className="flex gap-6 items-start">
-					{ key !== 'nt__start_2' 
-					? (<label className="input-checkbox">
-							<input 
-								type="radio" 
-								name={name} 
-								onChange={handleChange}
-								defaultValue={value} />
+				{fields.map(({key, name, value, label}) => (
+				<AlertMessage key={key} name={name} context={context}>
+					<div className="flex gap-6 items-start">
+						{ key !== 'nt__start_2' 
+						? (<label className="input-checkbox">
+								<input 
+									type="radio" 
+									name={name} 
+									onChange={handleChange}
+									defaultValue={value}
+									checked={formContext.formState[name] === value} />
 
-							<span>{label}</span>
+								<span>{label}</span>
 
-						</label>)
-					: (<>
-						<label className="input-checkbox w-40">
-							<input 
-								type="radio"
-								name={name}
-								onChange={handleChange}
-								defaultValue={value} />
+							</label>)
+						: (<>
+							<label className="input-checkbox w-40">
+								<input 
+									type="radio"
+									name={name}
+									onChange={handleChange}
+									defaultValue={value}
+									checked={formContext.formState[name] === value} />
+								
+								<span>{label}</span>
 							
-							<span>{label}</span>
-						
-						</label>
+							</label>
 
-						{ input_visible 
-						&& (<div className="w-full relative -top-1">
-									<Input name="nt__specify" context={context} />
-								</div>)}
-						
-					</>)}
-				</div>))}
+							{ input_visible 
+							&& (<div className="w-full relative -top-1">
+										<Input name="nt__specify" context={context} />
+									</div>)}
+							
+						</>)}
+					</div>
+				</AlertMessage>
+				))}
 			</div>
 		</section>
 	</>)

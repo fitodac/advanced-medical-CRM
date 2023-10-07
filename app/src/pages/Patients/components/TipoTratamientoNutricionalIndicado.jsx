@@ -4,7 +4,10 @@ import {
 	CheckboxList,
 	ConditionalInput
 } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/tipoTratamientoNutricionalIndicado'
 
@@ -32,7 +35,8 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 				label, 
 				options, 
 				other
-			}) => (<div key={key} className="">
+			}) => (
+			<AlertMessage key={key} name={name} context={context}>
 				<label className="input-checkbox">
 					<input 
 						type="checkbox" 
@@ -52,7 +56,8 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 						checkbox={other.checkbox} 
 						context={context} />
 				</div>)}
-			</div>))}
+			</AlertMessage>
+			))}
 			
 			
 		</section>

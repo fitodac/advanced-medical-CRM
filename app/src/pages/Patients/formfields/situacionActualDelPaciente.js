@@ -24,4 +24,3 @@ export default [
 		label: 'No acude a control'
 	}
 ]
-									// <div class="text-xs block">(contactar telefónicamente para descartar cualquier otra circunstancia)</div>`}

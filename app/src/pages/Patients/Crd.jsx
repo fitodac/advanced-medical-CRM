@@ -1,8 +1,7 @@
 import { 
 	useState, 
 	useEffect, 
-	useRef,
-	useCallback
+	useRef
 } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { useAxios } from '../../hooks'
@@ -11,7 +10,6 @@ import { useAppContext } from '../../hooks'
 import { Loading, PageHeader } from '../../components'
 import { Sidebar } from './components'
 import { FormInitial, FormFirst } from './forms'
-import { visitSessionStorage } from '../../helpers'
 
 
 export async function loader({params}){ 
@@ -19,10 +17,6 @@ export async function loader({params}){
 		...params,
 		id: parseInt(params.id)
 	}
-}
-
-export async function action({params, request}){
-
 }
 
 
@@ -33,6 +27,7 @@ export default function Page(){
 	const [ patient, setPatient ] = useState({id: id, name: '', gender: ''})
 	const [ formType, setFormType ] = useState('initial')
 	const [ formData, setFormData ] = useState(null)
+	const [ formMessages, setFormMessages ] = useState(null)
 	const [ loading, setLoading ] = useState(true)
 	const firstFooter = useRef(null)
 	const initialFooter = useRef(null)
@@ -75,6 +70,7 @@ export default function Page(){
 				gender
 			}))
 
+			setFormMessages({...response.data.messages})
 			setFormData([...response.data.patient.visits])
 		}
 	}, [response])
@@ -108,7 +104,10 @@ export default function Page(){
 					{formType === 'initial' 
 					&& (
 						<>
-							<FormInitial patient={patient} formData={formData} />
+							<FormInitial 
+								patient={patient} 
+								formData={formData}
+								formMessages={formMessages?.initial} />
 							<div ref={initialFooter} />
 						</>
 					)}
@@ -117,7 +116,10 @@ export default function Page(){
 					{formType === 'first' 
 					&& (
 						<>
-							<FormFirst patient={patient} formData={formData} />
+							<FormFirst 
+								patient={patient} 
+								formData={formData}
+								formMessages={formMessages?.first} />
 							<div ref={firstFooter} />
 						</>
 					)}

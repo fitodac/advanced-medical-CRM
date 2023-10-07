@@ -1,6 +1,9 @@
 import { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 import { InputDate } from '../../../components/Ui'
 
 import fields from '../formfields/situacionActualDelPaciente'
@@ -28,19 +31,21 @@ export const SituacionActualDelPaciente = ({context}) => {
 
 				<div className="grid gap-y-4">
 					{ fields && fields.map(({key, name, value, label}) => (
-					<label key={key} className="input-checkbox">
-			
-						<input 
-							type="radio" 
-							name={name} 
-							defaultValue={value}
-							onChange={handleChange} />
-						
-						<span>{label}</span>
-					</label>
+					<AlertMessage key={key} name={name} context={context}>
+						<label className="input-checkbox">
+				
+							<input 
+								type="radio" 
+								name={name} 
+								defaultValue={value}
+								onChange={handleChange}
+								checked={formContext.formState[name] === value} />
+							
+							<span>{label}</span>
+						</label>
+					</AlertMessage>
 					))}
 				</div>
-
 
 				{input_visible && (
 					<div className="flex-1">

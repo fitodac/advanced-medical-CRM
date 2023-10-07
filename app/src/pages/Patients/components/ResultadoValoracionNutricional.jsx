@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
-import { HeaderFieldGroup } from '.'
+import { 
+	HeaderFieldGroup,
+	AlertMessage 
+} from '.'
 
 import fields from '../formfields/resultadoValoracionNutricional'
 
@@ -32,37 +35,44 @@ export const ResultadoValoracionNutricional = ({context}) => {
 				subtitle="¿Está el paciente desnutrido?" />
 
 			<div className="space-y-3">
-				{fields.map(({key, name, value, label}) => (<div key={key} className="flex gap-6 items-start">
-					{ key !== 'patient_malnourished_3' 
-					? (<label className="input-checkbox">
-							<input 
-								type="radio" 
-								name={name} 
-								onChange={handleChange}
-								defaultValue={value} />
+				{fields.map(({key, name, value, label}) => (
+				<AlertMessage key={key} name={name} context={context}>
 
-							<span>{label}</span>
+					<div key={key} className="flex gap-6 items-start">
+						{ key !== 'patient_malnourished_3' 
+						? (<label className="input-checkbox">
+								<input 
+									type="radio" 
+									name={name} 
+									onChange={handleChange}
+									defaultValue={value}
+									checked={formContext.formState[name] === value} />
 
-						</label>)
-					: (<>
-						<label className="input-checkbox">
-							<input 
-								type="radio"
-								name={name}
-								onChange={handleChange}
-								defaultValue={value} />
+								<span>{label}</span>
+
+							</label>)
+						: (<>
+							<label className="input-checkbox">
+								<input 
+									type="radio"
+									name={name}
+									onChange={handleChange}
+									defaultValue={value}
+									checked={formContext.formState[name] === value} />
+								
+								<span>{label}</span>
 							
-							<span>{label}</span>
-						
-						</label>
+							</label>
 
-						{ input_visible 
-						&& (<div className="w-28 relative -top-1">
-									<Input name="patient_malnourished__code" context={context} />
-								</div>)}
-						
-					</>)}
-				</div>))}
+							{ input_visible 
+							&& (<div className="w-28 relative -top-1">
+										<Input name="patient_malnourished__code" context={context} />
+									</div>)}
+							
+						</>)}
+					</div>
+				</AlertMessage>
+				))}
 			</div>
 		</section>
 	</>)

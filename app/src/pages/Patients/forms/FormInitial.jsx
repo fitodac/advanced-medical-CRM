@@ -2,7 +2,8 @@ import {
 	useEffect,
 	createContext, 
 	useMemo,
-	useCallback
+	useCallback,
+	useState
 } from 'react'
 import { 
 	useForm,
@@ -49,7 +50,8 @@ const formContext = createContext({})
 
 export const FormInitial = ({
 	patient,
-	formData
+	formData,
+	formMessages
 }) => {
 
 	const { API_URI, token, notify } = useAppContext()
@@ -60,6 +62,9 @@ export const FormInitial = ({
 		onInputChange, 
 		// onResetForm
 	} = useForm({})
+
+	const [ messages, setMessage ] = useState({})
+	useEffect(() => setMessage(formMessages), [formMessages])
 
 
 	const {
@@ -99,13 +104,13 @@ export const FormInitial = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
+
 	const existentFormData = useMemo(() => {
 		if(formData){
 			const v = getVisitFormDataByType('initial', formData)
 			return v.id ? v : null
 		}
 	}, [formData])
-
 
 	useEffect(() => {
 		if( existentFormData ){
@@ -130,7 +135,6 @@ export const FormInitial = ({
 		if( createResponse?.success ) notify(createResponse.message, 'success')
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [createResponse])
-	
 
 
 	useEffect(() => {
@@ -153,6 +157,7 @@ export const FormInitial = ({
 	const contextValue = {
 		patient,
 		formState, 
+		messages,
 		handleInputChange
 	}
 
@@ -221,6 +226,7 @@ export const FormInitial = ({
 		</form> 
 
 		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/3 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(formState, null, 2)}</pre> */}
+		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/5 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(messages, null, 2)}</pre> */}
 	</formContext.Provider>
 
 	{(createLoading || updateLoading) && (<Loading />)}
@@ -230,5 +236,6 @@ export const FormInitial = ({
 
 FormInitial.propTypes = {
 	patient: PropTypes.object.isRequired,
-	formData: PropTypes.array
+	formData: PropTypes.array,
+	formMessages: PropTypes.object
 }
