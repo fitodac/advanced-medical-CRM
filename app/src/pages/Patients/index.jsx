@@ -81,11 +81,9 @@ export default function Page(){
 
 		<pageContext.Provider value={contextValue}>
 			<section className="w-full overflow-x-hidden pt-5">
-				{ loading && (<Loading />)}
+				{ (loading || createNewPatientLoading) && (<Loading />)}
 
 				{ !loading && error && <Alert type="error" data={error} /> }
-
-				{JSON.stringify(createNewPatientLoading)}
 
 				{ !loading && !error && 
 				(<>
