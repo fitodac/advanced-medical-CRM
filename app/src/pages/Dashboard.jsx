@@ -14,31 +14,33 @@ export default function Page(){
 		<PageHeader title="Dashboard" breadcrumbs={[]} />
 
 		<section className="w-full overflow-x-hidden pt-5">
-			<div className="grid grid-cols-4 gap-8">
+			<div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
 
 				<NavLink to={'/patients'} className={boxClassName}>
 					<div className="font-bold">Pacientes</div>
 					<div className="text-sm font-light leading-tight">Accede al listado de todos los pacientes registrados</div>
 				</NavLink>
 
-				{ 'superadmin' === role
-				? (<NavLink to={'/users'} className={boxClassName}>
+				{ 'superadmin' === role && (
+					<NavLink to={'/users'} className={boxClassName}>
 						<div className="font-bold">Usuarios</div>
 						<div className="text-sm font-light leading-tight">Administra los usuarios registrados tanto Doctores como Administradores</div>
-					</NavLink>)
-				: null }
+					</NavLink>
+				)}
 
-				{ 'admin' === role
-				? (<NavLink to={'/users'} className={boxClassName}>
+				{ 'admin' === role && (
+					<NavLink to={'/users'} className={boxClassName}>
 						<div className="font-bold">Doctores</div>
 						<div className="text-sm font-light leading-tight">Un listado de todos los doctores registrados</div>
-					</NavLink>)
-				: null }
+					</NavLink>
+				)}
 
-				<NavLink to={'/medical-centers'} className={boxClassName}>
-					<div className="font-bold">Centros médicos</div>
-					<div className="text-sm font-light leading-tight">Aquí podrás administrar los diferentes centros médicos con los que contamos</div>
-				</NavLink>
+				{ 'doctor' !== role && (
+					<NavLink to={'/medical-centers'} className={boxClassName}>
+						<div className="font-bold">Centros médicos</div>
+						<div className="text-sm font-light leading-tight">Aquí podrás administrar los diferentes centros médicos con los que contamos</div>
+					</NavLink>
+				)}
 
 				<NavLink to={'/documents'} className={boxClassName}>
 					<div className="font-bold">Documentos</div>
