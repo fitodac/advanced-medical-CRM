@@ -50,7 +50,6 @@ class VisitController extends Controller
 	// UPDATE
 	public function update(Request $request)
 	{
-		//Y-m-d
 
 		$auth = Auth::user();
 

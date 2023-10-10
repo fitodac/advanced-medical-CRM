@@ -29,14 +29,14 @@ class PatientController extends Controller
 			'code' => 'required',
 			'doctor_id' => 'required|numeric',
 			'center_id' => 'required|numeric',
-			'gender' => 'required',
+			// 'gender' => 'required',
 		], [
 			'code.required' => 'Debes incluír un código de paciente',
 			'doctor_id.required' => 'El ID del doctor es requerido',
 			'doctor_id.numeric' => 'Formato incorrecto',
 			'center_id.required' => 'El ID del centro médico es requerido',
 			'center_id.numeric' => 'Formato incorrecto',
-			'gender.required' => 'Debes incluír un género'
+			// 'gender.required' => 'Debes incluír un género'
 		]);
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
@@ -105,9 +105,9 @@ class PatientController extends Controller
 
 		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id', 'gender'])->find($request->id);
 
-        if ($patient->visits) {
-            $messages = $this->normalRangeMessageNotification($patient->visits->keyBy('visit_type')->toArray(), true);
-        }
+		if ($patient->visits) {
+			$messages = $this->normalRangeMessageNotification($patient->visits->keyBy('visit_type')->toArray(), true);
+		}
 
 		if( 'doctor' === $auth->role ){
 			$doctor = Doctor::where('user_id', $auth->id)->first();

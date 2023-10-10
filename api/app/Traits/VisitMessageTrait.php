@@ -50,61 +50,61 @@ trait VisitMessageTrait
 	 */
 	public function normalRangeMessageNotification($data, $list = false)
 	{
-        $warnings = [];
+		$warnings = [];
 
-        $checks = [
-            'current_body_weight' => fn($value) => ($value < 30 || $value > 150) ? "fuera de rango" : null,
-            'BMI' => fn($value) => ($value < 15 || $value > 35) ? "fuera de rango" : null,
-            'calf_circumference' => fn($value) => ($value < 20 || $value > 50) ? "fuera de rango" : null,
-            'bi__hydratation' => fn($value) => ($value < 50 || $value > 80) ? "fuera de rango" : null,
-            'bi__ffm' => fn($value) => ($value < 20 || $value > 70) ? "fuera de rango" : null,
-            'bi__fm' => fn($value) => ($value < 10 || $value > 35) ? "fuera de rango" : null,
-            'bi__bcm' => fn($value) => ($value < 10 || $value > 40) ? "fuera de rango" : null,
-            'bi__phase_angle' => fn($value) => ($value < 3 || $value > 25) ? "fuera de rango" : null,
-            'au__total_adipose_tissue' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-            'au__superficial' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-            'au__preperitoneal' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-            'mu__area' => fn($value) => ($value < 5) ? "fuera de rango" : null,
-            'mu__circumference' => fn($value) => ($value > 25) ? "fuera de rango" : null,
-            'mu__axes_xax' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-            'mu__axes_yax' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-            'mu__adipose_tissue' => fn($value) => ($value > 12) ? "fuera de rango" : null,
-        ];
+		$checks = [
+				'current_body_weight' => fn($value) => ($value < 30 || $value > 150) ? "fuera de rango" : null,
+				'BMI' => fn($value) => ($value < 15 || $value > 35) ? "fuera de rango" : null,
+				'calf_circumference' => fn($value) => ($value < 20 || $value > 50) ? "fuera de rango" : null,
+				'bi__hydratation' => fn($value) => ($value < 50 || $value > 80) ? "fuera de rango" : null,
+				'bi__ffm' => fn($value) => ($value < 20 || $value > 70) ? "fuera de rango" : null,
+				'bi__fm' => fn($value) => ($value < 10 || $value > 35) ? "fuera de rango" : null,
+				'bi__bcm' => fn($value) => ($value < 10 || $value > 40) ? "fuera de rango" : null,
+				'bi__phase_angle' => fn($value) => ($value < 3 || $value > 25) ? "fuera de rango" : null,
+				'au__total_adipose_tissue' => fn($value) => ($value > 12) ? "fuera de rango" : null,
+				'au__superficial' => fn($value) => ($value > 12) ? "fuera de rango" : null,
+				'au__preperitoneal' => fn($value) => ($value > 12) ? "fuera de rango" : null,
+				'mu__area' => fn($value) => ($value < 5) ? "fuera de rango" : null,
+				'mu__circumference' => fn($value) => ($value > 25) ? "fuera de rango" : null,
+				'mu__axes_xax' => fn($value) => ($value > 12) ? "fuera de rango" : null,
+				'mu__axes_yax' => fn($value) => ($value > 12) ? "fuera de rango" : null,
+				'mu__adipose_tissue' => fn($value) => ($value > 12) ? "fuera de rango" : null,
+		];
 
-        if($list) {
-            foreach ($data as $visit_type => $value) {
+		if($list) {
+				foreach ($data as $visit_type => $value) {
 
-                if($visit_type === 'initial')
-                {
-                    $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
-                }
+						if($visit_type === 'initial')
+						{
+								$checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
+						}
 
-                foreach ($checks as $key => $checkFn) {
-                    if(Arr::exists($value, $key)) {
-                        $result = $checkFn($value[$key] ?? null);
-                        if ($result) {
-                            $warnings[$visit_type][$key] = "({$value[$key]}) $result.";
-                        }
-                    }
-                }
-            }
-        } else {
+						foreach ($checks as $key => $checkFn) {
+								if(Arr::exists($value, $key)) {
+										$result = $checkFn($value[$key] ?? null);
+										if ($result) {
+												$warnings[$visit_type][$key] = "({$value[$key]}) $result.";
+										}
+								}
+						}
+				}
+		} else {
 
-            if($data['visit_type'] === 'initial')
-            {
-                $checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
-            }
+				if($data['visit_type'] === 'initial')
+				{
+						$checks = array_merge($checks, ['height' => fn($value) => ($value < 1.3 || $value > 2) ? "fuera de rango" : null]);
+				}
 
-            foreach ($checks as $key => $checkFn) {
-                if(Arr::exists($data, $key)) {
-                    $result = $checkFn($data[$key] ?? null);
-                    if ($result) {
-                        $warnings[$key] = "({$data[$key]}) $result.";
-                    }
-                }
-            }
-        }
+				foreach ($checks as $key => $checkFn) {
+						if(Arr::exists($data, $key)) {
+								$result = $checkFn($data[$key] ?? null);
+								if ($result) {
+										$warnings[$key] = "({$data[$key]}) $result.";
+								}
+						}
+				}
+		}
 
-        return $warnings;
+		return $warnings;
 	}
 }
