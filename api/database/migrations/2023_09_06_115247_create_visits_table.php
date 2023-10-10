@@ -48,13 +48,13 @@ return new class extends Migration
 			$table->enum('scheduled_visit', ['y'])->nullable()->comment('Visita programada en consulta externa/planta');
 			// Valoración del estado nutricional
 			// Antropometría
-			$table->unsignedDecimal('current_body_weight', 5, 2)->nullable()->comment('Peso corporal actual | kg');
-			$table->unsignedDecimal('usual_body_weight', 5, 2)->nullable()->comment('Peso corporal habitual (últimos 6 meses) | kg');
-			$table->unsignedDecimal('loss_last_six_months', 5, 2)->nullable()->comment('Pérdida en los últimos 6 meses | kg');
-			$table->unsignedDecimal('weight_loss_percentage', 5, 2)->nullable()->comment('Porcentaje de pérdida de peso | %');
-			$table->unsignedDecimal('height', 5, 2)->nullable()->comment('Altura | cm');
-			$table->unsignedDecimal('BMI', 5, 2)->nullable()->comment('IMC | kg/m2');
-			$table->unsignedDecimal('calf_circumference', 5, 2)->nullable()->comment('Perímetro de pantorrilla | cm');
+			$table->string('current_body_weight')->nullable()->comment('Peso corporal actual | kg');
+			$table->string('usual_body_weight')->nullable()->comment('Peso corporal habitual (últimos 6 meses) | kg');
+			$table->string('loss_last_six_months')->nullable()->comment('Pérdida en los últimos 6 meses | kg');
+			$table->string('weight_loss_percentage')->nullable()->comment('Porcentaje de pérdida de peso | %');
+			$table->string('height')->nullable()->comment('Altura | cm');
+			$table->string('BMI')->nullable()->comment('IMC | kg/m2');
+			$table->string('calf_circumference')->nullable()->comment('Perímetro de pantorrilla | cm');
 			// Cribado nutricional
 			$table->enum('ns__must', ['y'])->nullable()->comment('MUST');
 			$table->enum('ns__nrs_2002', ['y'])->nullable()->comment('NRS-2002');
@@ -79,42 +79,42 @@ return new class extends Migration
 			$table->enum('patient_malnourished', ['no', 'si', 'en riesgo'])->nullable()->comment('¿Está el paciente desnutrido?');
 			$table->string('patient_malnourished__code', 10)->nullable()->comment('Desnutrición del paciente según CIE 10');
 			// Parámetros funcionales 
-			$table->unsignedDecimal('dynamometry', 5, 2)->nullable()->comment('Dinamometría, valor máximo de 3 mediciones | kg');
+			$table->string('dynamometry')->nullable()->comment('Dinamometría, valor máximo de 3 mediciones | kg');
 			$table->enum('dynamometry__not_possible', ['y'])->nullable()->comment('No es posible realizar la dinamometría');
 			$table->tinyInteger('test_chair_five_repetitions')->nullable()->comment('Test “Test de la silla 5 repeticiones" | seg');
 			$table->enum('test_chair__not_possible', ['y'])->nullable()->comment('No es posible realizar el test de la silla');
 			// Otras mediciones de composición corporal
-			$table->unsignedDecimal('bi__hydratation', 5, 2)->nullable()->comment('Porcentaje de hidratación | %');
-			$table->unsignedDecimal('bi__tbm', 5, 2)->nullable()->comment('TBW (agua corporal total) | L');
-			$table->unsignedDecimal('bi__ecw', 5, 2)->nullable()->comment('ECW (agua extracelular) | L');
-			$table->unsignedDecimal('bi__icw', 5, 2)->nullable()->comment('ICW (agua intracelular) | L');
-			$table->unsignedDecimal('bi__ffm', 5, 2)->nullable()->comment('FFM (masa magra) | kg');
-			$table->unsignedDecimal('bi__fm', 5, 2)->nullable()->comment('FM (masa grasa) | kg');
-			$table->unsignedDecimal('bi__bcm', 5, 2)->nullable()->comment('BCM (masa celular) | kg');
-			$table->unsignedDecimal('bi__bcm_h', 5, 2)->nullable()->comment('BCM/h (masa celular dividido entre altura) | kg/m');
-			$table->unsignedDecimal('bi__asmm', 5, 2)->nullable()->comment('ASMM (masa muscular apendicular) | kg');
-			$table->unsignedDecimal('bi__smi', 5, 2)->nullable()->comment('SMI (Índice de masa muscular) | kg');
-			$table->unsignedDecimal('bi__body_fat', 5, 2)->nullable()->comment('Grasa corporal | %');
-			$table->unsignedDecimal('bi__resistance', 5, 2)->nullable()->comment('Resistencia (Rz/h, Ohm) | Ohm/m');
-			$table->unsignedDecimal('bi__reactance', 5, 2)->nullable()->comment('Reactancia (Xc/h, Ohm) | Ohm/m');
-			$table->unsignedDecimal('bi__phase_angle', 5, 2)->nullable()->comment('Ángulo de fase (AF) | deg');
+			$table->string('bi__hydratation')->nullable()->comment('Porcentaje de hidratación | %');
+			$table->string('bi__tbm')->nullable()->comment('TBW (agua corporal total) | L');
+			$table->string('bi__ecw')->nullable()->comment('ECW (agua extracelular) | L');
+			$table->string('bi__icw')->nullable()->comment('ICW (agua intracelular) | L');
+			$table->string('bi__ffm')->nullable()->comment('FFM (masa magra) | kg');
+			$table->string('bi__fm')->nullable()->comment('FM (masa grasa) | kg');
+			$table->string('bi__bcm')->nullable()->comment('BCM (masa celular) | kg');
+			$table->string('bi__bcm_h')->nullable()->comment('BCM/h (masa celular dividido entre altura) | kg/m');
+			$table->string('bi__asmm')->nullable()->comment('ASMM (masa muscular apendicular) | kg');
+			$table->string('bi__smi')->nullable()->comment('SMI (Índice de masa muscular) | kg');
+			$table->string('bi__body_fat')->nullable()->comment('Grasa corporal | %');
+			$table->string('bi__resistance')->nullable()->comment('Resistencia (Rz/h, Ohm) | Ohm/m');
+			$table->string('bi__reactance')->nullable()->comment('Reactancia (Xc/h, Ohm) | Ohm/m');
+			$table->string('bi__phase_angle')->nullable()->comment('Ángulo de fase (AF) | deg');
 			$table->string('bi__standarized_phase_angle')->nullable()->comment('Ángulo de fase estandarizado | L');
 			// DEXA
-			$table->unsignedDecimal('dexa__ffm', 5, 2)->nullable()->comment('FFM (masa magra) | kg');
-			$table->unsignedDecimal('dexa__fm', 5, 2)->nullable()->comment('FM (masa grasa) | kg');
+			$table->string('dexa__ffm')->nullable()->comment('FFM (masa magra) | kg');
+			$table->string('dexa__fm')->nullable()->comment('FM (masa grasa) | kg');
 			// TC
-			$table->unsignedDecimal('tc__ffm', 5, 2)->nullable()->comment('FFM (masa magra) | kg');
-			$table->unsignedDecimal('tc__fm', 5, 2)->nullable()->comment('FM (masa grasa) | kg');
+			$table->string('tc__ffm')->nullable()->comment('FFM (masa magra) | kg');
+			$table->string('tc__fm')->nullable()->comment('FM (masa grasa) | kg');
 			// Ecografía abdominal
-			$table->unsignedDecimal('au__total_adipose_tissue', 5, 2)->nullable()->comment('Ecografía abdominal: tejido adiposo total | cm');
-			$table->unsignedDecimal('au__superficial', 5, 2)->nullable()->comment('Ecografía abdominal: superficial | cm');
-			$table->unsignedDecimal('au__preperitoneal', 5, 2)->nullable()->comment('Ecografía abdominal: preperitoneal | cm');
+			$table->string('au__total_adipose_tissue')->nullable()->comment('Ecografía abdominal: tejido adiposo total | cm');
+			$table->string('au__superficial')->nullable()->comment('Ecografía abdominal: superficial | cm');
+			$table->string('au__preperitoneal')->nullable()->comment('Ecografía abdominal: preperitoneal | cm');
 			// Ecografía muscular
-			$table->unsignedDecimal('mu__area', 5, 2)->nullable()->comment('Ecografía muscular: Área | cm');
-			$table->unsignedDecimal('mu__circumference', 5, 2)->nullable()->comment('Ecografía muscular: Circunferencia | cm');
-			$table->unsignedDecimal('mu__axes_xax', 5, 2)->nullable()->comment('Ecografía muscular: Ejes X | cm');
-			$table->unsignedDecimal('mu__axes_yax', 5, 2)->nullable()->comment('Ecografía muscular: Ejes Y | cm');
-			$table->unsignedDecimal('mu__adipose_tissue', 5, 2)->nullable()->comment('Ecografía muscular: Tejido adiposo | cm');
+			$table->string('mu__area')->nullable()->comment('Ecografía muscular: Área | cm');
+			$table->string('mu__circumference')->nullable()->comment('Ecografía muscular: Circunferencia | cm');
+			$table->string('mu__axes_xax')->nullable()->comment('Ecografía muscular: Ejes X | cm');
+			$table->string('mu__axes_yax')->nullable()->comment('Ecografía muscular: Ejes Y | cm');
+			$table->string('mu__adipose_tissue')->nullable()->comment('Ecografía muscular: Tejido adiposo | cm');
 			// Resultado de la valoración muscular
 			$table->enum('mar__normal', ['y'])->nullable()->comment('Resultado de la valoración muscular: ¿La masa muscular/función del paciente es normal?');
 			// Tratamiento nutricional
@@ -170,7 +170,7 @@ return new class extends Migration
 			$table->enum('pa__mixed', ['y'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Mixto');
 			// ¿El paciente ha seguido la recomendación de actividad física prescrita?
 			$table->enum('pa__hpftppar', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
-			$table->unsignedDecimal('pa__hpftppar_percent', 5, 2)->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita? especifique % de adherencia a las recomendaciones | %');
+			$table->string('pa__hpftppar_percent')->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita? especifique % de adherencia a las recomendaciones | %');
 			$table->text('pa__reason')->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?, No, motivos');
 
 			// DATOS DE LA VISITA 1
@@ -193,21 +193,21 @@ return new class extends Migration
 			
 			// Valoración del estado nutricional
 			// Antropometría
-			$table->unsignedDecimal('ans__anthropometry__current_weight', 5, 2)->nullable()->comment('Peso corporal actual | kg');
-			$table->unsignedDecimal('ans__anthropometry__initial_weight', 5, 2)->nullable()->comment('Peso corporal inicial | kg');
-			$table->unsignedDecimal('ans__anthropometry__difference_percentage', 5, 2)->nullable()->comment('Porcentaje de diferencia | %');
-			$table->unsignedDecimal('ans__anthropometry__current_bmi', 5, 2)->nullable()->comment('IMC actual | kg/m2');
-			$table->unsignedDecimal('ans__anthropometry__calf_circumference', 5, 2)->nullable()->comment('Perímetro de pantorrilla | cm');
+			$table->string('ans__anthropometry__current_weight')->nullable()->comment('Peso corporal actual | kg');
+			$table->string('ans__anthropometry__initial_weight')->nullable()->comment('Peso corporal inicial | kg');
+			$table->string('ans__anthropometry__difference_percentage')->nullable()->comment('Porcentaje de diferencia | %');
+			$table->string('ans__anthropometry__current_bmi')->nullable()->comment('IMC actual | kg/m2');
+			$table->string('ans__anthropometry__calf_circumference')->nullable()->comment('Perímetro de pantorrilla | cm');
 			// ¿El paciente ha seguido la recomendación nutricional prescrita?
 			$table->enum('hfnr__followed_prescribed_nutritional_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
-			$table->unsignedDecimal('hfnr__percentage_of_adherece_to_recommendations', 5, 2)->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
+			$table->string('hfnr__percentage_of_adherece_to_recommendations')->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
 			$table->text('hfnr__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación nutricional prescrita');
 			$table->enum('rng__has_reached_nutritional_goal', ['y'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
 			$table->text('rng__has_reached_nutritional_goal_reasons')->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal? motivos');
 			$table->enum('cppi__considers_that_patient_perceives_improvement', ['y'])->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?');
 			$table->text('cppi__considers_that_patient_perceives_improvement_reasons')->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado? especifique motivos');
 			$table->enum('hfppar_followed_prescribed_physical_activity_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
-			$table->unsignedDecimal('hfppar_percentage_of_adherece_to_recommendations', 5, 2)->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
+			$table->string('hfppar_percentage_of_adherece_to_recommendations')->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
 			$table->text('hfppar__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación de actividad física prescrita');
 
 			$table->timestamps();
