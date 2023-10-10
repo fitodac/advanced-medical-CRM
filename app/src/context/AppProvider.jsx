@@ -8,7 +8,6 @@ const TOAST_TIME_OUT = 2400
 
 export const AppProvider = ({children}) => {
 
-	const Context = useContext(AppContext)
 	const [ toastContext, setToastContext ] = useState({
 		show: false,
 		status: '',

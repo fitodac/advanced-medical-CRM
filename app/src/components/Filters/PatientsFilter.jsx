@@ -9,9 +9,7 @@ import { objectToQueryString } from '../../helpers'
 
 export const PatientsFilter = ({filter}) => {
 
-	const { 
-		API_URI, 
-	} = useAppContext()
+	const { API_URI, user: {info: {role}} } = useAppContext()
 	const filterContext = useContext(FilterContext)
 
 	const handleSubmit = e => {
@@ -32,10 +30,12 @@ export const PatientsFilter = ({filter}) => {
 				containerClassName="w-36"
 				context={FilterContext} />
 			
-			<InputSearch 
-				label="Doctor"
-				name="doctor"
-				context={FilterContext} />
+			{'doctor' !== role && (
+				<InputSearch 
+					label="Doctor"
+					name="doctor"
+					context={FilterContext} />
+			)}
 
 			<Button className="btn-icon bg-primary border-primary text-white">
 				<i className="ri-equalizer-fill"></i>

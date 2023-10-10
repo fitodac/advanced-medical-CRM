@@ -16,7 +16,7 @@ export const PageHeader = (props) => {
 
 	return (<div className="flex justify-between">
 		<div>
-			<h1 className="text-primary text-3xl font-semibold leading-tight select-none">{title}</h1>
+			<h1 className="text-primary text-2xl font-semibold leading-none select-none md:text-3xl">{title}</h1>
 
 			{ breadcrumbs
 			? (<ul className="text-slate-400 text-sm leading-none flex items-center mt-2 select-none">

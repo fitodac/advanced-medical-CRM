@@ -8,7 +8,7 @@ import { useAxios } from '../../hooks'
 
 export const DoctorsFilter = ({filter}) => {
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, user: {role} } = useAppContext()
 	const filterContext = useContext(FilterContext)
 
 	// useEffect(() => {

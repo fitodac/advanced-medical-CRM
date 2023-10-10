@@ -7,7 +7,6 @@ import App from '../App'
 import Dashboard from '../pages/Dashboard'
 
 import Patient from '../pages/Patients'
-import PatientForm, {loader as loaderPatientForm} from '../pages/Patients/Form'
 import Crd, {loader as loaderCrd} from '../pages/Patients/Crd'
 
 import MedicalCenter from '../pages/MedicalCenters'
@@ -79,16 +78,6 @@ const router = createBrowserRouter([
 			{
 				path: '/patients', 
 				element: <Patient />
-			},
-			{
-				path: '/patients/new', 
-				element: <PatientForm />,
-				loader: loaderPatientForm
-			},
-			{
-				path: '/patients/edit/:id', 
-				element: <PatientForm />,
-				loader: loaderPatientForm
 			},
 			{
 				path: '/crd/:id/crd', 

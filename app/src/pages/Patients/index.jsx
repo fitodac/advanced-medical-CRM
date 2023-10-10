@@ -10,9 +10,11 @@ import {
 } from '../../components'
 import {
 	ButtonLink,
+	Button,
 	Alert
 } from '../../components/Ui'
 import { Table } from '../../components/Table'
+import { useCreateNewPatient } from '../../hooks/useCreateNewPatient'
 
 const thead = [
 	{ title: '#' },
@@ -27,8 +29,10 @@ export const pageContext = createContext({})
 
 export default function Page(){
 
-	const { API_URI, token, user: {info: {role}} } = useAppContext()
+	const { API_URI, token, user } = useAppContext()
+	const {info: {id, role}} = user
 	const [ request, setRequest ] = useState(`${API_URI}/patient/list`)
+
 
 	const { response, error, loading, refetch } = useAxios({
 		url: request,
@@ -41,18 +45,39 @@ export default function Page(){
 		refetch()
 	}
 
+	const { 
+		createNewPatient,
+		createNewPatientLoading 
+	} = useCreateNewPatient({
+		API_URI, 
+		user_id: id,
+		token
+	})
+
 	const contextValue = {
 		requestUpdate,
 		request
 	}
 
 	return (<>
-		<PageHeader 
-			title="Listado de pacientes"
-			buttons={'doctor' === role ? [{text: 'Nuevo paciente', link: '/patients/new'}] : null}
-			breadcrumbs={[
-				{title: 'Lista de pacientes', current: true}
-			]} />
+
+		<div className="flex justify-between">
+			<PageHeader 
+				title="Listado de pacientes"
+				breadcrumbs={[
+					{title: 'Lista de pacientes', current: true}
+				]} />
+			
+			{'doctor' === role && (
+			<div>
+				<Button 
+					className="bg-teal border-teal text-white"
+					onClick={createNewPatient}>
+					Nuevo paciente
+				</Button>
+			</div>
+			)}
+		</div>
 
 		<pageContext.Provider value={contextValue}>
 			<section className="w-full overflow-x-hidden pt-5">
@@ -60,6 +85,7 @@ export default function Page(){
 
 				{ !loading && error && <Alert type="error" data={error} /> }
 
+				{JSON.stringify(createNewPatientLoading)}
 
 				{ !loading && !error && 
 				(<>
@@ -92,7 +118,6 @@ export default function Page(){
 								<td>
 									<div className="flex gap-x-2 justify-end h-full">
 										{ 'doctor' === role && <ButtonLink className="btn-sm bg-teal border-teal text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
-										<ButtonLink className="btn-sm bg-primary border-primary text-white" link={`/patients/edit/${id}`}>Editar</ButtonLink>
 										<Delete 
 												id={id} 
 												url={`${API_URI}/patient/delete/${id}`}
