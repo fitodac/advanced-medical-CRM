@@ -80,12 +80,7 @@ const router = createBrowserRouter([
 				element: <Patient />
 			},
 			{
-				path: '/crd/:id/crd', 
-				element: <Crd />,
-				loader: loaderCrd
-			},
-			{
-				path: '/crd/:id/first', 
+				path: '/crd/:id', 
 				element: <Crd />,
 				loader: loaderCrd
 			},

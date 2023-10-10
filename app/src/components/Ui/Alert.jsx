@@ -18,5 +18,7 @@ Alert.propTypes = {
 }
 
 
+// bg-green-100
 // bg-red-100
+// text-green-700
 // text-red-700

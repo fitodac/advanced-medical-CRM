@@ -1,9 +1,5 @@
-// import { createContext, useContext } from 'react'
 import { Outlet, useNavigation, useLocation } from 'react-router-dom'
 import { AppProvider } from './context'
-
-import { useAuth } from './hooks'
-import { API_URI } from './config'
 import {
 	Loading,
 	Navbar,
@@ -12,21 +8,11 @@ import {
 } from './components'
 
 
-// export const appContext = createContext({})
-
 function App() {
 
 	const navigation = useNavigation()
-	const { user } = useAuth()
-	const { token_type, token } = user
 	const location = useLocation()
 
-
-	const contextValue = {
-		API_URI,
-		user,
-		token: `${token_type} ${token}`,
-	}
 
   return (
 		<AppProvider>

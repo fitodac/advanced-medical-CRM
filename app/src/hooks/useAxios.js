@@ -40,8 +40,7 @@ export const useAxios = ({
 						'Content-Type': 'application/json',
 						Accept: 'application/json',
 						'Access-Control-Allow-Origin': '*'
-					},
-					// withCredentials: true
+					}
 				})
 				.then(resp => setResponse(resp.data))
 				.catch(err => {

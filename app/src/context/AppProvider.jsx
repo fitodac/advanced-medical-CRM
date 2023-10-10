@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { AppContext } from '.'
 import { useAuth } from '../hooks'
@@ -56,7 +56,7 @@ export const AppProvider = ({children}) => {
 
 			<label 
 				htmlFor="toast" 
-				className="toast bg-green-100 border-green-100 text-green-600 p-8 overflow-hidden shadow-2xl"
+				className="toast bg-green-700 border-green-700 text-green-200 p-8 overflow-hidden shadow-2xl"
 				onClick={() => setToastContext({show: false, status: '', message: ''})}>
 				<div className="">{toastContext.message}</div>
 			</label>
