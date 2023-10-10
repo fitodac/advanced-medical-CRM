@@ -1,6 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { Input } from '../../../components/Ui'
+import { 
+	Input,
+	InputMask
+} from '../../../components/Ui'
 import { 
 	HeaderFieldGroup,
 	AlertMessage 
@@ -55,7 +58,7 @@ export const PacienteHaSeguidoTratamientoNutricional = ({context}) => {
 								'nt__followed_prescribed_nutritional_recommendation_1' === input_visible
 							) && (
 								<div className="w-90 relative -top-1">
-									<Input 
+									<InputMask 
 										label="Especifique % de adherencia a las recomendaciones"
 										name="nt__percentage_of_adherece_to_recommendations" 
 										context={context} />

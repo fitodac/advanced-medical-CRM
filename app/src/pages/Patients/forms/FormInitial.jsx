@@ -55,6 +55,7 @@ export const FormInitial = ({
 }) => {
 
 	const { API_URI, token, notify } = useAppContext()
+	const [loading, setLoading] = useState(true)
 
 	const {
 		formState, 
@@ -101,6 +102,8 @@ export const FormInitial = ({
 			patient_id: patient.id,
 			visit_type: 'initial'
 		})
+
+		setLoading(false)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -227,9 +230,10 @@ export const FormInitial = ({
 
 		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/3 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(formState, null, 2)}</pre> */}
 		{/* <pre className="bg-black bg-opacity-70 text-white text-sm w-1/5 h-screen p-8 right-0 top-0 fixed overflow-y-auto">{JSON.stringify(messages, null, 2)}</pre> */}
+
 	</formContext.Provider>
 
-	{(createLoading || updateLoading) && (<Loading />)}
+	{loading && (<Loading />)}
 	</>)
 }
 

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { Input } from '../../../components/Ui'
+import { InputMask } from '../../../components/Ui'
 import { 
 	HeaderFieldGroup,
 	AlertMessage 
@@ -31,7 +31,7 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 								</div>
 								
 								<div className="col-span-2 lg:col-span-2">
-									<Input name={name} context={context} />
+									<InputMask name={name} context={context} />
 								</div>
 								
 								<div className="col-span-3 flex items-center">
@@ -67,7 +67,7 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 								</div>
 								
 								<div className="col-span-2 lg:col-span-2">
-									<Input name={name} context={context} />
+									<InputMask name={name} context={context} />
 								</div>
 								
 								<div className="col-span-3 flex items-center">
@@ -96,7 +96,7 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 								</div>
 								
 								<div className="col-span-2 lg:col-span-2">
-									<Input name={name} context={context} />
+									<InputMask name={name} context={context} />
 								</div>
 								
 								<div className="col-span-3 flex items-center">
@@ -143,7 +143,7 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 								</div>
 								
 								<div className="col-span-2 lg:col-span-2">
-									<Input name={name} context={context} />
+									<InputMask name={name} context={context} />
 								</div>
 								
 								<div className="col-span-3 flex items-center">
@@ -168,7 +168,7 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 									</div>
 									
 									<div className="col-span-2 lg:col-span-2">
-										<Input name={name} context={context} />
+										<InputMask name={name} context={context} />
 									</div>
 									
 									<div className="col-span-3 flex items-center">

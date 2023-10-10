@@ -34,8 +34,8 @@ export const ResultadoValoracionMuscular = ({context}) => {
 							<input 
 								type="radio"
 								name={name} 
-								onChange={handleChange}
 								defaultValue={value}
+								onChange={handleChange}
 								checked={formContext.formState[name] === value} />
 
 							<span>{label}</span>

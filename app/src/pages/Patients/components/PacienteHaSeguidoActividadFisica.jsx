@@ -1,6 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { Input } from '../../../components/Ui'
+import { 
+	Input,
+	InputMask
+} from '../../../components/Ui'
 import { 
 	HeaderFieldGroup,
 	AlertMessage 
@@ -55,7 +58,7 @@ export const PacienteHaSeguidoActividadFisica = ({context}) => {
 								'hfppar_followed_prescribed_physical_activity_recommendation_1' === input_visible
 							) && (
 								<div className="w-90 relative -top-1">
-									<Input 
+									<InputMask 
 										label="Especifique % de adherencia a las recomendaciones"
 										name="hfppar_percentage_of_adherece_to_recommendations" 
 										context={context} />

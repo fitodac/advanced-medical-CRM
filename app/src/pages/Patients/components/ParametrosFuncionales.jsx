@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { 
-	Input, 
+	InputMask, 
 	CheckboxList
 } from '../../../components/Ui'
 import { 
@@ -29,7 +29,7 @@ export const ParametrosFuncionales = ({context}) => {
 								<label className="text-sm font-normal select-none">{e[1].label}</label>
 							</div>
 							<div className="col-span-1">
-								<Input name={e[1].name} context={context} />
+								<InputMask name={e[1].name} context={context} />
 							</div>
 							<div className="col-span-1 flex items-center">
 								<label className="text-sm font-normal select-none">{e[1].append}</label>

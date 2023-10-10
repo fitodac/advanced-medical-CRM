@@ -28,7 +28,7 @@ export default function Page(){
 	const [ formType, setFormType ] = useState('initial')
 	const [ formData, setFormData ] = useState(null)
 	const [ formMessages, setFormMessages ] = useState(null)
-	const [ loading, setLoading ] = useState(true)
+	const [ loading, setLoading ] = useState(false)
 	const firstFooter = useRef(null)
 	const initialFooter = useRef(null)
 

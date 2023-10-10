@@ -35,10 +35,13 @@ export const MenuInitial = ({
 
 		<div className={menuClass.container}>
 			<ul className={menuClass.ul}>
-				{menu.map(({toId, label}) => (<li key={toId}>
+				{menu.map(({toId, label}, i) => (<li key={toId}>
 					<button 
 						className={menuClass.nav}
-						onClick={() => handleScroll(toId)}>{label}</button>
+						onClick={() => handleScroll(toId)}>
+							<span className="text-teal-400">{i}</span>
+							<span className="">{label}</span>
+						</button>
 				</li>))}
 			</ul>
 		</div>

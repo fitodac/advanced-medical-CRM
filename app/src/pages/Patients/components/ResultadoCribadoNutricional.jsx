@@ -16,7 +16,6 @@ export const ResultadoCribadoNutricional = ({context}) => {
 	const handleChange = e => {
 		const {name, value} = e.target
 		formContext.handleInputChange({target: {name, value}})
-		// setChkState(value)
 	}
 
 	return (<>
@@ -38,7 +37,7 @@ export const ResultadoCribadoNutricional = ({context}) => {
 								defaultValue={value}
 								onChange={handleChange}
 								checked={formContext.formState[name] === value} />
-							
+
 							<span>{label}</span>
 				
 						</label>

@@ -14,17 +14,11 @@ export const IniciaTratamientoNutricional = ({context}) => {
 
 	const formContext = useContext(context)
 	const [ input_visible, setInputVisible ] = useState(false)
-	const [ chkState, setChkState ] = useState('')
-
-	useEffect(() => {
-		formContext.handleInputChange({target: {name: fields[0].name, value: chkState}})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chkState])
 
 	const handleChange = e => {
-		const {value, checked} = e.target
-		setChkState(checked ? value : '')
-		if( 'y' !== value ) formContext.handleInputChange({target: {name: 'nt__specify', value: ''}})
+		const {name, value} = e.target
+		formContext.handleInputChange({target: {name, value}})
+		// if( 'y' !== value ) formContext.handleInputChange({target: {name: 'nt__specify', value: ''}})
 		setInputVisible('y' === value)
 	}
 
@@ -35,6 +29,7 @@ export const IniciaTratamientoNutricional = ({context}) => {
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (
 				<AlertMessage key={key} name={name} context={context}>
+
 					<div className="flex gap-6 items-start">
 						{ key !== 'nt__start_2' 
 						? (<label className="input-checkbox">

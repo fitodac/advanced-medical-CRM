@@ -6,8 +6,8 @@ import { MenuInitial, MenuFirst } from '.'
 const menuClass = {
 	title: 'text-slate-600 text-xs font-semibold px-3 pt-5',
 	container: 'max-h-[68vh] scrollbar scrollbar-thumb-slate-400 scrollbar-track-slate-100 pb-20',
-	ul: 'text-slate-500 space-y-1 pt-4',
-	nav: 'border-slate-100 border-l-2 text-sm text-left leading-none inline-block px-3 select-none transition-all hover:text-primary hover:border-primary'
+	ul: 'text-slate-500 pt-4',
+	nav: 'border-slate-100 border-l-2 text-sm text-left leading-none inline-block px-3 py-2 flex gap-x-1.5 select-none transition-all hover:text-teal-400 hover:border-primary'
 }
 
 const handleScroll = id => {

@@ -115,7 +115,7 @@ export default function Page(){
 								
 								<td>
 									<div className="flex gap-x-2 justify-end h-full">
-										{ 'doctor' === role && <ButtonLink className="btn-sm bg-teal border-teal text-white" link={`/crd/${id}/crd`}>CRD</ButtonLink> }
+										{ 'doctor' === role && <ButtonLink className="btn-sm bg-teal border-teal text-white" link={`/crd/${id}`}>CRD</ButtonLink> }
 										<Delete 
 												id={id} 
 												url={`${API_URI}/patient/delete/${id}`}

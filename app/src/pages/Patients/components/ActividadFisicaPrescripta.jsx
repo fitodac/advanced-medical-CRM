@@ -23,7 +23,7 @@ export const ActividadFisicaPrescripta = ({context}) => {
 
 	const handleChange = e => {
 		const {value, checked} = e.target
-		setChkState(checked ? value : null)
+		setChkState(checked ? value : '')
 		if( 'y' === value ) formContext.handleInputChange({target: {name: 'pa__prescribed_reasons', value: ''}})
 		setInputVisible('y' !== value)
 	}

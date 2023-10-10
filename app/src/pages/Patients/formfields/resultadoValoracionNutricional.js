@@ -15,6 +15,6 @@ export default [
 		key: 'patient_malnourished_3',
 		name: 'patient_malnourished',
 		value: 'si', 
-		label: 'Sí' 
+		label: 'Sí, especifique' 
 	}
 ]

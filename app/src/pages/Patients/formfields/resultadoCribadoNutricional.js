@@ -2,7 +2,7 @@ export default [
 	{ 
 		key: 'ns__must_1',
 		name: 'ns__result',
-		value: null, 
+		value: '', 
 		label: 'No' 
 	},
 	{ 

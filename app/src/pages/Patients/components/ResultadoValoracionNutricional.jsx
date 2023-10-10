@@ -40,7 +40,7 @@ export const ResultadoValoracionNutricional = ({context}) => {
 
 					<div key={key} className="flex gap-6 items-start">
 						{ key !== 'patient_malnourished_3' 
-						? (<label className="input-checkbox">
+						? (<label className="input-checkbox w-40">
 								<input 
 									type="radio" 
 									name={name} 
@@ -49,10 +49,9 @@ export const ResultadoValoracionNutricional = ({context}) => {
 									checked={formContext.formState[name] === value} />
 
 								<span>{label}</span>
-
 							</label>)
 						: (<>
-							<label className="input-checkbox">
+							<label className="input-checkbox w-40">
 								<input 
 									type="radio"
 									name={name}
@@ -61,13 +60,17 @@ export const ResultadoValoracionNutricional = ({context}) => {
 									checked={formContext.formState[name] === value} />
 								
 								<span>{label}</span>
-							
 							</label>
 
 							{ input_visible 
-							&& (<div className="w-28 relative -top-1">
-										<Input name="patient_malnourished__code" context={context} />
-									</div>)}
+							&& (
+							<div className="w-full flex gap-x-4">
+								<label className="text-sm font-light">Codificación desnutrición según CIE 10</label>
+								<div className="w-28 relative -top-2">
+									<Input name="patient_malnourished__code" context={context} />
+								</div>
+							</div>
+							)}
 							
 						</>)}
 					</div>
