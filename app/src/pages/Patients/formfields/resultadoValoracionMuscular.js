@@ -2,7 +2,7 @@ export default [
 	{ 
 		key: 'mar__normal_1',
 		name: 'mar__normal',
-		value: '', 
+		value: 'n', 
 		label: 'No' 
 	},
 	{ 

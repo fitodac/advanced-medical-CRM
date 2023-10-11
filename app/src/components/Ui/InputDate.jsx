@@ -54,8 +54,9 @@ export const InputDate = ({
 		})
 	}
 
-	return (<div className="">
+	return (<div className="space-y-2">
 		{ label && (<label className="select-none leading-tight block">{label}</label>) }
+		
 		<input 
 			type={type ?? 'text'} 
 			name={name} 

@@ -7,7 +7,7 @@ export default {
 		{ 
 			key: 'ms__result_1',
 			name: 'ms__result',
-			value: '', 
+			value: 'n', 
 			label: 'No' 
 		},
 		{ 

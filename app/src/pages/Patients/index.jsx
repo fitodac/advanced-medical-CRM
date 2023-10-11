@@ -19,7 +19,6 @@ import { useCreateNewPatient } from '../../hooks/useCreateNewPatient'
 const thead = [
 	{ title: '#' },
 	{ title: 'ID' },
-	{ title: 'Género', class: 'text-center' },
 	{ title: 'Doctor' },
 	{ title: 'Acciones', class: 'text-end' },
 ]
@@ -103,7 +102,6 @@ export default function Page(){
 								<td>
 									<span className="text-slate-500 text-sm font-bold">{code}</span>
 								</td>
-								<td className="text-center">{'mujer' === gender ? 'M' : 'H'}</td>
 								{ 'doctor' !== role 
 								&& (<td className="leading-none">
 											{ doctor 

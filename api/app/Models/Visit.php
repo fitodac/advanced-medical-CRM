@@ -24,6 +24,7 @@ class Visit extends Model
         'exclusion_q4',
         'exclusion_q5',
         'birth_date',
+        'gender',
         'mh__diabetes',
         'mh__epoc',
         'mh__heart_failure',

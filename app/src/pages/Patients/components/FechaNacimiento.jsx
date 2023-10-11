@@ -7,7 +7,11 @@ const id = 'M1N2O3'
 export const FechaNacimiento = ({context}) => {
 
 	const formContext = useContext(context)
-	const { gender } = formContext.patient
+
+	const handleChange = e => {
+		const {name, value} = e.target
+		formContext.handleInputChange({target: {name, value}})
+	}
 
 	return (<section className="grid grid-cols-3 gap-x-10 justify-between" id={id}>
 		
@@ -16,10 +20,38 @@ export const FechaNacimiento = ({context}) => {
 			name="birth_date" 
 			context={context} />
 
-		<div className="">
+
+		<div className="space-y-1">
 			<label>Sexo</label>
-			<div className="capitalize">{gender}</div>
+			<div className="flex gap-x-6">
+				<label className="input-checkbox">
+				
+					<input 
+						type="radio" 
+						name="gender" 
+						defaultValue="hombre"
+						onChange={handleChange}
+						checked={formContext.formState.gender === 'hombre'} />
+
+					<span>Hombre</span>
+		
+				</label>
+
+				<label className="input-checkbox">
+				
+					<input 
+						type="radio" 
+						name="gender" 
+						defaultValue="mujer"
+						onChange={handleChange}
+						checked={formContext.formState.gender === 'mujer'} />
+
+					<span>Mujer</span>
+		
+				</label>
+			</div>
 		</div>
+
 	</section>)
 }
 

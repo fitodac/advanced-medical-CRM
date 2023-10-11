@@ -29,11 +29,12 @@ return new class extends Migration
 			$table->enum('exclusion_q5', ['y', 'n'])->nullable()->comment('Demencia conocida u otros ajenos a un trastorno neurológico o psiquiátrico significativo, o cualquier otra condición psicológica que pueda interferir con el desarrollo del estudio');
 			// Datos sociodemográficos
 			$table->date('birth_date')->nullable()->comment('Fecha de nacimiento');
+			$table->enum('gender', ['hombre', 'mujer'])->nullable()->comment('Género');
 			// Antecedentes médicos
 			$table->enum('mh__diabetes', ['y', 'n'])->nullable()->comment('Diabetes');
 			$table->enum('mh__epoc', ['y', 'n'])->nullable()->comment('EPOC');
 			$table->enum('mh__heart_failure', ['y', 'n'])->nullable()->comment('Insuficiencia cardíaca');
-			$table->enum('mh__cancer', ['y'])->nullable()->comment('Cáncer incluyendo neoplasias hematológicas');
+			$table->enum('mh__cancer', ['y', 'n'])->nullable()->comment('Cáncer incluyendo neoplasias hematológicas');
 			$table->enum('mh__neurological_disease', ['y', 'n'])->nullable()->comment('Enfermedad neurológica');
 			$table->enum('mh__liver_diseases', ['y', 'n'])->nullable()->comment('Enfermedades hepáticas');
 			$table->enum('mh__inflammatory_bowel_disease', ['y', 'n'])->nullable()->comment('Enfermedad inflamatoria intestinal');
