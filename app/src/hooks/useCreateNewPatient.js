@@ -49,7 +49,7 @@ export const useCreateNewPatient = ({
 					'Access-Control-Allow-Origin': '*'
 				}
 			}
-		).then(resp => navigate(`/crd/${resp.data.data.id}/crd`))
+		).then(resp => navigate(`/crd/${resp.data.data.id}`))
 
 	}
 

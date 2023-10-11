@@ -17,20 +17,21 @@ export const RadioGroup = ({
 	const handleChange = e => {
 		const { name, value } = e.target
 
-		formContext.handleInputChange({target: {name, value: value ? value : null}})
+		formContext.handleInputChange({target: {name, value: value ? value : ''}})
 	}
 
 	return (<div className="space-y-6">
 		{ options && options.map(({key, text, options}) => (<div key={key} className="flex gap-5 items-start">
 				{ options && options.map(({key, name, value, label}) => (
 					<label key={key} className="input-checkbox">
-						
+						<pre>{value}</pre>
 						<input 
 							type="radio" 
 							name={name} 
 							onChange={handleChange}
 							defaultValue={value}
 							checked={value === formContext.formState[name]} />
+						
 						
 						<span>{label}</span>
 					
