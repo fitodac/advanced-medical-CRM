@@ -1,6 +1,8 @@
 import { useState, createContext } from 'react'
-import { useAxios } from '../../hooks'
-import { useAppContext } from '../../hooks'
+import { 
+	useAxios,
+	useAppContext 
+} from '../../hooks'
 import { FilterProvider, UsersFilter } from '../../components/Filters'
 
 import {
