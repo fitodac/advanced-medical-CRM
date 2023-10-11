@@ -87,9 +87,11 @@ export default function Page(){
 
 				{ !loading && !error && 
 				(<>
-					<FilterProvider>
-						<PatientsFilter filter={requestUpdate} />
-					</FilterProvider>
+					{'doctor' !== role && (
+						<FilterProvider>
+							<PatientsFilter filter={requestUpdate} />
+						</FilterProvider>
+					)}
 
 					{response?.data && (
 						<Table header={'doctor' === role ? [...thead].filter(i => i.title !== 'Doctor') : thead} pager={response.data.links} context={pageContext}>

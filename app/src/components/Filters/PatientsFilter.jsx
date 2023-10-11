@@ -20,27 +20,25 @@ export const PatientsFilter = ({filter}) => {
 
 	return (
 		<>
-		<form 
-			onSubmit={handleSubmit}
-			className="w-full space-y-2 md:flex md:space-0 md:gap-x-3 md:items-end">
-			
-			<InputSearch 
-				label="Código"
-				name="code"
-				containerClassName="w-36"
-				context={FilterContext} />
-			
-			{'doctor' !== role && (
+			<form 
+				onSubmit={handleSubmit}
+				className="w-full space-y-2 md:flex md:space-0 md:gap-x-3 md:items-end">
+				
 				<InputSearch 
-					label="Doctor"
-					name="doctor"
+					label="Código"
+					name="code"
+					containerClassName="w-36"
 					context={FilterContext} />
-			)}
+				
+					<InputSearch 
+						label="Doctor"
+						name="doctor"
+						context={FilterContext} />
 
-			<Button className="btn-icon bg-primary border-primary text-white">
-				<i className="ri-equalizer-fill"></i>
-			</Button>
-		</form>
+				<Button className="btn-icon bg-primary border-primary text-white">
+					<i className="ri-equalizer-fill"></i>
+				</Button>
+			</form>
 		</>
 	)
 }

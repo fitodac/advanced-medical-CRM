@@ -18,34 +18,34 @@ return new class extends Migration
 			$table->enum('visit_type', ['initial', 'first'])->default('initial');
 			$table->date('date')->nullable();
 			// Criterios de inclusión
-			$table->enum('inclusion_q1', ['y'])->nullable()->comment('Personas con antecedentes de una enfermedad crónica');
-			$table->enum('inclusion_q2', ['y'])->nullable()->comment('Edad >18 años');
-			$table->enum('inclusion_q3', ['y'])->nullable()->comment('Accede a formar parte del estudio y firma el consentimiento informado');
+			$table->enum('inclusion_q1', ['y', 'n'])->nullable()->comment('Personas con antecedentes de una enfermedad crónica');
+			$table->enum('inclusion_q2', ['y', 'n'])->nullable()->comment('Edad >18 años');
+			$table->enum('inclusion_q3', ['y', 'n'])->nullable()->comment('Accede a formar parte del estudio y firma el consentimiento informado');
 			// Criterios de exclusión
-			$table->enum('exclusion_q1', ['y'])->nullable()->comment('Personas que no accedan a formar parte del registro y no firmen el consentimiento informado');
-			$table->enum('exclusion_q2', ['y'])->nullable()->comment('Personas sin diagnóstico de enfermedadcrónica');
-			$table->enum('exclusion_q3', ['y'])->nullable()->comment('Personas con trastornos de enfermedad crónica');
-			$table->enum('exclusion_q4', ['y'])->nullable()->comment('Personas con esperanza de vida inferior a 6 meses');
-			$table->enum('exclusion_q5', ['y'])->nullable()->comment('Demencia conocida u otros ajenos a un trastorno neurológico o psiquiátrico significativo, o cualquier otra condición psicológica que pueda interferir con el desarrollo del estudio');
+			$table->enum('exclusion_q1', ['y', 'n'])->nullable()->comment('Personas que no accedan a formar parte del registro y no firmen el consentimiento informado');
+			$table->enum('exclusion_q2', ['y', 'n'])->nullable()->comment('Personas sin diagnóstico de enfermedadcrónica');
+			$table->enum('exclusion_q3', ['y', 'n'])->nullable()->comment('Personas con trastornos de enfermedad crónica');
+			$table->enum('exclusion_q4', ['y', 'n'])->nullable()->comment('Personas con esperanza de vida inferior a 6 meses');
+			$table->enum('exclusion_q5', ['y', 'n'])->nullable()->comment('Demencia conocida u otros ajenos a un trastorno neurológico o psiquiátrico significativo, o cualquier otra condición psicológica que pueda interferir con el desarrollo del estudio');
 			// Datos sociodemográficos
 			$table->date('birth_date')->nullable()->comment('Fecha de nacimiento');
 			// Antecedentes médicos
-			$table->enum('mh__diabetes', ['y'])->nullable()->comment('Diabetes');
-			$table->enum('mh__epoc', ['y'])->nullable()->comment('EPOC');
-			$table->enum('mh__heart_failure', ['y'])->nullable()->comment('Insuficiencia cardíaca');
+			$table->enum('mh__diabetes', ['y', 'n'])->nullable()->comment('Diabetes');
+			$table->enum('mh__epoc', ['y', 'n'])->nullable()->comment('EPOC');
+			$table->enum('mh__heart_failure', ['y', 'n'])->nullable()->comment('Insuficiencia cardíaca');
 			$table->enum('mh__cancer', ['y'])->nullable()->comment('Cáncer incluyendo neoplasias hematológicas');
-			$table->enum('mh__neurological_disease', ['y'])->nullable()->comment('Enfermedad neurológica');
-			$table->enum('mh__liver_diseases', ['y'])->nullable()->comment('Enfermedades hepáticas');
-			$table->enum('mh__inflammatory_bowel_disease', ['y'])->nullable()->comment('Enfermedad inflamatoria intestinal');
-			$table->enum('mh__renal_failure', ['y'])->nullable()->comment('Insuficiencia renal crónica');
-			$table->enum('mh__other_chronic_diseases', ['y'])->nullable()->comment('Otras enfermedades crónicas');
-			$table->enum('mh__others', ['y'])->nullable()->comment('Otras enfermedades');
+			$table->enum('mh__neurological_disease', ['y', 'n'])->nullable()->comment('Enfermedad neurológica');
+			$table->enum('mh__liver_diseases', ['y', 'n'])->nullable()->comment('Enfermedades hepáticas');
+			$table->enum('mh__inflammatory_bowel_disease', ['y', 'n'])->nullable()->comment('Enfermedad inflamatoria intestinal');
+			$table->enum('mh__renal_failure', ['y', 'n'])->nullable()->comment('Insuficiencia renal crónica');
+			$table->enum('mh__other_chronic_diseases', ['y', 'n'])->nullable()->comment('Otras enfermedades crónicas');
+			$table->enum('mh__others', ['y', 'n'])->nullable()->comment('Otras enfermedades');
 			$table->text('mh__others_description')->nullable()->comment('Otras enfermedades (descripción)');
 			// Ámbito asistencial
 			$table->date('valuation_date')->nullable()->comment('Fecha de valoración');
-			$table->enum('hospitalization', ['y'])->nullable()->comment('Hospitalización');
+			$table->enum('hospitalization', ['y', 'n'])->nullable()->comment('Hospitalización');
 			$table->text('hospitalization_reason')->nullable()->comment('Motivo de la hospitalización');
-			$table->enum('scheduled_visit', ['y'])->nullable()->comment('Visita programada en consulta externa/planta');
+			$table->enum('scheduled_visit', ['y', 'n'])->nullable()->comment('Visita programada en consulta externa/planta');
 			// Valoración del estado nutricional
 			// Antropometría
 			$table->string('current_body_weight')->nullable()->comment('Peso corporal actual | kg');
@@ -56,33 +56,33 @@ return new class extends Migration
 			$table->string('BMI')->nullable()->comment('IMC | kg/m2');
 			$table->string('calf_circumference')->nullable()->comment('Perímetro de pantorrilla | cm');
 			// Cribado nutricional
-			$table->enum('ns__must', ['y'])->nullable()->comment('MUST');
-			$table->enum('ns__nrs_2002', ['y'])->nullable()->comment('NRS-2002');
-			$table->enum('ns__mna_sf', ['y'])->nullable()->comment('MNA-SF');
-			$table->enum('ns__mis', ['y'])->nullable()->comment('MIS');
-			$table->enum('ns__snaq', ['y'])->nullable()->comment('SNAQ');
-			$table->enum('ns__conut', ['y'])->nullable()->comment('CONUT');
-			$table->enum('ns__other', ['y'])->nullable()->comment('Otros');
+			$table->enum('ns__must', ['y', 'n'])->nullable()->comment('MUST');
+			$table->enum('ns__nrs_2002', ['y', 'n'])->nullable()->comment('NRS-2002');
+			$table->enum('ns__mna_sf', ['y', 'n'])->nullable()->comment('MNA-SF');
+			$table->enum('ns__mis', ['y', 'n'])->nullable()->comment('MIS');
+			$table->enum('ns__snaq', ['y', 'n'])->nullable()->comment('SNAQ');
+			$table->enum('ns__conut', ['y', 'n'])->nullable()->comment('CONUT');
+			$table->enum('ns__other', ['y', 'n'])->nullable()->comment('Otros');
 			$table->text('ns__other_description')->nullable()->comment('Otros (descripción)');
-			$table->enum('ns__result', ['y'])->nullable()->comment('Resultado del cribado nutricional: ¿Está el paciente en riesgo de desnutrición?');
+			$table->enum('ns__result', ['y', 'n'])->nullable()->comment('Resultado del cribado nutricional: ¿Está el paciente en riesgo de desnutrición?');
 			// Cribado muscular
-			$table->enum('ms__sarc_f', ['y'])->nullable()->comment('SARC-F');
-			$table->enum('ms__other', ['y'])->nullable()->comment('Otros');
+			$table->enum('ms__sarc_f', ['y', 'n'])->nullable()->comment('SARC-F');
+			$table->enum('ms__other', ['y', 'n'])->nullable()->comment('Otros');
 			$table->text('ms__other_description')->nullable()->comment('Otros');
-			$table->enum('ms__result', ['y'])->nullable()->comment('Resultado del cribado muscular: ¿Está el paciente en riesgo de sarcopenia?');
+			$table->enum('ms__result', ['y', 'n'])->nullable()->comment('Resultado del cribado muscular: ¿Está el paciente en riesgo de sarcopenia?');
 			// Diagnóstico nutricional utilizado
-			$table->enum('nd__glim', ['y'])->nullable()->comment('GLIM');
-			$table->enum('nd__mna', ['y'])->nullable()->comment('MNA');
-			$table->enum('nd__vgs', ['y'])->nullable()->comment('VGS');
-			$table->enum('nd__other', ['y'])->nullable()->comment('Otros');
+			$table->enum('nd__glim', ['y', 'n'])->nullable()->comment('GLIM');
+			$table->enum('nd__mna', ['y', 'n'])->nullable()->comment('MNA');
+			$table->enum('nd__vgs', ['y', 'n'])->nullable()->comment('VGS');
+			$table->enum('nd__other', ['y', 'n'])->nullable()->comment('Otros');
 			$table->text('nd__other_description')->nullable()->comment('Otros');
 			$table->enum('patient_malnourished', ['no', 'si', 'en riesgo'])->nullable()->comment('¿Está el paciente desnutrido?');
 			$table->string('patient_malnourished__code', 10)->nullable()->comment('Desnutrición del paciente según CIE 10');
 			// Parámetros funcionales 
 			$table->string('dynamometry')->nullable()->comment('Dinamometría, valor máximo de 3 mediciones | kg');
-			$table->enum('dynamometry__not_possible', ['y'])->nullable()->comment('No es posible realizar la dinamometría');
+			$table->enum('dynamometry__not_possible', ['y', 'n'])->nullable()->comment('No es posible realizar la dinamometría');
 			$table->tinyInteger('test_chair_five_repetitions')->nullable()->comment('Test “Test de la silla 5 repeticiones" | seg');
-			$table->enum('test_chair__not_possible', ['y'])->nullable()->comment('No es posible realizar el test de la silla');
+			$table->enum('test_chair__not_possible', ['y', 'n'])->nullable()->comment('No es posible realizar el test de la silla');
 			// Otras mediciones de composición corporal
 			$table->string('bi__hydratation')->nullable()->comment('Porcentaje de hidratación | %');
 			$table->string('bi__tbm')->nullable()->comment('TBW (agua corporal total) | L');
@@ -116,60 +116,60 @@ return new class extends Migration
 			$table->string('mu__axes_yax')->nullable()->comment('Ecografía muscular: Ejes Y | cm');
 			$table->string('mu__adipose_tissue')->nullable()->comment('Ecografía muscular: Tejido adiposo | cm');
 			// Resultado de la valoración muscular
-			$table->enum('mar__normal', ['y'])->nullable()->comment('Resultado de la valoración muscular: ¿La masa muscular/función del paciente es normal?');
+			$table->enum('mar__normal', ['y', 'n'])->nullable()->comment('Resultado de la valoración muscular: ¿La masa muscular/función del paciente es normal?');
 			// Tratamiento nutricional
 			// Objetivo/s planteado/s (puede indicarse más de uno si en su opinión aplica)
-			$table->enum('nt__planted_objectives__weight_gain', ['y'])->nullable()->comment('Tratamiento nutricional: Ganancia ponderal');
-			$table->enum('nt__planted_objectives__muscle_gain', ['y'])->nullable()->comment('Tratamiento nutricional: Ganancia muscular / fuerza / mejoría de la funcionalidad');
-			$table->enum('nt__planted_objectives__preservation_status', ['y'])->nullable()->comment('Tratamiento nutricional: Preservación del estado nutricional y/o muscular');
-			$table->enum('nt__planted_objectives__other', ['y'])->nullable()->comment('Tratamiento nutricional: Otro');
+			$table->enum('nt__planted_objectives__weight_gain', ['y', 'n'])->nullable()->comment('Tratamiento nutricional: Ganancia ponderal');
+			$table->enum('nt__planted_objectives__muscle_gain', ['y', 'n'])->nullable()->comment('Tratamiento nutricional: Ganancia muscular / fuerza / mejoría de la funcionalidad');
+			$table->enum('nt__planted_objectives__preservation_status', ['y', 'n'])->nullable()->comment('Tratamiento nutricional: Preservación del estado nutricional y/o muscular');
+			$table->enum('nt__planted_objectives__other', ['y', 'n'])->nullable()->comment('Tratamiento nutricional: Otro');
 			$table->text('nt__planted_objectives__other_description')->nullable()->comment('Tratamiento nutricional: Otro');
 			// Inicia tratamiento nutricional
-			$table->enum('nt__start', ['y'])->nullable()->comment('Inicia tratamiento nutricional');
+			$table->enum('nt__start', ['y', 'n'])->nullable()->comment('Inicia tratamiento nutricional');
 			$table->text('nt__specify')->nullable()->comment('Inicia tratamiento nutricional, especifique');
 			// Tipo de tratamiento nutricional indicado
-			$table->enum('nti__parental_nutrition', ['y'])->nullable()->comment('Tipo de tratamiento nutricional indicado: nutrición parental');
-			$table->enum('nti__dietary_modifications', ['y'])->nullable()->comment('Tipo de tratamiento nutricional indicado: modificaciones dietéticas');
-			$table->enum('nti__son', ['y'])->nullable()->comment('SON: Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__hc_with_smi', ['y'])->nullable()->comment('SON: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__hc_without_smi', ['y'])->nullable()->comment('SON: Normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__nc_without_smi', ['y'])->nullable()->comment('SON: Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__diabetics_hypercaloric', ['y'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
-			$table->enum('nti__son__normal_normoprotein_without_msi', ['y'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
-			$table->enum('nti__son__peptide_formulas', ['y'])->nullable()->comment('SON: Fórmulas peptídicas');
-			$table->enum('nti__son__snp', ['y'])->nullable()->comment('SON: Específica para paciente nefrópata');
-			$table->enum('nti__son__other', ['y'])->nullable()->comment('SON: otras');
+			$table->enum('nti__parental_nutrition', ['y', 'n'])->nullable()->comment('Tipo de tratamiento nutricional indicado: nutrición parental');
+			$table->enum('nti__dietary_modifications', ['y', 'n'])->nullable()->comment('Tipo de tratamiento nutricional indicado: modificaciones dietéticas');
+			$table->enum('nti__son', ['y', 'n'])->nullable()->comment('SON: Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__son__hc_with_smi', ['y', 'n'])->nullable()->comment('SON: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__son__hc_without_smi', ['y', 'n'])->nullable()->comment('SON: Normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__son__nc_without_smi', ['y', 'n'])->nullable()->comment('SON: Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__son__diabetics_hypercaloric', ['y', 'n'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
+			$table->enum('nti__son__normal_normoprotein_without_msi', ['y', 'n'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
+			$table->enum('nti__son__peptide_formulas', ['y', 'n'])->nullable()->comment('SON: Fórmulas peptídicas');
+			$table->enum('nti__son__snp', ['y', 'n'])->nullable()->comment('SON: Específica para paciente nefrópata');
+			$table->enum('nti__son__other', ['y', 'n'])->nullable()->comment('SON: otras');
 			$table->text('nti__son__other_description')->nullable()->comment('SON: otras');
-			$table->enum('nti__en', ['y'])->nullable()->comment('Nutrición enteral, tipo de fórmula');
-			$table->enum('nti__en__hypercaloric_with_msi', ['y'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica con ingrediente Músculo Especifico (HMB y/o Leucina)');
-			$table->enum('nti__en__hypercaloric_without_msi', ['y'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__en__caloric_without_msi', ['y'])->nullable()->comment('Nutrición enteral: normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__en__specific_diabetics_with_smi', ['y'])->nullable()->comment('Nutrición enteral: Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__en__normal_calorie_without_smi', ['y'])->nullable()->comment('Nutrición enteral: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
-			$table->enum('nti__en__peptide_formulas', ['y'])->nullable()->comment('Nutrición enteral: Fórmulas peptídicas');
-			$table->enum('nti__en__snp', ['y'])->nullable()->comment('Nutrición enteral: Específica para paciente nefrópata');
-			$table->enum('nti__en__other', ['y'])->nullable()->comment('Nutrición enteral: otras');
+			$table->enum('nti__en', ['y', 'n'])->nullable()->comment('Nutrición enteral, tipo de fórmula');
+			$table->enum('nti__en__hypercaloric_with_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica con ingrediente Músculo Especifico (HMB y/o Leucina)');
+			$table->enum('nti__en__hypercaloric_without_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__en__caloric_without_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__en__specific_diabetics_with_smi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
+			$table->enum('nti__en__normal_calorie_without_smi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
+			$table->enum('nti__en__peptide_formulas', ['y', 'n'])->nullable()->comment('Nutrición enteral: Fórmulas peptídicas');
+			$table->enum('nti__en__snp', ['y', 'n'])->nullable()->comment('Nutrición enteral: Específica para paciente nefrópata');
+			$table->enum('nti__en__other', ['y', 'n'])->nullable()->comment('Nutrición enteral: otras');
 			$table->text('nti__en__other_description')->nullable()->comment('Nutrición enteral: otras');
 			// Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional
-			$table->enum('refers_patient_to_begin_nutritional_treatment', ['y'])->nullable()->comment('Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)');
+			$table->enum('refers_patient_to_begin_nutritional_treatment', ['y', 'n'])->nullable()->comment('Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)');
 			// ¿El paciente ha seguido la recomendación nutricional prescrita?
-			$table->enum('nt__pnr', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
-			$table->unsignedDecimal('nt__pnr_percent', 5, 2)->nullable()->comment('Especifique % adherencia a las recomendaciones | %');
+			$table->enum('nt__pnr', ['y', 'n'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
+			$table->string('nt__pnr_percent')->nullable()->comment('Especifique % adherencia a las recomendaciones | %');
 			$table->text('nt__reason')->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?, No, motivos');
 			// ¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?
-			$table->enum('nt__objective_reached', ['y'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
+			$table->enum('nt__objective_reached', ['y', 'n'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
 			$table->text('nt__objective_reached_reason')->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?, No, motivos');
 			// ¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?
-			$table->enum('nt__improvement', ['y'])->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?');
+			$table->enum('nt__improvement', ['y', 'n'])->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?');
 			$table->text('nt__has_not_got_improvement_reason')->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?, No, motivos');
 			// Actividad física, promoción
-			$table->enum('pa__prescribed', ['y'])->nullable()->comment('Actividad física: ¿Ha prescrito actividad física al paciente?');
+			$table->enum('pa__prescribed', ['y', 'n'])->nullable()->comment('Actividad física: ¿Ha prescrito actividad física al paciente?');
 			$table->text('pa__prescribed_reasons')->nullable()->comment('Actividad física: No. espceifique motivos');
-			$table->enum('pa__aerobic_predominance', ['y'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Predominio aeróbico');
-			$table->enum('pa__predominance_muscular_strength', ['y'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Predominio de fuerza/resistencia muscular');
-			$table->enum('pa__mixed', ['y'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Mixto');
+			$table->enum('pa__aerobic_predominance', ['y', 'n'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Predominio aeróbico');
+			$table->enum('pa__predominance_muscular_strength', ['y', 'n'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Predominio de fuerza/resistencia muscular');
+			$table->enum('pa__mixed', ['y', 'n'])->nullable()->comment('¿Qué tipo de ejercicios ha recomendado?: Mixto');
 			// ¿El paciente ha seguido la recomendación de actividad física prescrita?
-			$table->enum('pa__hpftppar', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
+			$table->enum('pa__hpftppar', ['y', 'n'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
 			$table->string('pa__hpftppar_percent')->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita? especifique % de adherencia a las recomendaciones | %');
 			$table->text('pa__reason')->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?, No, motivos');
 
@@ -199,14 +199,14 @@ return new class extends Migration
 			$table->string('ans__anthropometry__current_bmi')->nullable()->comment('IMC actual | kg/m2');
 			$table->string('ans__anthropometry__calf_circumference')->nullable()->comment('Perímetro de pantorrilla | cm');
 			// ¿El paciente ha seguido la recomendación nutricional prescrita?
-			$table->enum('hfnr__followed_prescribed_nutritional_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
+			$table->enum('hfnr__followed_prescribed_nutritional_recommendation', ['y', 'n'])->nullable()->comment('¿El paciente ha seguido la recomendación nutricional prescrita?');
 			$table->string('hfnr__percentage_of_adherece_to_recommendations')->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
 			$table->text('hfnr__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación nutricional prescrita');
-			$table->enum('rng__has_reached_nutritional_goal', ['y'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
+			$table->enum('rng__has_reached_nutritional_goal', ['y', 'n'])->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?');
 			$table->text('rng__has_reached_nutritional_goal_reasons')->nullable()->comment('¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal? motivos');
-			$table->enum('cppi__considers_that_patient_perceives_improvement', ['y'])->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?');
+			$table->enum('cppi__considers_that_patient_perceives_improvement', ['y', 'n'])->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?');
 			$table->text('cppi__considers_that_patient_perceives_improvement_reasons')->nullable()->comment('¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado? especifique motivos');
-			$table->enum('hfppar_followed_prescribed_physical_activity_recommendation', ['y'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
+			$table->enum('hfppar_followed_prescribed_physical_activity_recommendation', ['y', 'n'])->nullable()->comment('¿El paciente ha seguido la recomendación de actividad física prescrita?');
 			$table->string('hfppar_percentage_of_adherece_to_recommendations')->nullable()->comment('Porcentaje de adherencia a las recomendaciones | %');
 			$table->text('hfppar__not_followed_prescribed_recommendation')->nullable()->comment('Motivos por los que el paciente no ha seguido la recomendación de actividad física prescrita');
 
