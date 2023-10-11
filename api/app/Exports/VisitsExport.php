@@ -23,10 +23,10 @@ class VisitsExport implements FromCollection
         foreach ($visits as $visit) {
             $x++;
 
-            $temp[$x] = [
-                '#' => $x,
-                'nombre' => $visit['patient']['name'],
-            ];
+            // $temp[$x] = [
+            //     '#' => $x,
+            //     'nombre' => $visit['patient']['name'],
+            // ];
 
             // Eliminar claves no deseadas
             unset($visit['created_at']);
@@ -35,7 +35,8 @@ class VisitsExport implements FromCollection
             unset($visit['patient_id']);
             unset($visit['id']);
 
-            $response[] = array_merge($temp[$x], $visit);
+            // $response[] = array_merge($temp[$x], $visit);
+            $response[] = $visit;
         }
 
         return collect($response);

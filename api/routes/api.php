@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::delete('/visit/delete/{visit}',			[VisitController::class, 'delete'])->name('visit.delete');
 
 	// Export
-	Route::get('/export', 											[ExportController::class,'index'])->name('export');
+	Route::get('/export', 											[ExportController::class,'index'])->middleware('restrictRole:superadmin,admin')->name('export');
 });
 
 Route::get('account/verify/{token}', 					[AuthController::class, 'verifyAccount'])->name('user.verify');
