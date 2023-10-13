@@ -17,7 +17,6 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 			<section className="space-y-8">
 				<div className="">
 					<label className="input-checkbox">
-						<input type="checkbox" />
 						<span className="text-slate-600 text-base font-medium">{fields.bioimpedanciaElectrica.label}</span>
 					</label>
 
@@ -54,7 +53,6 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 
 				<div className="">
 					<label className="input-checkbox">
-						<input type="checkbox" />
 						<span className="text-slate-600 text-base font-medium">{fields.dexa.label}</span>
 					</label>
 
@@ -83,7 +81,6 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 
 				<div className="">
 					<label className="input-checkbox">
-						<input type="checkbox" />
 						<span className="text-slate-600 text-base font-medium">{fields.tc.label}</span>
 					</label>
 
