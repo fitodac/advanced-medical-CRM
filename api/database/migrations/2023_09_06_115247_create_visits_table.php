@@ -132,14 +132,7 @@ return new class extends Migration
 			$table->enum('nti__parental_nutrition', ['y', 'n'])->nullable()->comment('Tipo de tratamiento nutricional indicado: nutrición parental');
 			$table->enum('nti__dietary_modifications', ['y', 'n'])->nullable()->comment('Tipo de tratamiento nutricional indicado: modificaciones dietéticas');
 			$table->enum('nti__son', ['y', 'n'])->nullable()->comment('SON: Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__hc_with_smi', ['y', 'n'])->nullable()->comment('SON: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__hc_without_smi', ['y', 'n'])->nullable()->comment('SON: Normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__nc_without_smi', ['y', 'n'])->nullable()->comment('SON: Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__son__diabetics_hypercaloric', ['y', 'n'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
-			$table->enum('nti__son__normal_normoprotein_without_msi', ['y', 'n'])->nullable()->comment('SON: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
-			$table->enum('nti__son__peptide_formulas', ['y', 'n'])->nullable()->comment('SON: Fórmulas peptídicas');
-			$table->enum('nti__son__snp', ['y', 'n'])->nullable()->comment('SON: Específica para paciente nefrópata');
-			$table->enum('nti__son__other', ['y', 'n'])->nullable()->comment('SON: otras');
+			$table->string('nti__son__option')->nullable()->comment('Opciones de SON');
 			$table->text('nti__son__other_description')->nullable()->comment('SON: otras');
 			$table->enum('nti__en', ['y', 'n'])->nullable()->comment('Nutrición enteral, tipo de fórmula');
 			$table->enum('nti__en__hypercaloric_with_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica con ingrediente Músculo Especifico (HMB y/o Leucina)');

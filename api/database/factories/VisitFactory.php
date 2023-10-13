@@ -24,7 +24,6 @@ class VisitFactory extends Factory
         $ms__other = 						$this->faker->randomElement(['y', 'n', null]);
         $nd__other = 						$this->faker->randomElement(['y', 'n', null]);
         $nt__planted_objectives__other = 	$this->faker->randomElement(['y', 'n', null]);
-        $nti__son__other = 					$this->faker->randomElement(['y', 'n', null]);
         $nti__en__other = 					$this->faker->randomElement(['y', 'n', null]);
 
         return [
@@ -146,15 +145,8 @@ class VisitFactory extends Factory
             'nti__parental_nutrition' => $this->faker->randomElement(['y', 'n', null]),
             'nti__dietary_modifications' => $this->faker->randomElement(['y', 'n', null]),
             'nti__son' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__hc_with_smi' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__hc_without_smi' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__nc_without_smi' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__diabetics_hypercaloric' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__normal_normoprotein_without_msi' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__peptide_formulas' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__snp' => $this->faker->randomElement(['y', 'n', null]),
-            'nti__son__other' => $nti__son__other,
-            'nti__son__other_description' => $nti__son__other ? $this->faker->text : '',
+            'nti__son__option' => $this->faker->text,
+            'nti__son__other_description' => $this->faker->text,
             'nti__en' => $this->faker->randomElement(['y', 'n', null]),
             'nti__en__hypercaloric_with_msi' => $this->faker->randomElement(['y', 'n', null]),
             'nti__en__hypercaloric_without_msi' => $this->faker->randomElement(['y', 'n', null]),
