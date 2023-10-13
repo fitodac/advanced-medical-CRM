@@ -1,6 +1,5 @@
 export default [
 	[
-		'dynamometry',
 		{
 			key: 'dynamometry',
 			name: 'dynamometry',
@@ -15,7 +14,6 @@ export default [
 		}
 	],
 	[
-		'chair_test',
 		{
 			key: 'test_chair_five_repetitions',
 			name: 'test_chair_five_repetitions',

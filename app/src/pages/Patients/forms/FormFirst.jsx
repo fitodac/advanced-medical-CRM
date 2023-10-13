@@ -57,7 +57,7 @@ export const FormFirst = ({
 	const {
 		response: updateResponse,
 		// error,
-		loading: updateLoading,
+		// loading: updateLoading,
 		refetch: updateRefetch
 	} = useAxios({
 		url: `${API_URI}/visit/update`,
@@ -71,7 +71,7 @@ export const FormFirst = ({
 	const {
 		response: createResponse,
 		// error,
-		loading: createLoading,
+		// loading: createLoading,
 		refetch: createRefetch
 	} = useAxios({
 		url: `${API_URI}/visit/create`,
