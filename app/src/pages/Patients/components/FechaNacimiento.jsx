@@ -16,7 +16,7 @@ export const FechaNacimiento = ({context}) => {
 	return (<section className="grid grid-cols-3 gap-x-10 justify-between" id={id}>
 		
 		<InputDate 
-			label="Fecha de nacimiento" 
+			label="Fecha de nacimiento (día/mes/año)" 
 			name="birth_date" 
 			context={context} />
 

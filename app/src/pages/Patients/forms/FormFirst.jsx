@@ -157,7 +157,7 @@ export const FormFirst = ({
 		<form onSubmit={handleSubmit}>
 			<HeaderForm 
 				title="Visita Seguimiento 1" 
-				dateFieldLabel="Fecha de la visita (≈3 meses de la visita basal)"
+				dateFieldLabel="Fecha de la visita (día/mes/año) (≈3 meses de la visita basal)"
 				context={formContext} />
 
 			<div className="text-sm mt-8 space-y-4">

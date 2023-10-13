@@ -170,7 +170,7 @@ export const FormInitial = ({
 		<form onSubmit={handleSubmit}>
 			<HeaderForm 
 				title="Visita inicial" 
-				dateFieldLabel="Fecha"
+				dateFieldLabel="Fecha (día/mes/año)"
 				context={formContext} />
 
 			<div className="space-y-14 mt-8">

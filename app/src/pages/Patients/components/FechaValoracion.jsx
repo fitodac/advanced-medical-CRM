@@ -5,8 +5,7 @@ import {
 	ConditionalInput
 } from '../../../components/Ui'
 import { 
-	HeaderFieldGroup,
-	AlertMessage 
+	HeaderFieldGroup 
 } from '.'
 
 import fields from '../formfields/fechaValoracion'
@@ -19,7 +18,7 @@ export const FechaValoracion = ({context}) => {
 		<HeaderFieldGroup title="Fecha de valoración" />
 		
 		<InputDate 
-			label="Fecha" 
+			label="Fecha (día/mes/año)" 
 			name="valuation_date" 
 			context={context} />
 		
