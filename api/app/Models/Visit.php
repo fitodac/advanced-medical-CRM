@@ -173,7 +173,7 @@ class Visit extends Model
 		// 'death_date' => 'datetime:d/m/Y H:i:s',
 	];
 
-	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'gender', 'doctor_id']); }
+	public function patient(){ return $this->belongsTo(Patient::class, 'patient_id')->select(['id', 'code', 'doctor_id']); }
 
 
 	public function modelUpdate($req){
