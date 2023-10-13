@@ -24,7 +24,7 @@ export default function Page(){
 	
 	const { API_URI, token } = useAppContext()
 	const { id } = useLoaderData()
-	const [ patient, setPatient ] = useState({id: id, name: '', gender: ''})
+	const [ patient, setPatient ] = useState({id: id, name: ''})
 	const [ formType, setFormType ] = useState('initial')
 	const [ formData, setFormData ] = useState(null)
 	const [ formMessages, setFormMessages ] = useState(null)
@@ -62,12 +62,11 @@ export default function Page(){
 
 	useEffect(() => {
 		if( response?.success ){
-			const { code, gender } = response.data.patient
+			const { code } = response.data.patient
 			
 			setPatient(patient => ({
 				...patient, 
 				code,
-				gender
 			}))
 
 			setFormMessages({...response.data.messages})
