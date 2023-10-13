@@ -12,9 +12,6 @@ const id = 'G5H6I7'
 
 export const CriteriosInclusionExclusionExclusion = ({context}) => {
 
-	const [valid_inclusion_criteria, setValidInclusionCriteria] = useState(true)
-	const [valid_exclusion_criteria, setValidExclusionCriteria] = useState(true)
-
 	const formContext = useContext(context)
 
 	const inclusion_criteria_values = fields.criteriosDeInclusion.map(e => formContext.formState[e.options[0].name])
