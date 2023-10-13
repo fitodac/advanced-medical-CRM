@@ -90,7 +90,7 @@ class PatientController extends Controller
 		$auth = Auth::user();
 		$resp = [];
 
-		$query = Patient::with(['doctor.user', 'visits']);
+		$query = Patient::with(['doctor.user', 'visits:id,patient_id,birth_date,date']);
 
 		if ($auth->role === 'doctor') {
 			$query->where('doctor_id', $auth->doctor->id);
