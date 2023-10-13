@@ -29,14 +29,12 @@ class PatientController extends Controller
 			'code' => 'required',
 			'doctor_id' => 'required|numeric',
 			'center_id' => 'required|numeric',
-			// 'gender' => 'required',
 		], [
 			'code.required' => 'Debes incluír un código de paciente',
 			'doctor_id.required' => 'El ID del doctor es requerido',
 			'doctor_id.numeric' => 'Formato incorrecto',
 			'center_id.required' => 'El ID del centro médico es requerido',
-			'center_id.numeric' => 'Formato incorrecto',
-			// 'gender.required' => 'Debes incluír un género'
+			'center_id.numeric' => 'Formato incorrecto'
 		]);
 
 		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
@@ -46,44 +44,6 @@ class PatientController extends Controller
 		return $this->successResponse($patient, 'Hemos creado un nuevo paciente');
 
 	}
-
-
-
-	// UPDATE
-	public function update(Request $request)
-	{
-
-		$validate = Validator::make($request->all(), [
-			'id' => 'required|numeric',
-			'doctor_id' => 'required|numeric',
-			'center_id' => 'required|numeric',
-			'gender' => 'required',
-			'gender.required' => 'Debes incluír un género'
-		], [
-			'id.required' => 'Debes proveernos el ID del paciente para continuar',
-			'id.numeric' => 'Formato incorrecto',
-			'doctor_id.required' => 'Debes proveernos un ID de usuario',
-			'doctor_id.numeric' => 'Formato incorrecto',
-			'center_id.required' => 'El ID del centro médico es requerido',
-			'center_id.numeric' => 'Formato incorrecto',
-			'gender.required' => 'Debes incluír un género'
-		]);
-
-		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
-
-		$patient = Patient::find($request->id);
-
-		if( !$patient ) return $this->errorResponse('El paciente que estás buscando no existe o ha sido eliminado', 404);
-		if( $request->doctor_id !== $patient->doctor_id ) return $this->unauthorizedResponse('Tu usuario no puede modificar este paciente');
-
-		$patient->update([
-			'gender' => $request->gender
-		]);
-
-		return $this->successResponse($patient, 'Hemos actualizado los datos del paciente');
-
-	}
-
 
 
 
@@ -103,7 +63,7 @@ class PatientController extends Controller
 
 		if( $validate->fails() ) return $this->validationErrorResponse($validate->errors());
 
-		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id', 'gender'])->find($request->id);
+		$patient = Patient::with('visits')->select(['id', 'code', 'doctor_id', 'center_id'])->find($request->id);
 
 		if ($patient->visits) {
 			$messages = $this->normalRangeMessageNotification($patient->visits->keyBy('visit_type')->toArray(), true);
@@ -130,7 +90,7 @@ class PatientController extends Controller
 		$auth = Auth::user();
 		$resp = [];
 
-		$query = Patient::with('doctor.user');
+		$query = Patient::with(['doctor.user', 'visits']);
 
 		if ($auth->role === 'doctor') {
 			$query->where('doctor_id', $auth->doctor->id);
