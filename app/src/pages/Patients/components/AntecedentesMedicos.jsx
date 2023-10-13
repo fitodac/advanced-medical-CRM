@@ -4,8 +4,7 @@ import {
 	ConditionalInput
 } from '../../../components/Ui'
 import { 
-	HeaderFieldGroup,
-	AlertMessage 
+	HeaderFieldGroup
 } from '.'
 
 import fields from '../formfields/antecedentesMedicos'
