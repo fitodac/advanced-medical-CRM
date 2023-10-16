@@ -28,7 +28,9 @@ import {
 	PacienteHaSeguidoTratamientoNutricional,
 	HaConseguidoElPacienteElObjetivoNutricional,
 	ConsideraQuePacientePercibeMejoria,
-	PacienteHaSeguidoActividadFisica
+	PacienteHaSeguidoActividadFisica,
+	ResultadoCribadoNutricional,
+	ResultadoCribadoMuscular,
 } from '../components'
 import { Button } from '../../../components/Ui'
 import { Loading } from '../../../components'
@@ -187,7 +189,11 @@ export const FormFirst = ({
 
 			<div className="space-y-14 mt-8">
 				<FromGroup>
-					<SituacionActualDelPaciente context={formContext} /> 
+					<FromGroupContainer>
+						<SituacionActualDelPaciente context={formContext} />
+						<ResultadoCribadoNutricional context={formContext} />
+						<ResultadoCribadoMuscular context={formContext} />
+					</FromGroupContainer>
 				</FromGroup>
 				
 				<FromGroup>

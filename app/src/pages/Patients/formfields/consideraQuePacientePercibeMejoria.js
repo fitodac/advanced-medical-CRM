@@ -8,7 +8,7 @@ export default [
 	{ 
 		key: 'cppi__considers_that_patient_perceives_improvement_2',
 		name: 'cppi__considers_that_patient_perceives_improvement',
-		value: '', 
+		value: 'n', 
 		label: 'No (especifique motivo/s)' 
 	}
 ]

@@ -31,8 +31,7 @@ export const RadioGroup = ({
 							onChange={handleChange}
 							defaultValue={value}
 							checked={value === formContext.formState[name]} />
-						
-						
+
 						<span>{label}</span>
 					
 					</label>))}

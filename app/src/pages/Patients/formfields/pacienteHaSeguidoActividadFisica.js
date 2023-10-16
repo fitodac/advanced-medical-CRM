@@ -8,7 +8,7 @@ export default [
 	{ 
 		key: 'hfppar_followed_prescribed_physical_activity_recommendation_2',
 		name: 'hfppar_followed_prescribed_physical_activity_recommendation',
-		value: '', 
+		value: 'n', 
 		label: 'No (especifique motivo/s)' 
 	}
 ]

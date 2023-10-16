@@ -135,14 +135,7 @@ return new class extends Migration
 			$table->string('nti__son__option')->nullable()->comment('Opciones de SON');
 			$table->text('nti__son__other_description')->nullable()->comment('SON: otras');
 			$table->enum('nti__en', ['y', 'n'])->nullable()->comment('Nutrición enteral, tipo de fórmula');
-			$table->enum('nti__en__hypercaloric_with_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica con ingrediente Músculo Especifico (HMB y/o Leucina)');
-			$table->enum('nti__en__hypercaloric_without_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__en__caloric_without_msi', ['y', 'n'])->nullable()->comment('Nutrición enteral: normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__en__specific_diabetics_with_smi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)');
-			$table->enum('nti__en__normal_calorie_without_smi', ['y', 'n'])->nullable()->comment('Nutrición enteral: Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)');
-			$table->enum('nti__en__peptide_formulas', ['y', 'n'])->nullable()->comment('Nutrición enteral: Fórmulas peptídicas');
-			$table->enum('nti__en__snp', ['y', 'n'])->nullable()->comment('Nutrición enteral: Específica para paciente nefrópata');
-			$table->enum('nti__en__other', ['y', 'n'])->nullable()->comment('Nutrición enteral: otras');
+			$table->string('nti__en__option')->nullable()->comment('Opciones de Nutrición enteral');
 			$table->text('nti__en__other_description')->nullable()->comment('Nutrición enteral: otras');
 			// Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional
 			$table->enum('refers_patient_to_begin_nutritional_treatment', ['y', 'n'])->nullable()->comment('Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)');

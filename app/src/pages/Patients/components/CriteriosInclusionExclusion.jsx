@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { RadioGroup } from '../../../components/Ui'
 import { 
@@ -5,7 +6,6 @@ import {
 } from '.'
 
 import fields from '../formfields/criteriosInclusionExclusion'
-import { useState, useContext } from 'react'
 
 const id = 'G5H6I7'
 

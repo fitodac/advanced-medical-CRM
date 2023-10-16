@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 
 const menu = [
 	{ toId: 'C3D4E5', label: 'Situación actual del paciente' },
+	{ toId: 'T4U5V6', label: 'Resultado del cribado nutricional' },
+	{ toId: 'Q1R2S3', label: 'Resultado del cribado muscular' },
 	{ toId: 'U3V4W5', label: 'Antropometría' },
 	{ toId: 'K5L6M7', label: 'Parámetros funcionales' },
 	{ toId: 'B6C7D8', label: 'Otras medidas de composición corporal' },

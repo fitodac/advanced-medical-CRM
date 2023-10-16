@@ -19,56 +19,54 @@ export default [
 											<small>(Seleccione la definición que aplica. Si se pautan diferentes dietas, puede señalar varias)</small>`},
 		options: [
 			{
-				key: 'nti__son__hc_with_smi',
-				name: 'nti__son__hc_with_smi',
-				value: 'y',
+				key: 'nti__son__type_1',
+				name: 'nti__son__option',
+				value: 'Hipercalórica/Hperproteica con ingrediente Músculo Específico (HBM y/o Leucina)',
 				label: 'Hipercalórica/Hperproteica con ingrediente Músculo Específico (HBM y/o Leucina)'
 			},
 			{
-				key: 'nti__son__hc_without_smi',
-				name: 'nti__son__hc_without_smi',
-				value: 'y',
+				key: 'nti__son__type_2',
+				name: 'nti__son__option',
+				value: 'Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)',
 				label: 'Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__son__nc_without_smi',
-				name: 'nti__son__nc_without_smi',
-				value: 'y',
+				key: 'nti__son__type_3',
+				name: 'nti__son__option',
+				value: 'Normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)',
 				label: 'Normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__son__diabetics_hypercaloric',
-				name: 'nti__son__diabetics_hypercaloric',
-				value: 'y',
+				key: 'nti__son__type_4',
+				name: 'nti__son__option',
+				value: 'Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)',
 				label: 'Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__son__normal_normoprotein_without_msi',
-				name: 'nti__son__normal_normoprotein_without_msi',
-				value: 'y',
+				key: 'nti__son__type_5',
+				name: 'nti__son__option',
+				value: 'Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)',
 				label: 'Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)'
 			},
 			{
-				key: 'nti__son__peptide_formulas',
-				name: 'nti__son__peptide_formulas',
-				value: 'y',
+				key: 'nti__son__type_6',
+				name: 'nti__son__option',
+				value: 'Fórmulas peptídicas',
 				label: 'Fórmulas peptídicas'
 			},
 			{
-				key: 'nti__son__snp',
-				name: 'nti__son__snp',
-				value: 'y',
+				key: 'nti__son__type_7',
+				name: 'nti__son__option',
+				value: 'Específica para paciente nefrópata',
 				label: 'Específica para paciente nefrópata'
+			},
+			{
+				key: 'nti__son__type_8',
+				name: 'nti__son__option',
+				value: 'Otras',
+				label: 'Otras (especifique)'
 			}
-		],
-		other: {
-			name: 'nti__son__other_description',
-			checkbox: {
-				label: 'Otras (especifique)',
-				name: 'nti__son__other',
-				defaultValue: 'y'
-			}
-		}
+		]
 	},
 	{
 		key: 'nti__en',
@@ -77,55 +75,53 @@ export default [
 		label: {__html: 'Nutrición enteral, tipo de fórmula'},
 		options: [
 			{
-				key: 'nti__en__hypercaloric_with_msi',
-				name: 'nti__en__hypercaloric_with_msi',
+				key: 'nti__en__option_1',
+				name: 'nti__en__option',
 				value: 'y',
 				label: 'Hipercalórica/Hiperproteica con ingrediente Músculo Especifico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__en__hypercaloric_without_msi',
-				name: 'nti__en__hypercaloric_without_msi',
+				key: 'nti__en__option_2',
+				name: 'nti__en__option',
 				value: 'y',
 				label: 'Hipercalórica/Hiperproteica sin ingrediente Músculo Específico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__en__caloric_without_msi',
-				name: 'nti__en__caloric_without_msi',
+				key: 'nti__en__option_3',
+				name: 'nti__en__option',
 				value: 'y',
 				label: 'Normo calórica/Normoproteica sin ingrediente Músculo Específico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__en__specific_diabetics_with_smi',
-				name: 'nti__en__specific_diabetics_with_smi',
+				key: 'nti__en__option_4',
+				name: 'nti__en__option',
 				value: 'y',
 				label: 'Específica para Diabético Hipercalórica/Hiperproteica con ingrediente Músculo Específico (HMB y/o Leucina)'
 			},
 			{
-				key: 'nti__en__normal_calorie_without_smi',
-				name: 'nti__en__normal_calorie_without_smi',
+				key: 'nti__en__option_5',
+				name: 'nti__en__option',
 				value: 'y',
 				label: 'Especifica para diabético normo calórica/normoproteica sin ingrediente Músculo Específico (HMB y Leucina)'
 			},
 			{
-				key: 'nti__en__peptide_formulas',
-				name: 'nti__en__peptide_formulas',
+				key: 'nti__en__option_6',
+				name: 'nti__en__option',
 				value: 'y',
-				label: 'Fórmulas peptídicas '
+				label: 'Fórmulas peptídicas'
 			},
 			{
-				key: 'nti__en__snp',
-				name: 'nti__en__snp',
+				key: 'nti__en__option_7',
+				name: 'nti__en__option',
 				value: 'y',
-				label: 'Específica para paciente nefrópata '
+				label: 'Específica para paciente nefrópata'
 			},
-		],
-		other: {
-			name: 'nti__en__other_description',
-			checkbox: {
-				label: 'Otras (especifique)',
-				name: 'nti__en__other',
-				defaultValue: 'y'
-			}
-		}
+			{
+				key: 'nti__en__option_8',
+				name: 'nti__en__option',
+				value: 'Otras',
+				label: 'Otras (especifique)'
+			},
+		]
 	},
 ]

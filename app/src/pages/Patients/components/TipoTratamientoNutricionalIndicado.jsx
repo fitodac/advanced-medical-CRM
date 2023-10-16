@@ -1,9 +1,6 @@
 import { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { 
-	CheckboxList,
-	ConditionalInput
-} from '../../../components/Ui'
+import { Input } from '../../../components/Ui'
 import { 
 	HeaderFieldGroup,
 	AlertMessage 
@@ -33,8 +30,7 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 				name, 
 				value, 
 				label, 
-				options, 
-				other
+				options,
 			}) => (
 			<AlertMessage key={key} name={name} context={context}>
 				<label className="input-checkbox">
@@ -46,20 +42,45 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 					<span dangerouslySetInnerHTML={label} />
 				</label>
 
-				{options && (<div className="pt-2 pb-3 pl-8">
-					<CheckboxList options={options} context={context} />
-				</div>)}
+				{options && (
+				<div className="pt-2 pb-3 pl-8 space-y-2">
+					{options.map(({
+						key, 
+						name, 
+						value, 
+						label
+					}) => (
+						<div key={key} className="w-full flex gap-x-3">
+							<label 
+								className="input-checkbox">
 
-				{other && (<div className="pb-3 pl-8">
-					<ConditionalInput 
-						name={other.name}
-						checkbox={other.checkbox} 
-						context={context} />
-				</div>)}
+								<input 
+									type="radio"
+									name={name}
+									defaultValue={value}
+									onChange={handleChange} />
+
+								<span>{label}</span>
+							</label>
+
+							{key === 'nti__son__type_8' && formContext.formState.nti__son__option === 'Otras' && (
+								<div className="w-full pb-1 pl-3 flex-1">
+									<Input name="nti__son__other_description" context={context} />
+								</div>
+							)}
+
+
+							{key === 'nti__en__option_8' && formContext.formState.nti__en__option === 'Otras' && (
+								<div className="w-full pb-1 pl-3 flex-1">
+									<Input name="nti__en__other_description" context={context} />
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+				)}
 			</AlertMessage>
 			))}
-			
-			
 		</section>
 	</>)
 

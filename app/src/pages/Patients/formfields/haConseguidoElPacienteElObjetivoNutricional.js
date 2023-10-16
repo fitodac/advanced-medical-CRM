@@ -8,7 +8,7 @@ export default [
 	{ 
 		key: 'rng__has_reached_nutritional_goal_2',
 		name: 'rng__has_reached_nutritional_goal',
-		value: '', 
+		value: 'n', 
 		label: 'No (especifique motivo/s)' 
 	}
 ]

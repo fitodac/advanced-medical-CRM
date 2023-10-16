@@ -8,11 +8,11 @@ import {
 	useAppContext 
 } from '../hooks'
 
-import { Button } from '../components/Ui'
+import { Button, Alert } from '../components/Ui'
 
 export default function Page(){
 
-	const { API_URI, token } = useAppContext()
+	const { API_URI, token, user: {info: {role}} } = useAppContext()
 	const [ loading, setLoading ] = useState(false)
 
 	const { 
@@ -47,18 +47,22 @@ export default function Page(){
 				{title: 'Exportar datos', current: true}
 			]} />
 
-		<div className="py-10 items-center max-w-4xl">
-			<div className="bg-white border border-slate-100 p-6 rounded-xl shadow-lg">
-				<Button 
-					className="btn btn-lg bg-green-600 border-green-600 text-white space-x-2"
-					onClick={generateXLS}>
-					<span className="text-3xl">
-						<i className="ri-file-excel-2-line"></i>
-					</span>
-					<span>Descargar XLS</span>
-				</Button>
-			</div>
-		</div>
+			{'superadmin' === role ? (
+				<div className="py-10 items-center max-w-4xl">
+					<div className="bg-white border border-slate-100 p-6 rounded-xl shadow-lg">
+						<Button 
+							className="btn btn-lg bg-green-600 border-green-600 text-white space-x-2"
+							onClick={generateXLS}>
+							<span className="text-3xl">
+								<i className="ri-file-excel-2-line"></i>
+							</span>
+							<span>Descargar XLS</span>
+						</Button>
+					</div>
+				</div>
+			):(
+				<Alert type="error" data={{message: 'No estás autorizado para ejecutar esta acción'}} />
+			)}
 
 		{loading && <Loading />}
 	</>)

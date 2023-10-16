@@ -18,7 +18,6 @@ export const IniciaTratamientoNutricional = ({context}) => {
 	const handleChange = e => {
 		const {name, value} = e.target
 		formContext.handleInputChange({target: {name, value}})
-		// if( 'y' !== value ) formContext.handleInputChange({target: {name: 'nt__specify', value: ''}})
 		setInputVisible('y' === value)
 	}
 

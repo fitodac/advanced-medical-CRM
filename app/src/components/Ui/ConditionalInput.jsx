@@ -1,9 +1,4 @@
-import { 
-	useState, 
-	useEffect, 
-	// useMemo,
-	useContext 
-} from 'react'
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '.'
 

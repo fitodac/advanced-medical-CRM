@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { 
 	Input,
@@ -17,18 +17,11 @@ export const PacienteHaSeguidoActividadFisica = ({context}) => {
 
 	const formContext = useContext(context)
 	const [ input_visible, setInputVisible ] = useState('')
-	const [ chkState, setChkState ] = useState('')
-
-	useEffect(() => {
-		formContext.handleInputChange({target: {name: fields[0].name, value: chkState}})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chkState])
 
 	const handleChange = e => {
-		const {value, checked} = e.target
-		setChkState(checked ? value : '')
-		if( 'y' !== value ) formContext.handleInputChange({target: {name: 'nt__followed_prescribed_nutritional_recommendation', value: ''}})
-		setInputVisible(e.target.id)
+		const {name, value} = e.target
+		formContext.handleInputChange({target: {name, value}})
+		setInputVisible(value)
 	}
 
 	return (<>
@@ -55,7 +48,7 @@ export const PacienteHaSeguidoActividadFisica = ({context}) => {
 
 							{(
 								'hfppar_followed_prescribed_physical_activity_recommendation_1' === key && 
-								'hfppar_followed_prescribed_physical_activity_recommendation_1' === input_visible
+								'y' === input_visible
 							) && (
 								<div className="w-90 relative -top-1">
 									<InputMask 
@@ -67,7 +60,7 @@ export const PacienteHaSeguidoActividadFisica = ({context}) => {
 
 							{(
 								'hfppar_followed_prescribed_physical_activity_recommendation_2' === key &&
-								'hfppar_followed_prescribed_physical_activity_recommendation_2' === input_visible
+								'n' === input_visible
 							) && (
 								<div className="w-full relative -top-1">
 									<Input name="hfppar__not_followed_prescribed_recommendation" context={context} />
