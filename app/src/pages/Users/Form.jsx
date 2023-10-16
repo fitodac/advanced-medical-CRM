@@ -34,8 +34,8 @@ export default function Page(){
 		name: '',
 		email: '',
 		role: '',
-		center_id: 0,
-		specialty_id: 0
+		center_id: 1,
+		specialty_id: 1
 	})
 
 	const handleInputChange = e => onInputChange(e)
