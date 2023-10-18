@@ -46,7 +46,10 @@ import {
 import { Button } from '../../../components/Ui'
 import { Loading } from '../../../components'
 
+
 const formContext = createContext({})
+
+
 
 export const FormInitial = ({
 	patient,
@@ -56,6 +59,7 @@ export const FormInitial = ({
 
 	const { API_URI, token, notify } = useAppContext()
 	const [loading, setLoading] = useState(true)
+	const [formSaved, setFormSaved] = useState(false)
 
 	const {
 		formState, 
@@ -71,7 +75,7 @@ export const FormInitial = ({
 	const {
 		response: updateResponse,
 		// error,
-		loading: updateLoading,
+		// loading: updateLoading,
 		refetch: updateRefetch
 	} = useAxios({
 		url: `${API_URI}/visit/update`,
@@ -85,7 +89,7 @@ export const FormInitial = ({
 	const {
 		response: createResponse,
 		// error,
-		loading: createLoading,
+		// loading: createLoading,
 		refetch: createRefetch
 	} = useAxios({
 		url: `${API_URI}/visit/create`,
@@ -135,13 +139,19 @@ export const FormInitial = ({
 
 
 	useEffect(() => {
-		if( createResponse?.success ) notify(createResponse.message, 'success')
+		if( createResponse?.success ){
+			notify(createResponse.message, 'success')
+			setFormSaved(true)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [createResponse])
 
 
 	useEffect(() => {
-		if( updateResponse?.success ) notify(updateResponse.message, 'success')
+		if( updateResponse?.success ){
+			notify(updateResponse.message, 'success')
+			setFormSaved(true)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateResponse])
 
@@ -154,6 +164,7 @@ export const FormInitial = ({
 		}else{
 			createRefetch()
 		}
+
 	}, [formState, createRefetch, updateRefetch])
 
 
@@ -161,7 +172,8 @@ export const FormInitial = ({
 		patient,
 		formState, 
 		messages,
-		handleInputChange
+		handleInputChange,
+		formSaved
 	}
 
 

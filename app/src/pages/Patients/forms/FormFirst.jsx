@@ -35,7 +35,10 @@ import {
 import { Button } from '../../../components/Ui'
 import { Loading } from '../../../components'
 
+
 const formContext = createContext({})
+
+
 
 export const FormFirst = ({
 	patient,
@@ -45,6 +48,7 @@ export const FormFirst = ({
 
 	const { API_URI, token, notify } = useAppContext()
 	const [loading, setLoading] = useState(true)
+	const [formSaved, setFormSaved] = useState(false)
 
 	const {
 		formState, 
@@ -124,13 +128,19 @@ export const FormFirst = ({
 
 
 	useEffect(() => {
-		if( createResponse?.success ) notify(createResponse.message, 'success')
+		if( createResponse?.success ){
+			notify(createResponse.message, 'success')
+			setFormSaved(true)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [createResponse])
 
 
 	useEffect(() => {
-		if( updateResponse?.success ) notify(updateResponse.message, 'success')
+		if( updateResponse?.success ){
+			notify(updateResponse.message, 'success')
+			setFormSaved(true)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateResponse])
 
@@ -150,7 +160,8 @@ export const FormFirst = ({
 		patient,
 		formState, 
 		messages,
-		handleInputChange
+		handleInputChange,
+		formSaved
 	}
 
 	

@@ -108,7 +108,6 @@ export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 
 				<div className="space-y-4">
 					<label className="input-checkbox">
-						<input type="checkbox" />
 						<span className="text-slate-600 text-base font-medium">{fields.ecography.label}</span>
 					</label>
 

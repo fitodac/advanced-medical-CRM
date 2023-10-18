@@ -40,7 +40,8 @@ export const InputDate = ({
 	maxlength,
 	minlength,
 	className,
-	context
+	context,
+	onBlur
 }) => {
 
 	const formContext = useContext(context)
@@ -58,6 +59,7 @@ export const InputDate = ({
 			}
 		})
 	}
+
 
 	return (<div className="space-y-2">
 		{ label && (<label className="select-none leading-tight block">{label}</label>) }
