@@ -177,6 +177,7 @@ export default function Page(){
 
 	const handleSubmit = e => {
 		e.preventDefault()
+		setLoading(true)
 
 		try {
 			if( id ){
@@ -197,6 +198,7 @@ export default function Page(){
 				createUserRefetch()
 			}
 		} catch (err) {
+			setLoading(false)
 			console.log('error', err)
 		}
 	}

@@ -21,6 +21,7 @@ import UserForm, {loader as loaderUserForm} from '../pages/Users/Form'
 import Login from '../pages/Login'
 import Logout from '../pages/Logout'
 import Profile from '../pages/Profile'
+import AccountVerify from '../pages/AccountVerify'
 
 import Documents from '../pages/Documents'
 import ExportData from '../pages/ExportData'
@@ -122,7 +123,13 @@ const router = createBrowserRouter([
 	{
 		path: '/logout',
 		element: <AuthProvider><Logout /></AuthProvider>
-	}
+	},
+
+	// Verify account
+	{
+		path: '/account/verify',
+		element: <AccountVerify />
+	},
 
 ])
 

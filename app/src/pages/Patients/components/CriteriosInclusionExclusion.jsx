@@ -16,8 +16,8 @@ export const CriteriosInclusionExclusionExclusion = ({context}) => {
 
 	const inclusion_criteria_values = fields.criteriosDeInclusion.map(e => formContext.formState[e.options[0].name])
 	const exclusion_criteria_values = fields.criteriosDeExclusion.map(e => formContext.formState[e.options[0].name])
-	const inclusion_criteria_errors = inclusion_criteria_values.filter(e => e !== 'y').length
-	const exclusion_criteria_errors = exclusion_criteria_values.filter(e => e !== 'n').length
+	const inclusion_criteria_errors = inclusion_criteria_values.filter(e => e === 'n').length
+	const exclusion_criteria_errors = exclusion_criteria_values.filter(e => e === 'y').length
 
 	return (<>
 		<section className="space-y-7" id={id}>

@@ -29,7 +29,7 @@ export const SituacionActualDelPaciente = ({context}) => {
 
 			<div className="flex">
 
-				<div className="grid gap-y-4">
+				<div className="grid gap-y-2">
 					{ fields && fields.map(({key, name, value, label}) => (
 					<AlertMessage key={key} name={name} context={context}>
 						<label className="input-checkbox">

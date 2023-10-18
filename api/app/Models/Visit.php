@@ -163,7 +163,7 @@ class Visit extends Model
         'hfppar__not_followed_prescribed_recommendation'
     ];
 
-    protected $casts = [
+	protected $casts = [
 		'date' => 'date:d/m/Y',
 		'birth_date' => 'date:d/m/Y',
 		'valuation_date' => 'date:d/m/Y',

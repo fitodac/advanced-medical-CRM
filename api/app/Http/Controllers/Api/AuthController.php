@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 
 class AuthController extends Controller
@@ -62,7 +61,7 @@ class AuthController extends Controller
     {
 			$verifyUser = UserVerify::where('token', $token)->first();
 
-			$message = 'Sorry your email cannot be identified.';
+			$message = "Lo sentimos, su email no puede ser verificado";
 
 			if(!is_null($verifyUser) ){
 				$user = $verifyUser->user;
@@ -70,12 +69,14 @@ class AuthController extends Controller
 				if(!$user->email_verified_at) {
 					$verifyUser->user->email_verified_at = now();
 					$verifyUser->user->save();
-					$message = "Your e-mail is verified. You can now login.";
+					$message = "Hemos verificado su email correctamente";
+					return $this->successResponse([], $message);
 				} else {
-					$message = "Your e-mail is already verified. You can now login.";
+					$message = "Su email ya fué verificado.";
+					return $this->successResponse([], $message);
 				}
 			}
 
-			return $this->successResponse([], $message);
+			return $this->errorResponse($message, 422);
     }
 }

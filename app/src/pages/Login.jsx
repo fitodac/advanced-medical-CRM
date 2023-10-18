@@ -52,7 +52,7 @@ export default function Page(){
 					(<div className="w-full max-w-xs pb-10">
 
 						<section className="space-y-6">
-							<div className="flex justify-center">
+							<div className="flex justify-center select-none">
 								<img 
 									src="/brand.png" 
 									alt="Advanced experts" 
@@ -63,12 +63,12 @@ export default function Page(){
 								<section className="grid gap-y-3">
 									
 									<div className="space-y-2">
-										<label className="text-white text-base font-light">Email:</label>
+										<label className="text-white text-base font-light select-none">Email:</label>
 										<input type="email" value={loginForm.email} name="email" onChange={handleInput} />
 									</div>
 
 									<div className="space-y-2">
-										<label className="text-white text-base font-light">Password:</label>
+										<label className="text-white text-base font-light select-none">Password:</label>
 										<input type="password" value={loginForm.password} name="password" onChange={handleInput} />
 									</div>
 
