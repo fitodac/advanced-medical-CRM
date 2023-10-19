@@ -183,7 +183,7 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
     */
     public function collection()
     {
-        $visits = Visit::with('patient')->get();
+        $visits = Visit::with('patient', 'patient.center', 'patient.doctor.user', 'patient.doctor.specialty')->get();
         $response = [];
         $x = 0;
 
@@ -197,9 +197,9 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
             // Eliminar claves no deseadas
             unset($visit['created_at']);
             unset($visit['updated_at']);
-            unset($visit['patient']);
+            // unset($visit['patient']);
             unset($visit['patient_id']);
-            // unset($visit['id']);
+            unset($visit['id']);
 
             $response[] = array_merge($temp[$x], $visit);
         }
