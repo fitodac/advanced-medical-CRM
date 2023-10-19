@@ -23,7 +23,7 @@ return new class extends Migration
 			$table->enum('inclusion_q3', ['y', 'n'])->nullable()->comment('Accede a formar parte del estudio y firma el consentimiento informado');
 			// Criterios de exclusión
 			$table->enum('exclusion_q1', ['y', 'n'])->nullable()->comment('Personas que no accedan a formar parte del registro y no firmen el consentimiento informado');
-			$table->enum('exclusion_q2', ['y', 'n'])->nullable()->comment('Personas sin diagnóstico de enfermedadcrónica');
+			$table->enum('exclusion_q2', ['y', 'n'])->nullable()->comment('Personas sin diagnóstico de enfermedad crónica');
 			$table->enum('exclusion_q3', ['y', 'n'])->nullable()->comment('Personas con trastornos de enfermedad crónica');
 			$table->enum('exclusion_q4', ['y', 'n'])->nullable()->comment('Personas con esperanza de vida inferior a 6 meses');
 			$table->enum('exclusion_q5', ['y', 'n'])->nullable()->comment('Demencia conocida u otros ajenos a un trastorno neurológico o psiquiátrico significativo, o cualquier otra condición psicológica que pueda interferir con el desarrollo del estudio');
@@ -82,7 +82,7 @@ return new class extends Migration
 			// Parámetros funcionales 
 			$table->string('dynamometry')->nullable()->comment('Dinamometría, valor máximo de 3 mediciones | kg');
 			$table->enum('dynamometry__not_possible', ['y', 'n'])->nullable()->comment('No es posible realizar la dinamometría');
-			$table->tinyInteger('test_chair_five_repetitions')->nullable()->comment('Test “Test de la silla 5 repeticiones" | seg');
+			$table->tinyInteger('test_chair_five_repetitions')->nullable()->comment('Test “Test de la silla 5 repeticiones“ | seg');
 			$table->enum('test_chair__not_possible', ['y', 'n'])->nullable()->comment('No es posible realizar el test de la silla');
 			// Otras mediciones de composición corporal
 			$table->string('bi__hydratation')->nullable()->comment('Porcentaje de hidratación | %');
@@ -101,11 +101,11 @@ return new class extends Migration
 			$table->string('bi__phase_angle')->nullable()->comment('Ángulo de fase (AF) | deg');
 			$table->string('bi__standarized_phase_angle')->nullable()->comment('Ángulo de fase estandarizado | L');
 			// DEXA
-			$table->string('dexa__ffm')->nullable()->comment('FFM (masa magra) | kg');
-			$table->string('dexa__fm')->nullable()->comment('FM (masa grasa) | kg');
+			$table->string('dexa__ffm')->nullable()->comment('DEXA (masa magra) | kg');
+			$table->string('dexa__fm')->nullable()->comment('DEXA (masa grasa) | kg');
 			// TC
-			$table->string('tc__ffm')->nullable()->comment('FFM (masa magra) | kg');
-			$table->string('tc__fm')->nullable()->comment('FM (masa grasa) | kg');
+			$table->string('tc__ffm')->nullable()->comment('TC (masa magra) | kg');
+			$table->string('tc__fm')->nullable()->comment('TC (masa grasa) | kg');
 			// Ecografía abdominal
 			$table->string('au__total_adipose_tissue')->nullable()->comment('Ecografía abdominal: tejido adiposo total | cm');
 			$table->string('au__superficial')->nullable()->comment('Ecografía abdominal: superficial | cm');
@@ -169,14 +169,6 @@ return new class extends Migration
 				'No acude a control'
 			])->nullable()->comment('Situación actual del paciente');
 			$table->date('patient_current_situation_date')->nullable()->comment('Situación actual del paciente - Fecha');
-			
-			// $table->enum('discharged', ['y'])->nullable()->comment('Paciente dado de alta');
-			// $table->date('discharged_date')->nullable()->comment('Fecha del alta del paciente');
-			// $table->enum('readmission', ['y'])->nullable()->comment('Reingreso del paciente');
-			// $table->date('readmission_date')->nullable()->comment('Fecha de reingreso del paciente');
-			// $table->enum('death', ['y'])->nullable()->comment('Deceso del paciente');
-			// $table->date('death_date')->nullable()->comment('Fecha de deceso del paciente');
-			// $table->enum('not_come_for_control', ['y'])->nullable()->comment('El paciente no acude a control');
 			
 			// Valoración del estado nutricional
 			// Antropometría
