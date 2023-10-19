@@ -56,7 +56,10 @@ export const AppProvider = ({children}) => {
 
 			<label 
 				htmlFor="toast" 
-				className="toast bg-green-700 border-green-700 text-green-200 p-8 overflow-hidden shadow-2xl"
+				className={`toast p-8 overflow-hidden shadow-2xl
+					${toastContext.status === 'success' ? 
+						'bg-green-700 border-green-700 text-green-200' : 
+						'bg-red-700 border-red-700 text-red-200'}`}
 				onClick={() => setToastContext({show: false, status: '', message: ''})}>
 				<div className="">{toastContext.message}</div>
 			</label>

@@ -11,16 +11,18 @@ import { Button, Input } from '../components/Ui'
 
 const updateUserInLocalStorage = data => {
 
-	const stored_user = JSON.parse(window.localStorage.getItem('user'))
-	const new_user = {
-		...stored_user,
-		info: {
-			...stored_user.info,
-			...data
-		}
-	}
+	console.log('updateUserInLocalStorage:', data)
 
-	window.localStorage.setItem('advancedUser', JSON.stringify(new_user))
+	// const stored_user = JSON.parse(window.localStorage.getItem('user'))
+	// const new_user = {
+	// 	...stored_user,
+	// 	info: {
+	// 		...stored_user.info,
+	// 		...data
+	// 	}
+	// }
+
+	// window.localStorage.setItem('advancedUser', JSON.stringify(new_user))
 }
 
 
@@ -59,14 +61,13 @@ export default function Page(){
 
 
 	const { 
-		response: getDoctorResponse, 
-		error: getDoctorError, 
-		loading: getDoctorLoading,
-		refetch: getDoctorRefetch
+		response, 
+		// error: getDoctorError, 
+		// loading: getDoctorLoading,
+		refetch
 	} = useAxios({
-		url: `${API_URI}/doctor/getInfo`,
-		method: 'POST',
-		body: {id},
+		url: `${API_URI}/profile/${id}`,
+		method: 'GET',
 		token,
 		init: 0
 	})
@@ -74,7 +75,7 @@ export default function Page(){
 	// Get specialties list
 	const {
 		response: getSpecialtiesResponse,
-		error: getSpecialtiesError,
+		// error: getSpecialtiesError,
 		loading: getSpecialtiesLoading,
 		refetch: getSpecialtiesRefetch
 	} = useAxios({
@@ -87,25 +88,25 @@ export default function Page(){
 	// Upadate profile
 	const { 
 		response: updateProfileResponse, 
-		error: updateProfileError, 
+		// error: updateProfileError, 
 		loading: updateProfileLoading, 
 		refetch: updateProfileRefetch 
 	} = useAxios({
-		url: `${API_URI}/user/update`,
-		method: 'PUT',
-		body: {...formState, id},
+		url: `${API_URI}/profile/${id}`,
+		method: 'PATCH',
+		body: {...formState},
 		token,
 		init: 0
 	})
 
 	useEffect(() => {
-		if( getDoctorResponse?.success && 'doctor' === role ){
-			const {specialty_id, center} = getDoctorResponse.data.doctor
+		if( response?.success && 'doctor' === role ){
+			const {specialty_id, center} = response.data.doctor
 			setFormState({ ...formState, specialty_id })
 			setCenter({...center})
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getDoctorResponse])
+	}, [response])
 
 	useEffect(() => {
 		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
@@ -115,7 +116,16 @@ export default function Page(){
 	useEffect(() => setLoading(updateProfileLoading), [updateProfileLoading])
 
 	useEffect(() => {
-		getDoctorRefetch()
+		if( updateProfileResponse?.success ){
+			updateUserInLocalStorage({...formState})
+			console.log('updateProfileResponse', updateProfileResponse)
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateProfileResponse])
+
+
+	useEffect(() => {
+		refetch()
 		'doctor' === role ? getSpecialtiesRefetch() : setLoading(false)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -139,7 +149,6 @@ export default function Page(){
 			}
 
 			updateProfileRefetch()
-			updateUserInLocalStorage({...formState})
 
 		} catch (err) {
 			console.log('error', err)
@@ -216,6 +225,28 @@ export default function Page(){
 						</div>
 					</>)
 					: null}
+
+					<div className="bg-slate-200 h-px"></div>
+
+					<div className="space-y-2">
+						<div className="font-semibold leading-none select-none">Seguridad</div>
+						<div className="text-slate-500 text-sm">Cambiar contraseña</div>
+
+						<div className="grid grid-cols-2 gap-x-5 gap-y-4 pt-2">
+							<Input 
+								label="Contraseña actual" 
+								name="password" 
+								context={formContext}
+								type="password" />
+
+							<Input 
+								label="Nueva contraseña" 
+								name="new_password" 
+								context={formContext}
+								type="password" />
+						</div>
+					</div>
+
 
 					{ 'doctor' === role || 'admin' === role
 					? (<div className="pt-4 col-span-2">

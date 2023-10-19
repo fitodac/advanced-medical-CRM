@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CenterController;
 use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SpecialtyController;
 
 /*
@@ -38,6 +39,9 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 	Route::post('/user', 												[UserController::class, 'get'])->middleware('restrictRole:superadmin,admin')->name('user.show');
 	Route::get('/user/list', 				    				[UserController::class, 'list'])->middleware('restrictRole:superadmin')->name('user.list');
 	Route::delete('/user/delete/{user}', 				[UserController::class, 'delete'])->middleware('restrictRole:superadmin,admin')->name('user.delete');
+
+	Route::get('/profile/{user:id}', 						[ProfileController::class, 'edit']);
+	Route::patch('/profile/{user:id}', 					[ProfileController::class, 'update']);
 
 	// Centers
 	Route::post('/center/create', 		        	[CenterController::class, 'create'])->middleware('restrictRole:superadmin,admin')->name('center.create');

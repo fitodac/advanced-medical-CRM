@@ -42,6 +42,7 @@ class UserController extends Controller
 		// Set the default password for the new user
 		$userData = array_merge($request->all(), [
 			'role' => 'superadmin' === $auth->role ? $request->role : 'doctor',
+			'name' => Str::slug($request->name),
 			'password' => env('USER_DEFAULT_PASSWORD')
 		]);
 
@@ -68,18 +69,18 @@ class UserController extends Controller
 			Doctor::create($doctorData);
 		}
 
-		$token = $user->createToken('my-token')->plainTextToken;
+		// $token = $user->createToken('my-token')->plainTextToken;
 
-        $verify_token = Str::random(64);
-        UserVerify::create([
-            'user_id' => $user->id,
-            'token' => $verify_token
-        ]);
+		$verify_token = Str::random(64);
+		UserVerify::create([
+			'user_id' => $user->id,
+			'token' => $verify_token
+		]);
 
-        Mail::send('email.email-verification', ['token' => $verify_token], function($message) use($request){
-            $message->to($request->email);
-            $message->subject(__('Verify Email Address'));
-        });
+		Mail::send('email.email-verification', ['token' => $verify_token], function($message) use($request){
+			$message->to($request->email);
+			$message->subject(__('Verify Email Address'));
+		});
 
 		return $this->successResponse($user, 'Hemos creado un nuevo usuario');
 
@@ -137,12 +138,13 @@ class UserController extends Controller
 		$userData = array_merge($user->toArray(), [
 			'firstname' => $request->firstname,
 			'lastname' => $request->lastname,
-			'name' => $request->name,
+			'name' => Str::slug($request->name),
 			'email' => $request->email,
 			'role' => $auth->id === $user->id ? $user->role : ('superadmin' === $auth->role ? $request->role : ('admin' === $auth->role ? 'doctor' : 'doctor'))
 		]);
 
 		$user->update($userData);
+
 
 		// Update doctors table
 		if( $request->specialty_id or $request->center_id ){

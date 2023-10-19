@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 
 export const Header = () => {
 
-	const { user: {info: { name }} } = useAuth()
+	const { user: {info: { firstname, name }} } = useAuth()
 	const [dd, setDd] = useState(0)
 
 	return (<div className="bg-primary border-b border-primary w-full px-5 py-2 flex justify-between items-center">
@@ -38,7 +38,7 @@ export const Header = () => {
 							<div className="bg-teal text-white tracking-tight w-8 h-8 flex items-center rounded-full">
 								<div className="w-full text-center">{(`${name[0]}${name[1]}`).toUpperCase()}</div>
 							</div>
-							<span className="text-xs">Hola {name}</span>
+							<span className="text-xs">Hola {firstname}</span>
 							<i className="ri-arrow-down-s-fill top-0.5 relative"></i>
 						</span>
 

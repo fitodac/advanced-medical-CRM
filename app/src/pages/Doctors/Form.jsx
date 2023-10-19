@@ -81,7 +81,7 @@ export default function Page(){
 	// Create doctor
 	const { 
 		response: createDoctorResponse, 
-		// error: createDoctorError, 
+		error: createDoctorError, 
 		loading: createDoctorLoading, 
 		refetch: createDoctorRefetch 
 	} = useAxios({
@@ -95,7 +95,7 @@ export default function Page(){
 	// Upadate doctor
 	const { 
 		response: updateDoctorResponse, 
-		// error: updateDoctorError, 
+		error: updateDoctorError, 
 		loading: updateDoctorLoading, 
 		refetch: updateDoctorRefetch 
 	} = useAxios({
@@ -136,6 +136,25 @@ export default function Page(){
 	useEffect(() => setLoading(getCentersLoading), [getCentersLoading])
 	useEffect(() => setLoading(createDoctorLoading), [createDoctorLoading])
 	useEffect(() => setLoading(updateDoctorLoading), [updateDoctorLoading])
+
+	useEffect(() => { 
+		if( createDoctorError ){
+			for(let e in createDoctorError.message){
+				notify(createDoctorError.message[e][0], 'error')
+			}
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createDoctorError])
+
+
+	useEffect(() => { 
+		if( updateDoctorError ){
+			for(let e in updateDoctorError.message){
+				notify(updateDoctorError.message[e][0], 'error')
+			}
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateDoctorError])
 
 	useEffect(() => {
 		if( createDoctorResponse?.success ){

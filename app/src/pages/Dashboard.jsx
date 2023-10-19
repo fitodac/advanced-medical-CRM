@@ -29,7 +29,7 @@ export default function Page(){
 				)}
 
 				{ 'admin' === role && (
-					<NavLink to={'/users'} className={boxClassName}>
+					<NavLink to={'/doctors'} className={boxClassName}>
 						<div className="font-bold">Doctores</div>
 						<div className="text-sm font-light leading-tight">Un listado de todos los doctores registrados</div>
 					</NavLink>

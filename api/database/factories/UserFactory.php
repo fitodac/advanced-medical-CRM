@@ -21,7 +21,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'name' => Str::slug($this->faker->name),
             'role' => 'doctor',
             'email' => $this->faker->unique()->safeEmail,
             'firstname' => $this->faker->firstName,
