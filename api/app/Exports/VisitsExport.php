@@ -22,7 +22,7 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
 				'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 				'L' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 				'Y' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				'DP' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+				'DP ' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 			];
     }
 
@@ -130,7 +130,6 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
 				"SON: otras", // nti__son__other_description
 				"Nutrición enteral, tipo de fórmula", // nti__en
 				"Opciones de Nutrición enteral", // nti__en__option
-				
 				"Nutrición enteral: otras", // nti__en__other_description
 				'Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)', // refers_patient_to_begin_nutritional_treatment
 				'¿El paciente ha seguido la recomendación nutricional prescrita?', // nt__pnr

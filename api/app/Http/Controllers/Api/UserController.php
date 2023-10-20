@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\env;
 
 class UserController extends Controller
 {
@@ -77,7 +78,10 @@ class UserController extends Controller
 			'token' => $verify_token
 		]);
 
-		Mail::send('email.email-verification', ['token' => $verify_token], function($message) use($request){
+		Mail::send('email.email-verification', [
+			'token' => $verify_token,
+			'app_uri' => env('REACT_URL')
+		], function($message) use($request){
 			$message->to($request->email);
 			$message->subject(__('Verify Email Address'));
 		});
