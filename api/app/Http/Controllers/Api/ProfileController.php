@@ -24,7 +24,7 @@ class ProfileController extends Controller
 		$auth = Auth::user();
 		if( $auth->id !== $user->id ) return $this->validationErrorResponse('No estás autorizado para ver esta información');
 
-		$resp = User::with('doctor')->find($user->id);
+		$resp = User::with('doctor.center')->find($user->id);
 		return $this->successResponse($resp);
 	}
 
@@ -43,12 +43,15 @@ class ProfileController extends Controller
 			'name.unique' => 'Nombre de usuario inválido'
 		]);
 
-		if( $validate->fails() ){ return $this->validationErrorResponse($validate->errors()); }
+		if( $validate->fails() ){
+			return $this->validationErrorResponse($validate->errors());
+		}
 
+		if( $auth->id !== $user->id ){
+			return $this->validationErrorResponse('No estás autorizado para ver esta información');
+		}
 
-		if( $auth->id !== $user->id ) return $this->validationErrorResponse('No estás autorizado para ver esta información');
-
-		$req = [];
+		$req = $request->all();
 		
 		if( isset($request->name) ){
 			$req['name'] = Str::slug($request->name);
@@ -57,12 +60,18 @@ class ProfileController extends Controller
 		if( isset($request->new_password) ){
 			if( Hash::check($request->password, $user->password) ){
 				$req['password'] = Hash::make($request->new_password);
+			}else{
+				return $this->validationErrorResponse('Ha ocurrido un problema al actualizar tu contraseña');
 			}
 		}
 
-		$user->update($req);
+		$updated = $user->update($req);
 
-		return $this->successResponse($user);
+		if( !$updated ){
+			return $this->validationErrorResponse('Ocurrió un problema al actualizar tus datos');
+		}
+
+		return $this->successResponse(User::find($user->id), 'Tus datos se han actualizado correctamente');
 	}
 
 }
