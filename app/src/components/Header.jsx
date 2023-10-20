@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAppContext } from '../hooks'
 
 
 export const Header = () => {
 
-	const { user: {info: { firstname, name }} } = useAuth()
+	const { user } = useAppContext()
+
+	const {info: { firstname, name }} = user
 	const [dd, setDd] = useState(0)
 
 	return (<div className="bg-primary border-b border-primary w-full px-5 py-2 flex justify-between items-center">

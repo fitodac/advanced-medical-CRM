@@ -22,10 +22,6 @@ export const Navbar = () => {
 		</div>
 
 		<ul className="text-sm pb-6 select-none">
-			{/* <li>
-				<NavLink to={'/'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Dashboard</NavLink>
-			</li> */}
-
 			{ ('admin' === role || 'superadmin' === role) 
 			? (<>
 				<li>

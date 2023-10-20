@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { AppContext } from '.'
 import { useAuth } from '../hooks'
@@ -13,9 +13,15 @@ export const AppProvider = ({children}) => {
 		status: '',
 		message: ''
 	})
-	const { user } = useAuth()
-	const { token_type, token } = user
 
+	const [user, setUser] = useState(useAuth().user)
+	const { token_type, token } = useAuth().user
+	
+	const setUserInfo = data => {
+		console.log('setUserInfo', data)
+		setUser({...user, info: {...data}})
+	}
+	
 	const notify = (message, status) => {
 		setToastContext({
 			show: true,
@@ -40,7 +46,8 @@ export const AppProvider = ({children}) => {
 					API_URI,
 					token: `${token_type} ${token}`,
 					// methods
-					notify
+					notify,
+					setUserInfo
 				}}>
 				{children}
 			</AppContext.Provider>

@@ -10,19 +10,17 @@ import { Button, Input } from '../components/Ui'
 
 
 const updateUserInLocalStorage = data => {
+	const stored_user = JSON.parse(window.localStorage.getItem('advancedUser'))
 
-	console.log('updateUserInLocalStorage:', data)
+	const new_user = {
+		...stored_user,
+		info: {
+			...stored_user.info,
+			...data
+		}
+	}
 
-	// const stored_user = JSON.parse(window.localStorage.getItem('user'))
-	// const new_user = {
-	// 	...stored_user,
-	// 	info: {
-	// 		...stored_user.info,
-	// 		...data
-	// 	}
-	// }
-
-	// window.localStorage.setItem('advancedUser', JSON.stringify(new_user))
+	window.localStorage.setItem('advancedUser', JSON.stringify(new_user))
 }
 
 
@@ -33,31 +31,19 @@ export default function Page(){
 	const { 
 		API_URI, 
 		token,
-		user: {
-			info: {
-				id, 
-				firstname, 
-				lastname, 
-				email, 
-				name, 
-				role
-			}
-		}
+		notify,
+		setUserInfo,
+		user
 	} = useAppContext()
+
+	const { info } = user
+	const {id, role} = info
 	
 	const [ specialties, setSpecialties ] = useState(null)
 	const [ center, setCenter ] = useState(null)
 	const [ loading, setLoading ] = useState(true)
 
-	const {formState, setFormState, onInputChange} = useForm({
-		firstname,
-		lastname,
-		name,
-		email,
-		role,
-		center_id: 0,
-		specialty_id: 0
-	})
+	const {formState, setFormState, onInputChange} = useForm({})
 
 
 	const { 
@@ -85,10 +71,11 @@ export default function Page(){
 		init: 0
 	})
 
+
 	// Upadate profile
 	const { 
 		response: updateProfileResponse, 
-		// error: updateProfileError, 
+		error: updateProfileError, 
 		loading: updateProfileLoading, 
 		refetch: updateProfileRefetch 
 	} = useAxios({
@@ -99,29 +86,65 @@ export default function Page(){
 		init: 0
 	})
 
+
 	useEffect(() => {
-		if( response?.success && 'doctor' === role ){
-			const {specialty_id, center} = response.data.doctor
-			setFormState({ ...formState, specialty_id })
-			setCenter({...center})
+		if( response?.success ){
+
+			if( 'doctor' === role ){
+				const {specialty_id, center} = response.data.doctor
+
+				setFormState({ 
+					...formState, 
+					...response.data,
+					specialty_id 
+				})
+
+				setCenter({...center})
+
+			}else{
+				setFormState({
+					...formState, 
+					...response.data
+				})
+			}
+
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [response])
+
 
 	useEffect(() => {
 		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
 	}, [getSpecialtiesResponse])
 
-	useEffect(() => setLoading(getSpecialtiesLoading), [ getSpecialtiesLoading ])
-	useEffect(() => setLoading(updateProfileLoading), [updateProfileLoading])
+
+	useEffect(() => {
+		setLoading(getSpecialtiesLoading)
+	}, [ getSpecialtiesLoading ])
+
+
+	useEffect(() => {
+		setLoading(updateProfileLoading)
+	}, [updateProfileLoading])
+
 
 	useEffect(() => {
 		if( updateProfileResponse?.success ){
-			updateUserInLocalStorage({...formState})
-			console.log('updateProfileResponse', updateProfileResponse)
+			console.log('updateProfileResponse', updateProfileResponse.data)
+			setUserInfo({...updateProfileResponse.data})
+			updateUserInLocalStorage({...updateProfileResponse.data})
+			notify(updateProfileResponse.message, 'success')
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateProfileResponse])
+
+
+	useEffect(() => {
+		if( updateProfileError?.message ){
+			notify(updateProfileError.message, 'error')
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateProfileError])
 
 
 	useEffect(() => {
@@ -147,7 +170,6 @@ export default function Page(){
 					specialty_id: parseInt(specialty_id)
 				})
 			}
-
 			updateProfileRefetch()
 
 		} catch (err) {
@@ -204,14 +226,14 @@ export default function Page(){
 							<div className="font-semibold leading-none select-none">Datos de doctor</div>
 
 							<div className="grid grid-cols-2 gap-x-5 gap-y-4">
-								{ specialties 
-								? (<div className="">
+								{ specialties ? (
+									<div className="">
 										<label>Especialidad</label>
 										<select name="specialty_id" value={formState.specialty_id} onChange={onInputChange}>
 											{ specialties.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
 										</select>
-									</div>) 
-								: null }
+									</div>
+								) : null }
 
 								{ center 
 								? (<div className="">
@@ -255,7 +277,7 @@ export default function Page(){
 					: null }
 
 				</form>
-			</section> 
+			</section>
 		</formContext.Provider>
 		
 		{loading && (<Loading />)}

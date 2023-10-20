@@ -21,7 +21,11 @@ export async function loader({params}){ return {...params, id: parseInt(params.i
 
 export default function Page(){
 
-	const { API_URI, token, notify } = useAppContext()
+	const { 
+		API_URI, 
+		token, 
+		notify 
+	} = useAppContext()
 	const { id } = useLoaderData()
 	const [ centers, setCenters ] = useState(null)
 	const [ specialties, setSpecialties ] = useState(null)
