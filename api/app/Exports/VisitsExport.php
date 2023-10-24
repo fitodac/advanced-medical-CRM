@@ -131,42 +131,43 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
             "Nutrición enteral, tipo de fórmula", // nti__en
             "Opciones de Nutrición enteral", // nti__en__option
             "Nutrición enteral: otras", // nti__en__other_description
-            'Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)', // refers_patient_to_begin_nutritional_treatment
-            '¿El paciente ha seguido la recomendación nutricional prescrita?', // nt__pnr
-            'Especifique % adherencia a las recomendaciones | %', // nt__pnr_percent
-            '¿El paciente ha seguido la recomendación nutricional prescrita?, No, motivos', // nt__reason
-            '¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?', // nt__objective_reached
-            '¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?, No, motivos', // nt__objective_reached_reason
-            '¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?', // nt__improvement
-            '¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?, No, motivos', // nt__has_not_got_improvement_reason
-            'Actividad física: ¿Ha prescrito actividad física al paciente?', // pa__prescribed
-            'Actividad física: No. espceifique motivos', // pa__prescribed_reasons
-            '¿Qué tipo de ejercicios ha recomendado?: Predominio aeróbico', // pa__aerobic_predominance
-            '¿Qué tipo de ejercicios ha recomendado?: Predominio de fuerza/resistencia muscular', // pa__predominance_muscular_strength
-            '¿Qué tipo de ejercicios ha recomendado?: Mixto', // pa__mixed
-            '¿El paciente ha seguido la recomendación de actividad física prescrita?', // pa__hpftppar
-            '¿El paciente ha seguido la recomendación de actividad física prescrita? especifique % de adherencia a las recomendaciones | %', // pa__hpftppar_percent
-            '¿El paciente ha seguido la recomendación de actividad física prescrita?, No, motivos', // pa__reason
-            'Situación actual del paciente', // patient_current_situation
-            'Situación actual del paciente - Fecha', // patient_current_situation_date
-            'Peso corporal actual | kg', // ans__anthropometry__current_weight
-            'Peso corporal inicial | kg', // ans__anthropometry__initial_weight
-            'Porcentaje de diferencia | %', // ans__anthropometry__difference_percentage
-            'IMC actual | kg/m2', // ans__anthropometry__current_bmi
-            'Perímetro de pantorrilla | cm', // ans__anthropometry__calf_circumference
-            '¿El paciente ha seguido la recomendación nutricional prescrita?', // hfnr__followed_prescribed_nutritional_recommendation
-            'Porcentaje de adherencia a las recomendaciones | %', // hfnr__percentage_of_adherece_to_recommendations
-            'Motivos por los que el paciente no ha seguido la recomendación nutricional prescrita', // hfnr__not_followed_prescribed_recommendation
-            '¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?', // rng__has_reached_nutritional_goal
-            '¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal? motivos', // rng__has_reached_nutritional_goal_reasons
-            '¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?', // cppi__considers_that_patient_perceives_improvement
-            '¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado? especifique motivos', // cppi__considers_that_patient_perceives_improvement_reasons
-            '¿El paciente ha seguido la recomendación de actividad física prescrita?', // hfppar_followed_prescribed_physical_activity_recommendation
-            'Porcentaje de adherencia a las recomendaciones | %', // hfppar_percentage_of_adherece_to_recommendations
-            'Motivos por los que el paciente no ha seguido la recomendación de actividad física prescrita', // hfppar__not_followed_prescribed_recommendation
-            'Centro médico',
-            'Doctor',
-            'Especialidad'
+            "Refiere al Servicio de Endocrinología y Nutrición al paciente para iniciar tratamiento nutricional, (yo gestiono el tratamiento del paciente)", // refers_patient_to_begin_nutritional_treatment
+            "¿El paciente ha seguido la recomendación nutricional prescrita?", // nt__pnr
+            "Especifique % adherencia a las recomendaciones | %", // nt__pnr_percent
+            "¿El paciente ha seguido la recomendación nutricional prescrita?, No, motivos", // nt__reason
+            "¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?", // nt__objective_reached
+            "¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?, No, motivos", // nt__objective_reached_reason
+            "¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?", // nt__improvement
+            "¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional iniciado?, No, motivos", // nt__has_not_got_improvement_reason
+            "Actividad física: ¿Ha prescrito actividad física al paciente?", // pa__prescribed
+            "Actividad física: No. espceifique motivos", // pa__prescribed_reasons
+            "¿Qué tipo de ejercicios ha recomendado?: Predominio aeróbico", // pa__aerobic_predominance
+            "¿Qué tipo de ejercicios ha recomendado?: Predominio de fuerza/resistencia muscular", // pa__predominance_muscular_strength
+            "¿Qué tipo de ejercicios ha recomendado?: Mixto", // pa__mixed
+            "¿El paciente ha seguido la recomendación de actividad física prescrita?", // pa__hpftppar
+            "¿El paciente ha seguido la recomendación de actividad física prescrita? especifique % de adherencia a las recomendaciones | %", // pa__hpftppar_percent
+            "¿El paciente ha seguido la recomendación de actividad física prescrita?, No, motivos", // pa__reason
+            "Situación actual del paciente", // patient_current_situation
+            "Situación actual del paciente - Fecha", // patient_current_situation_date
+            "Peso corporal actual | kg", // ans__anthropometry__current_weight
+            "Peso corporal inicial | kg", // ans__anthropometry__initial_weight
+            "Porcentaje de diferencia | %", // ans__anthropometry__difference_percentage
+            "IMC actual | kg/m2", // ans__anthropometry__current_bmi
+            "Perímetro de pantorrilla | cm", // ans__anthropometry__calf_circumference
+            "¿El paciente ha seguido la recomendación nutricional prescrita?", // hfnr__followed_prescribed_nutritional_recommendation
+            "Porcentaje de adherencia a las recomendaciones | %", // hfnr__percentage_of_adherece_to_recommendations
+            "Motivos por los que el paciente no ha seguido la recomendación nutricional prescrita", // hfnr__not_followed_prescribed_recommendation
+            "¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal?", // rng__has_reached_nutritional_goal
+            "¿Ha conseguido el paciente el objetivo nutricional planteado en la visita basal? motivos", // rng__has_reached_nutritional_goal_reasons
+            "¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado?", // cppi__considers_that_patient_perceives_improvement
+            "¿Tras la entrevista con el paciente, considera usted que el paciente percibe algún tipo de mejoría asociado al tratamiento nutricional indicado? especifique motivos", // cppi__considers_that_patient_perceives_improvement_reasons
+            "¿El paciente ha seguido la recomendación de actividad física prescrita?", // hfppar_followed_prescribed_physical_activity_recommendation
+            "Porcentaje de adherencia a las recomendaciones | %", // hfppar_percentage_of_adherece_to_recommendations
+            "Motivos por los que el paciente no ha seguido la recomendación de actividad física prescrita", // hfppar__not_followed_prescribed_recommendation
+            "Código paciente",
+						"Centro médico",
+            "Doctor",
+            "Especialidad"
         ];
     }
     /**
@@ -194,6 +195,7 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
                 [ $x ],
                 $visit,
                 [
+                    'code'    => $patient['code'],
                     'center'    => $patient['center']['name'],
                     'doctor'    => $patient['doctor']['user']['firstname'] .' '. $patient['doctor']['user']['lastname'],
                     'specialty' => $patient['doctor']['specialty']['name']
