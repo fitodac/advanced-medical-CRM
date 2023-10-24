@@ -20,14 +20,14 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
     public function columnFormats(): array
     {
         return [
-            'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'P' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'AC' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'DT' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'EK' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'ET' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'FG' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-            'IX' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'H' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'Q' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'AD' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'DU' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'EL' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'EU' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'FH' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'IY' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 
@@ -36,6 +36,7 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
         return [
             "id",
             "Código paciente",
+            "Código centro médico",
             "Centro médico",
             "Doctor",
             "Especialidad",
@@ -338,12 +339,12 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
 
             $response[] = array_merge(
                 [
-                    '#'         => $x,
-                    'code'      => $patient['code'],
-                    'center'    => $patient['center']['code'],
-                    'center'    => $patient['center']['name'],
-                    'doctor'    => $patient['doctor']['user']['firstname'] .' '. $patient['doctor']['user']['lastname'],
-                    'specialty' => $patient['doctor']['specialty']['name']
+                    '#'             => $x,
+                    'code'          => $patient['code'],
+                    'center_code'   => $patient['center']['code'],
+                    'center'        => $patient['center']['name'],
+                    'doctor'        => $patient['doctor']['user']['firstname'] .' '. $patient['doctor']['user']['lastname'],
+                    'specialty'     => $patient['doctor']['specialty']['name']
                 ],
                 array_values($initial->toArray()),
                 array_values($first->toArray()),
