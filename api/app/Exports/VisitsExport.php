@@ -40,6 +40,7 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
             "Centro médico",
             "Doctor",
             "Especialidad",
+            // inicial
             "Tipo de visita", // visit_type
             "Fecha", // date
             "Personas con antecedentes de una enfermedad crónica", // inclusion_q1
@@ -174,6 +175,7 @@ class VisitsExport implements FromCollection, WithHeadings, WithColumnFormatting
             "¿El paciente ha seguido la recomendación de actividad física prescrita?", // hfppar_followed_prescribed_physical_activity_recommendation
             "Porcentaje de adherencia a las recomendaciones | %", // hfppar_percentage_of_adherece_to_recommendations
             "Motivos por los que el paciente no ha seguido la recomendación de actividad física prescrita", // hfppar__not_followed_prescribed_recommendation
+            // first
             "Tipo de visita", // visit_type
             "Fecha", // date
             "Personas con antecedentes de una enfermedad crónica", // inclusion_q1
