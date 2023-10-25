@@ -18,8 +18,46 @@
 				<table style="background-color: white; padding: 30px;">
 					<tr>
 						<td>
-							<p>{{ __('Please click the button below to verify your email address.') }}</p>
-							<p>Una vez haya confirmado su correo, podrá acceder a la aplicación con la contraseña: advanced</p>
+							<p>Bienvenido al programa Advanced Expert Program</p>
+							<p>Por favor siga los siguientes pasos para acceder a la plataforma</p>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<p>1. Tome nota de su contraseña temporal: <strong>advanced</strong>
+									<br>
+									La podrá cambiar desde la plataforma en "mi cuenta", el apartado de "Seguridad, Cambiar la contraseña".
+									<br>
+									Su usuario es su correo electrónico con el que ha sido registrado en la plataforma.
+							</p>
+							<p>
+								2. Por favor haga click en el botón de abajo para verificar su correo electrónico
+							</p>
+							<p>
+								3. Acceda a la plataforma con su usuario y password en 
+								<a href="https://advancedexpertprogram.com/" target="_blank">https://advancedexpertprogram.com</a>
+							</p>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<p>&nbsp;</p>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<p>
+								Muchas gracias por su colaboración
+								<br>
+								El equipo coordinador
+								<br>
+								Advanced Expert Program
+								<br>
+								advanced@kaccesshealth.com
+							</p>
 						</td>
 					</tr>
 

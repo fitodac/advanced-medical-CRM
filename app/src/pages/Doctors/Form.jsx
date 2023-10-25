@@ -32,8 +32,8 @@ export default function Page(){
 		lastname: '',
 		name: '',
 		email: '',
-		center_id: 0,
-		specialty_id: 0
+		center_id: 1,
+		specialty_id: 1
 	})
 
 	const handleInputChange = e => onInputChange(e)
@@ -231,7 +231,10 @@ export default function Page(){
 						{ specialties 
 						? (<div className="">
 								<label>Especialidad</label>
-								<select name="specialty_id" value={formState.specialty_id} onChange={onInputChange}>
+								<select 
+									name="specialty_id" 
+									value={formState.specialty_id} 
+									onChange={onInputChange}>
 									{ specialties.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
 								</select>
 							</div>) 
@@ -240,7 +243,10 @@ export default function Page(){
 						{ centers 
 						? (<div className="">
 								<label>Centro médico</label>
-								<select name="center_id" value={formState.center_id} onChange={onInputChange}>
+								<select 
+									name="center_id" 
+									value={formState.center_id} 
+									onChange={onInputChange}>
 									{ centers.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
 								</select>
 							</div>) 

@@ -40,7 +40,7 @@ export default function Page(){
 	return (<>
 		{!user 
 		? (<section 
-				className="bg-primary bg-[url(/background.jpg)] bg-center bg-no-repeat bg-cover 
+				className="bg-primary bg-[url(/background.webp)] bg-center bg-no-repeat bg-cover 
 				border-b-[46px] border-secondary h-screen p-6 grid place-content-center grid-cols-1">
 
 			<div className="col-span-1 flex justify-center">
