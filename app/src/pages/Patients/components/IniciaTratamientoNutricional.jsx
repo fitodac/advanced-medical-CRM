@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
 import { 
@@ -55,10 +55,11 @@ export const IniciaTratamientoNutricional = ({context}) => {
 							
 							</label>
 
-							{ input_visible 
-							&& (<div className="w-full relative -top-1">
-										<Input name="nt__specify" context={context} />
-									</div>)}
+							{ ('y' === formContext.formState[name] || input_visible) && (
+								<div className="w-full relative -top-1">
+									<Input name="nt__specify" context={context} />
+								</div>
+							)}
 							
 						</>)}
 					</div>

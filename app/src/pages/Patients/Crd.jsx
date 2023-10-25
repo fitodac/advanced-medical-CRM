@@ -32,18 +32,6 @@ export default function Page(){
 	const firstFooter = useRef(null)
 	const initialFooter = useRef(null)
 
-	
-	const scrollToTheEnd = () => {
-		switch(formType){
-			case 'first':
-				firstFooter.current.scrollIntoView({ behavior: 'smooth' })
-				break;
-			case 'initial':
-				initialFooter.current.scrollIntoView({ behavior: 'smooth' })
-				break;
-		}
-		return
-	}
 
 
 	// Get patient data
@@ -125,15 +113,7 @@ export default function Page(){
 
 				</div> 
 			</div>
-
 		</section>
-
-
-		<button
-			className="btn btn-icon bg-slate-400 border-slate-400 text-white bottom-10 right-10 absolute rounded-full"
-			onClick={scrollToTheEnd}>
-			<i className="ri-arrow-down-line top-0.5 relative"></i>
-		</button>
 
 		{loading && (<Loading />)}
 		

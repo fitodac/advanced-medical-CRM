@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Input } from '../../../components/Ui'
 import { 
@@ -14,23 +14,16 @@ export const ActividadFisicaPrescripta = ({context}) => {
 
 	const formContext = useContext(context)
 	const [ input_visible, setInputVisible ] = useState(false)
-	const [ chkState, setChkState ] = useState('')
-
-	useEffect(() => {
-		formContext.handleInputChange({target: {name: fields[0].name, value: chkState}})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chkState])
 
 	const handleChange = e => {
-		const {value, checked} = e.target
-		setChkState(checked ? value : '')
-		if( 'y' === value ) formContext.handleInputChange({target: {name: 'pa__prescribed_reasons', value: ''}})
-		setInputVisible('y' !== value)
+		const {name, value} = e.target
+		formContext.handleInputChange({target: {name, value}})
+		setInputVisible('n' === value)
 	}
 
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup	title="Inicia tratamiento nutricional" />
+			<HeaderFieldGroup	title="¿Ha prescrito actividad física al paciente?" />
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (
@@ -62,10 +55,11 @@ export const ActividadFisicaPrescripta = ({context}) => {
 							
 							</label>
 
-							{ input_visible 
-							&& (<div className="w-full relative -top-1 flex-1">
-										<Input name="pa__prescribed_reasons" context={context} />
-									</div>)}
+							{ ('n' === formContext.formState[name] || input_visible) && (
+								<div className="w-full relative -top-1 flex-1">
+									<Input name="pa__prescribed_reasons" context={context} />
+								</div>
+							)}
 							
 						</>)}
 					</div>

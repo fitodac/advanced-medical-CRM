@@ -62,14 +62,13 @@ export const ResultadoValoracionNutricional = ({context}) => {
 								<span>{label}</span>
 							</label>
 
-							{ input_visible 
-							&& (
-							<div className="w-full flex gap-x-4">
-								<label className="text-sm font-light">Codificación desnutrición según CIE 10</label>
-								<div className="w-28 relative -top-2">
-									<Input name="patient_malnourished__code" context={context} />
+							{ ('si' === formContext.formState[name] || input_visible) && (
+								<div className="w-full flex gap-x-4">
+									<label className="text-sm font-light">Codificación desnutrición según CIE 10</label>
+									<div className="w-28 relative -top-2">
+										<Input name="patient_malnourished__code" context={context} />
+									</div>
 								</div>
-							</div>
 							)}
 							
 						</>)}

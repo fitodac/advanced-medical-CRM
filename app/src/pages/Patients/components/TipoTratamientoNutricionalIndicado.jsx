@@ -21,6 +21,18 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 		formContext.handleInputChange({target: {name, value: val}})
 	}
 
+
+	const handleClick = e => {
+		const {name, value} = e.target
+
+		if( value === formContext.formState[name] ){
+			formContext.handleInputChange({target: {name, value: ''}})
+			e.target.checked = false
+		}
+
+	}
+
+
 	return (<>
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	title="Tipo de tratamiento nutricional indicado" />
@@ -58,7 +70,8 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 									type="radio"
 									name={name}
 									defaultValue={value}
-									onChange={handleChange} />
+									onChange={handleChange}
+									onClick={handleClick} />
 
 								<span>{label}</span>
 							</label>
@@ -81,6 +94,8 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 				)}
 			</AlertMessage>
 			))}
+
+			<pre>{JSON.stringify(formContext.formState.nti__en__option, null, 2)}</pre>
 		</section>
 	</>)
 

@@ -78,10 +78,9 @@ export default function Page(){
 								</section>
 							</form>
 						</section>
-						
 
 
-						{/* 
+
 						<div className="w-full mt-10 space-y-3">
 							<Button 
 								className="bg-indigo-500 border-indigo-500 text-white w-full" 
@@ -110,7 +109,6 @@ export default function Page(){
 								Entrar como superadmin
 							</Button>
 						</div> 
-						*/}
 
 					</div>)}
 

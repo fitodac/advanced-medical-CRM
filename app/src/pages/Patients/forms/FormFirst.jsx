@@ -229,7 +229,7 @@ export const FormFirst = ({
 				</FromGroup>
 
 
-				<div className="">
+				<div className="bg-white w-full py-4 bottom-0 fixed z-20 shadow-2xl">
 					<Button className="btn-lg text-base bg-primary border-primary text-white">Guardar</Button>
 				</div>
 			</div>
