@@ -29,11 +29,8 @@ class UserController extends Controller
 		$auth = Auth::user();
 
 		$validate = Validator::make($request->all(), [
-			'name' => 'required|unique:users',
 			'email' => 'required|unique:users'
 		], [
-			'name.required' => 'Debes incluír un nombre para el usuario',
-			'name.unique' => 'Ya existe un usuario con ese nombre',
 			'email.required' => 'Debes incluír un email para el usuario',
 			'email.unique' => 'El email que intentas usar ya existe en la base de datos'
 		]);
@@ -43,7 +40,6 @@ class UserController extends Controller
 		// Set the default password for the new user
 		$userData = array_merge($request->all(), [
 			'role' => 'superadmin' === $auth->role ? $request->role : 'doctor',
-			'name' => Str::slug($request->name),
 			'password' => env('USER_DEFAULT_PASSWORD')
 		]);
 

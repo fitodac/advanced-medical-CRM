@@ -19,7 +19,6 @@ class User extends Authenticatable implements MustVerifyEmail
 	 * @var array<int, string>
 	 */
 	protected $fillable = [
-		'name',
 		'email',
 		'firstname',
 		'lastname',
@@ -47,9 +46,6 @@ class User extends Authenticatable implements MustVerifyEmail
 		'email_verified_at' => 'datetime',
 		'password' => 'hashed',
 	];
-
-
-	// public function doctor(){ return Doctor::where('user_id', $this->id)->first(); }
 
     public function doctor(): HasOne
     {

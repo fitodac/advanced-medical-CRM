@@ -31,7 +31,7 @@ class UsersSeeder extends Seeder
 
 			// Super Admin
 			User::create([
-				'name' => $super_admin['name'],
+				// 'name' => $super_admin['name'],
 				'email' => $super_admin['email'],
 				'password' => bcrypt($super_admin['password']),
 				'firstname' => 'Daniel',
@@ -42,7 +42,7 @@ class UsersSeeder extends Seeder
 
 			// Admin
 			User::create([
-				'name' => $admin['name'],
+				// 'name' => $admin['name'],
 				'email' => $admin['email'],
 				'password' => bcrypt($admin['password']),
 				'firstname' => 'Daniel',
@@ -60,7 +60,7 @@ class UsersSeeder extends Seeder
 
 				// Doctor
 				$dr = User::create([
-					'name' => $doctor['name'],
+					// 'name' => $doctor['name'],
 					'email' => $doctor['email'],
 					'password' => bcrypt($doctor['password']),
 					'firstname' => 'Gregory',
@@ -76,7 +76,7 @@ class UsersSeeder extends Seeder
 				]);
 
 				User::factory(15)->create()->each(function ($user) {
-					$doctor = Doctor::factory()->create(['user_id' => $user->id]);
+					Doctor::factory()->create(['user_id' => $user->id]);
 					Patient::factory()->create();
 				});
 
