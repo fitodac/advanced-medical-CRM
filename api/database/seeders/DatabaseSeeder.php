@@ -10,7 +10,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use Database\Factories\VisitsFactory;
+use Database\Factories\VisitFactory;
 
 
 class DatabaseSeeder extends Seeder
@@ -37,6 +37,8 @@ class DatabaseSeeder extends Seeder
 			$this->call([
 				CenterSeeder::class
 			]);
+
+			// VisitFactory::new()->count(10)->create();
 		}
 	}
 }

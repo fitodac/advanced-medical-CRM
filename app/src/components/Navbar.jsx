@@ -17,7 +17,7 @@ export const Navbar = () => {
 				<img 
 					src="/brand.webp" 
 					alt="Advanced experts" 
-					className="w-40 object-cover pointer-events-none" />
+					className="w-44 object-cover pointer-events-none" />
 			</NavLink>
 		</div>
 
