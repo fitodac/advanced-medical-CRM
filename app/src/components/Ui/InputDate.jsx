@@ -40,8 +40,7 @@ export const InputDate = ({
 	maxlength,
 	minlength,
 	className,
-	context,
-	onBlur
+	context
 }) => {
 
 	const formContext = useContext(context)
