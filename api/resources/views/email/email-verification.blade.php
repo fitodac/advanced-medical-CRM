@@ -42,8 +42,12 @@
 					</tr>
 
 					<tr>
-						<td>
-							<p>&nbsp;</p>
+						<td style="text-align: center;">
+							<a
+								href="{{ $app_uri.'/account/verify/?token='.$token }}""
+								style="background: #00a6af; border-width: 0px; color: white; padding: 10px 30px; border-radius: 8px; display: inline-block; text-decoration: none;">
+								{{ __('Verify Email Address') }}
+							</a>
 						</td>
 					</tr>
 
@@ -58,18 +62,6 @@
 								<br>
 								advanced@kaccesshealth.com
 							</p>
-						</td>
-					</tr>
-
-					<tr>
-						<td style="text-align: center;">
-							<br>
-							<br>
-							<a
-								href="{{ $app_uri.'/account/verify/?token='.$token }}""
-								style="background: #00a6af; border-width: 0px; color: white; padding: 10px 30px; border-radius: 8px; display: inline-block; text-decoration: none;">
-								{{ __('Verify Email Address') }}
-							</a>
 						</td>
 					</tr>
 				</table>

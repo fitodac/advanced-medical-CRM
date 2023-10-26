@@ -8,7 +8,7 @@ export default [
 	{
 		key: 'refers_patient_to_begin_nutritional_treatment_2',
 		name: 'refers_patient_to_begin_nutritional_treatment',
-		value: '',
+		value: 'n',
 		label: 'No (yo gestiono el tratamiento del paciente)'
 	}
 ]

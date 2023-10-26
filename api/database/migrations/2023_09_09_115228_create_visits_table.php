@@ -198,6 +198,7 @@ return new class extends Migration
 				'Alta',
 				'Reingreso',
 				'Deceso',
+				'Seguimiento telefónico',
 				'No acude a control'
 			])->nullable()->comment('Situación actual del paciente');
 			$table->date('patient_current_situation_date')->nullable()->comment('Situación actual del paciente - Fecha');

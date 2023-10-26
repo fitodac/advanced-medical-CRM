@@ -54,23 +54,23 @@ export const PacienteHaSeguidoTratamientoNutricional = ({context}) => {
 							</label>
 
 							{(
-								'nt__followed_prescribed_nutritional_recommendation_1' === key && 
-								'nt__followed_prescribed_nutritional_recommendation_1' === input_visible
+								'hfnr__followed_prescribed_nutritional_recommendation_1' === key && 
+								'hfnr__followed_prescribed_nutritional_recommendation_1' === input_visible
 							) && (
 								<div className="w-90 relative -top-1">
 									<InputMask 
 										label="Especifique % de adherencia a las recomendaciones"
-										name="nt__percentage_of_adherece_to_recommendations" 
+										name="hfnr__percentage_of_adherece_to_recommendations" 
 										context={context} />
 								</div>
 							)}
 
 							{(
-								'nt__followed_prescribed_nutritional_recommendation_2' === key &&
-								'nt__followed_prescribed_nutritional_recommendation_2' === input_visible
+								'hfnr__followed_prescribed_nutritional_recommendation_2' === key &&
+								'hfnr__followed_prescribed_nutritional_recommendation_2' === input_visible
 							) && (
 								<div className="w-full relative -top-1">
-									<Input name="nt__not_followed_prescribed_recommendation" context={context} />
+									<Input name="hfnr__not_followed_prescribed_recommendation" context={context} />
 								</div>
 							)}
 

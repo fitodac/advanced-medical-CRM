@@ -15,7 +15,7 @@ export default [
 		key: 'nti__son',
 		name: 'nti__son',
 		value: 'y',
-		label: {__html: `SON, tipo de fórmula <br>
+		label: {__html: `SNO, tipo de fórmula <br>
 											<small>(Seleccione la definición que aplica. Si se pautan diferentes dietas, puede señalar varias)</small>`},
 		options: [
 			{

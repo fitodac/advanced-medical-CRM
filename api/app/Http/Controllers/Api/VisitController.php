@@ -39,8 +39,6 @@ class VisitController extends Controller
 
         $patient_id = $data['patient_id'];
         $visit_type = $data['visit_type'];
-        unset($data['patient_id']);
-        unset($data['visit_type']);
 
         $visit = Visit::updateOrCreate(
             ['patient_id' => $patient_id, 'visit_type' => $visit_type],

@@ -41,7 +41,8 @@ import {
 	TipoTratamientoNutricionalIndicado,
 	RefiereEndocrinologiaParaIniciarTratamientoNutricional,
 	ActividadFisicaPrescripta,
-	TiposDeEjercicios
+	TiposDeEjercicios,
+	RequiredFieldsMessage
 } from '../components'
 import { Button } from '../../../components/Ui'
 import { Loading } from '../../../components'
@@ -234,8 +235,9 @@ export const FormInitial = ({
 					</FromGroupContainer>
 				</FromGroup>
 
-				<div className="bg-white w-full py-4 bottom-0 fixed z-20 shadow-2xl">
+				<div className="bg-white w-full py-4 flex items-center gap-x-8 bottom-0 fixed z-20 shadow-2xl">
 					<Button className="btn-lg text-base bg-primary border-primary text-white">Guardar</Button>
+					<RequiredFieldsMessage />
 				</div>
 			</div>
 		</form>
