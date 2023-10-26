@@ -24,7 +24,7 @@ use App\Http\Controllers\Api\SpecialtyController;
 */
 
 //public route
-Route::get('/', function () { return 'Advanced API'; });
+Route::get('/', function () { return 'Advance API'; });
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
 
