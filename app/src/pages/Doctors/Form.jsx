@@ -30,7 +30,6 @@ export default function Page(){
 	const {formState, setFormState, onInputChange, onResetForm} = useForm({
 		firstname: '',
 		lastname: '',
-		name: '',
 		email: '',
 		center_id: 1,
 		specialty_id: 1

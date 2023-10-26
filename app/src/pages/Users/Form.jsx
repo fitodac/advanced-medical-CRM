@@ -37,7 +37,7 @@ export default function Page(){
 		lastname: '',
 		name: '',
 		email: '',
-		role: '',
+		role: 'admin',
 		center_id: 1,
 		specialty_id: 1
 	})
@@ -224,11 +224,10 @@ export default function Page(){
 					<div className="grid grid-cols-2 gap-x-5 gap-y-4">
 						<Input label="Nombre" name="firstname" context={formContext} />
 						<Input label="Apellido" name="lastname" context={formContext} />
-						<Input label="Usuario" name="name" context={formContext} />
 						<Input label="Email" name="email" context={formContext} />
 						
 						<div className="">
-							<label className="select-none">Rol de usuario</label>
+							<label className="select-none leading-tight block">Rol de usuario</label>
 							<select name="role" value={formState.role} onChange={onInputChange}>
 								<option value="admin">Admin</option>
 								<option value="doctor">Doctor</option>
