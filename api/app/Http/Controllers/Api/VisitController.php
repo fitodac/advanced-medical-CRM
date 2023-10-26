@@ -37,7 +37,13 @@ class VisitController extends Controller
 
 		$data = (new Visit)->formatRequestDate($data);
 
-		$visit = Visit::create($data);
+        $patient_id = $data['patient_id'];
+        unset($data['patient_id']);
+
+        $visit = Visit::firstOrCreate(
+            ['patient_id' => $patient_id],
+            [$data]
+        );
 
 		return $this->successResponse(
 			['visit' => $visit, 'message' => $messages],
