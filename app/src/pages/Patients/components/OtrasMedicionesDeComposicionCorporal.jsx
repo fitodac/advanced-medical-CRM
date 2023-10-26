@@ -12,7 +12,7 @@ const id = 'B6C7D8'
 export const OtrasMedicionesDeComposicionCorporal = ({context}) => {
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup title="Otras medidas de composición corporal" />
+			<HeaderFieldGroup title="Otras medidas de composición corporal" required />
 
 			<section className="space-y-8">
 				<div className="">

@@ -3,10 +3,7 @@ import {
 	CheckboxList,
 	ConditionalInput
 } from '../../../components/Ui'
-import { 
-	HeaderFieldGroup,
-	AlertMessage 
-} from '.'
+import { HeaderFieldGroup } from '.'
 
 import fields from '../formfields/cribadoNutricional'
 
@@ -16,7 +13,7 @@ const id = 'D2E3F4'
 export const CribadoNutricional = ({context}) => {
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup	title="Cribado nutricional" />
+			<HeaderFieldGroup	title="Cribado nutricional" required />
 
 			<CheckboxList 
 				options={fields} 

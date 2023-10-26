@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo } from 'react'
+import { PropTypes } from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { useLocalStorage } from './useLocalStorage'
 
@@ -58,7 +59,6 @@ export const usekickOut = resp => {
 }
 
 
-useLogin.propTypes = {
-	children: PropTypes.string.isRequired,
-	body: PropTypes.string
+AuthProvider.propTypes = {
+	children: PropTypes.node.isRequired
 }

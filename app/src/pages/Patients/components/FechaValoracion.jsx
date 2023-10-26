@@ -15,7 +15,7 @@ const id = 'P4Q5R6'
 export const FechaValoracion = ({context}) => {
 	return (<>
 	<section className="space-y-3" id={id}>
-		<HeaderFieldGroup title="Fecha de valoración" />
+		<HeaderFieldGroup title="Fecha de valoración" required />
 		
 		<InputDate 
 			label="Fecha (día/mes/año)" 

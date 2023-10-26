@@ -13,7 +13,6 @@ return new class extends Migration
 	{
 		Schema::create('visits', function (Blueprint $table) {
 			$table->id();
-			// $table->unsignedBigInteger('patient_id');
 			$table->foreignId('patient_id')
 						->nullable()
 						->constrained('patients')
@@ -100,7 +99,7 @@ return new class extends Migration
 			// Parámetros funcionales 
 			$table->string('dynamometry')->nullable()->comment('Dinamometría, valor máximo de 3 mediciones | kg');
 			$table->enum('dynamometry__not_possible', ['y', 'n'])->nullable()->comment('No es posible realizar la dinamometría');
-			$table->tinyInteger('test_chair_five_repetitions')->nullable()->comment('Test “Test de la silla 5 repeticiones“ | seg');
+			$table->string('test_chair_five_repetitions')->nullable()->comment('Test “Test de la silla 5 repeticiones“ | seg');
 			$table->enum('test_chair__not_possible', ['y', 'n'])->nullable()->comment('No es posible realizar el test de la silla');
 			
 			// Otras mediciones de composición corporal

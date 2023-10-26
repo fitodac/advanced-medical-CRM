@@ -22,7 +22,8 @@ export const ResultadoCribadoNutricional = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Resultado del cribado nutricional"
-				subtitle="¿Está el paciente en riesgo de desnutrición?" />
+				subtitle="¿Está el paciente en riesgo de desnutrición?"
+				required />
 
 			
 			<div className="flex gap-x-4">

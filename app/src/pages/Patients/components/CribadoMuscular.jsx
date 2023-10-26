@@ -14,7 +14,7 @@ const id = 'A9B0C1'
 export const CribadoMuscular = ({context}) => {
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup	title="Cribado muscular" />
+			<HeaderFieldGroup	title="Cribado muscular" required />
 
 			<CheckboxList 
 				options={fields} 

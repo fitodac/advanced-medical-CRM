@@ -17,7 +17,8 @@ export const AntecedentesMedicos = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Antecedentes médicos"
-				subtitle="(Especificar patología y estadío si procede)" />
+				subtitle="(Especificar patología y estadío si procede)" 
+				required />
 			
 			<CheckboxList 
 				options={fields} 

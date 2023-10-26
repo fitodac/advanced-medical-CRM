@@ -22,7 +22,8 @@ export const ResultadoCribadoMuscular = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Resultado del cribado muscular"
-				subtitle="¿Está el paciente en riesgo de sarcopenia?" />
+				subtitle="¿Está el paciente en riesgo de sarcopenia?"
+				required />
 
 			<div className="flex gap-x-4">
 				{ fields.options.map(({key, name, value, label}) => (

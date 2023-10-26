@@ -32,7 +32,8 @@ export const ResultadoValoracionNutricional = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Resultado de la valoración nutricional"
-				subtitle="¿Está el paciente desnutrido?" />
+				subtitle="¿Está el paciente desnutrido?"
+				required />
 
 			<div className="space-y-3">
 				{fields.map(({key, name, value, label}) => (

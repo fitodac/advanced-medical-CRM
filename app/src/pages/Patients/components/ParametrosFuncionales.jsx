@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { 
 	InputMask
@@ -40,7 +40,8 @@ export const ParametrosFuncionales = ({context}) => {
 		<section className="space-y-3" id={id}>
 			<HeaderFieldGroup	
 				title="Parámetros funcionales"
-				subtitle="(Detalle de los valores obtenidos)" />
+				subtitle="(Detalle de los valores obtenidos)"
+				required />
 
 			<div className="space-y-5">
 				{fields.map(e => (

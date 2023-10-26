@@ -12,7 +12,7 @@ const id = 'L2M3N4'
 export const Antropometria = ({context}) => {
 	return (<>
 		<section className="space-y-3" id={id}>
-			<HeaderFieldGroup title="Antropometría" />
+			<HeaderFieldGroup title="Antropometría" required />
 
 			{fields.map(({name, label, append}) => (
 			<AlertMessage key={label} name={name} context={context}>
