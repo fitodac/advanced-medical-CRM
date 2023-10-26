@@ -95,7 +95,7 @@ export const TipoTratamientoNutricionalIndicado = ({context}) => {
 			</AlertMessage>
 			))}
 
-			<pre>{JSON.stringify(formContext.formState.nti__en__option, null, 2)}</pre>
+			{/* <pre>{JSON.stringify(formContext.formState.nti__en__option, null, 2)}</pre> */}
 		</section>
 	</>)
 

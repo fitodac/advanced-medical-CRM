@@ -22,11 +22,21 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run(): void
 	{
+		if( env('APP_DEBUG') ) {
+			$this->call([
+				CenterSeeder::class
+			]);
+		}
+
 		$this->call([
-			// CenterSeeder::class,
 			SpecialtySeeder::class,
-			UsersSeeder::class,
-            // PatientSeeder::class
+			UsersSeeder::class
 		]);
+
+		if( env('APP_DEBUG') ) {
+			$this->call([
+				CenterSeeder::class
+			]);
+		}
 	}
 }

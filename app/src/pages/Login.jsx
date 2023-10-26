@@ -95,7 +95,7 @@ export default function Page(){
 								className="bg-indigo-400 border-indigo-400 text-white w-full" 
 								type="button" 
 								onClick={() => {
-									setLoginForm({email: 'admin@local.com', password: 'cpi_1975'})
+									setLoginForm({email: 'dani+admin@commonpeoplei.com', password: 'cpi_1975'})
 								}}>
 								Entrar como admin
 							</Button>
@@ -104,11 +104,11 @@ export default function Page(){
 								className="bg-indigo-300 border-indigo-300 text-white w-full" 
 								type="button" 
 								onClick={() => {
-									setLoginForm({email: 'fito+advanced@commonpeoplei.com', password: 'cpi_1975'})
+									setLoginForm({email: 'dani@commonpeoplei.com', password: 'cpi_1975'})
 								}}>
 								Entrar como superadmin
 							</Button>
-						</div> 
+						</div>
 
 					</div>)}
 
