@@ -7,7 +7,7 @@ const AuthContext = createContext('')
 
 export const AuthProvider = ({children}) => {
 
-	const [user, setUser] = useLocalStorage('advancedUser', null)
+	const [user, setUser] = useLocalStorage('advanceUser', null)
 	const navigate = useNavigate()
 
 	// call this function when you want to authenticate the user
@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
 	// call this function to sign out logged in user
 	const logout = () => {
 		setUser(null)
-		window.localStorage.removeItem('advancedUser')
+		window.localStorage.removeItem('advanceUser')
 		if (navigate) navigate('/login', { replace: true })
 	}
 
@@ -31,6 +31,7 @@ export const AuthProvider = ({children}) => {
 			login,
 			logout
 		}),
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[user]
 	)
 
@@ -48,10 +49,16 @@ export const useAuth = () => useContext(AuthContext)
 export const usekickOut = resp => {
 	const { message } = resp
 	if( 'Unauthenticated.' === message ){
-		window.localStorage.removeItem('advancedUser')
+		window.localStorage.removeItem('advanceUser')
 		window.location.reload()
 		return true
 	}else{
 		return false
 	}
+}
+
+
+useLogin.propTypes = {
+	children: PropTypes.string.isRequired,
+	body: PropTypes.string
 }

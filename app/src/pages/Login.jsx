@@ -55,7 +55,7 @@ export default function Page(){
 							<div className="flex justify-center select-none">
 								<img 
 									src="/brand.png" 
-									alt="Advanced experts" 
+									alt="Advance experts" 
 									className="w-60 object-cover pointer-events-none" />
 							</div>
 

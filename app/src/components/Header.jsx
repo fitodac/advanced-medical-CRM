@@ -7,27 +7,17 @@ export const Header = () => {
 
 	const { user } = useAppContext()
 
-	const {info: { firstname, name }} = user
+	const {info: { firstname }} = user
 	const [dd, setDd] = useState(0)
 
 	return (<div className="bg-primary border-b border-primary w-full px-5 py-2 flex justify-between items-center">
 
 		<div className="flex gap-x-6 items-center">
-			
 			<span className="sm:hidden">
 				<button className="btn btn-icon bg-transparent border-transparent text-slate-400">
 					<i className="ri-menu-2-line"></i>
 				</button>
 			</span>
-
-			{/* 
-			<NavLink to="/">
-				<img 
-					src="/brand.png" 
-					alt="Advanced experts" 
-					className="w-40 object-cover pointer-events-none" />
-			</NavLink> 
-			*/}
 		</div>
 
 		<div className="flex gap-x-6 justify-end items-center">

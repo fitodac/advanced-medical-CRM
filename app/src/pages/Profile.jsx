@@ -10,7 +10,7 @@ import { Button, Input } from '../components/Ui'
 
 
 const updateUserInLocalStorage = data => {
-	const stored_user = JSON.parse(window.localStorage.getItem('advancedUser'))
+	const stored_user = JSON.parse(window.localStorage.getItem('advanceUser'))
 
 	const new_user = {
 		...stored_user,
@@ -20,7 +20,7 @@ const updateUserInLocalStorage = data => {
 		}
 	}
 
-	window.localStorage.setItem('advancedUser', JSON.stringify(new_user))
+	window.localStorage.setItem('advanceUser', JSON.stringify(new_user))
 }
 
 
