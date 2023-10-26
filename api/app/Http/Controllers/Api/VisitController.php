@@ -40,14 +40,18 @@ class VisitController extends Controller
         $patient_id = $data['patient_id'];
         unset($data['patient_id']);
 
-        $visit = Visit::updateOrInsert(
+        $visit = Visit::updateOrCreate(
             ['patient_id' => $patient_id],
             $data
         );
 
-		return $this->successResponse(
+        $response_message = $visit->wasRecentlyCreated
+            ? 'Hemos registrado una nueva visita'
+            : 'Hemos actualizado los datos de la visita';
+
+        return $this->successResponse(
 			['visit' => $visit, 'message' => $messages],
-			'Hemos registrado una nueva visita'
+			$response_message
 		);
 	}
 
