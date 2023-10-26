@@ -97,7 +97,6 @@ class UserController extends Controller
 
 		$validate = Validator::make($request->all(), [
 			'id' => 'required|numeric',
-			'name' => 'required|unique:users,name,'.$request->id,
 			'email' => 'required|unique:users,email,'.$request->id,
 			'role' => 'required|in:admin,doctor',
 			'specialty_id' => 'numeric',
@@ -105,8 +104,6 @@ class UserController extends Controller
 		], [
 			'id.required' => 'Debes proveernos el ID del usuario para continuar',
 			'id.numeric' => 'Formato incorrecto',
-			'name.required' => 'Debes incluír un nombre para el usuario',
-			'name.unique' => 'Ya existe un usuario con ese nombre',
 			'email.required' => 'Debes incluír un email para el usuario',
 			'email.unique' => 'El email que intentas usar ya existe en la base de datos',
 			'role.in' => 'El role no es válido',
@@ -138,7 +135,6 @@ class UserController extends Controller
 		$userData = array_merge($user->toArray(), [
 			'firstname' => $request->firstname,
 			'lastname' => $request->lastname,
-			'name' => Str::slug($request->name),
 			'email' => $request->email,
 			'role' => $auth->id === $user->id ? $user->role : ('superadmin' === $auth->role ? $request->role : ('admin' === $auth->role ? 'doctor' : 'doctor'))
 		]);
@@ -184,8 +180,7 @@ class UserController extends Controller
 
 		if ($request->has('name') && !empty($request->name)) {
 			$query->where(function($query) use ($request) {
-				$query->where(DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($request->name) . '%')
-					->orWhere(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+				$query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->name) . '%')
 					->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
 			});
 		}

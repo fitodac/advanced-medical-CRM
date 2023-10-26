@@ -37,26 +37,12 @@ class ProfileController extends Controller
 
 		$auth = Auth::user();
 
-		$validate = Validator::make($request->all(), [
-			'name' => ['unique:users,name,'.$auth->id]
-		],[
-			'name.unique' => 'Nombre de usuario inválido'
-		]);
-
-		if( $validate->fails() ){
-			return $this->validationErrorResponse($validate->errors());
-		}
-
 		if( $auth->id !== $user->id ){
 			return $this->validationErrorResponse('No estás autorizado para ver esta información');
 		}
 
 		$req = $request->all();
-		
-		if( isset($request->name) ){
-			$req['name'] = Str::slug($request->name);
-		}
-		
+
 		if( isset($request->new_password) ){
 			if( Hash::check($request->password, $user->password) ){
 				$req['password'] = Hash::make($request->new_password);
