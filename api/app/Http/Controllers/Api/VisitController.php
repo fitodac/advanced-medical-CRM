@@ -40,9 +40,9 @@ class VisitController extends Controller
         $patient_id = $data['patient_id'];
         unset($data['patient_id']);
 
-        $visit = Visit::firstOrCreate(
+        $visit = Visit::updateOrInsert(
             ['patient_id' => $patient_id],
-            [$data]
+            $data
         );
 
 		return $this->successResponse(
