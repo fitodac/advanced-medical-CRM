@@ -224,12 +224,11 @@ export default function Page(){
 					<div className="grid grid-cols-2 gap-x-5 gap-y-4">
 						<Input label="Nombre" name="firstname" context={formContext} />
 						<Input label="Apellido" name="lastname" context={formContext} />
-						<Input label="Usuario" name="name" context={formContext} />
 						<Input label="Email" name="email" context={formContext} />
 
 						{ specialties 
 						? (<div className="">
-								<label>Especialidad</label>
+								<label className="select-none leading-tight block">Especialidad</label>
 								<select 
 									name="specialty_id" 
 									value={formState.specialty_id} 
