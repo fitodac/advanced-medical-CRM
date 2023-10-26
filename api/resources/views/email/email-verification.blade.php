@@ -6,8 +6,8 @@
 	}
 </style>
 
-<table 
-	align="center" 
+<table
+	align="center"
 	style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
 		<tr>
 			<td style="height:20px;"></td>
@@ -18,14 +18,14 @@
 				<table style="background-color: white; padding: 30px;">
 					<tr>
 						<td>
-							<p>Bienvenido al programa Advanced Expert Program</p>
+							<p>Bienvenido al programa Advance Expert Program</p>
 							<p>Por favor siga los siguientes pasos para acceder a la plataforma</p>
 						</td>
 					</tr>
 
 					<tr>
 						<td>
-							<p>1. Tome nota de su contraseña temporal: <strong>advanced</strong>
+							<p>1. Tome nota de su contraseña temporal: <strong>advance</strong>
 									<br>
 									La podrá cambiar desde la plataforma en "mi cuenta", el apartado de "Seguridad, Cambiar la contraseña".
 									<br>
@@ -35,7 +35,7 @@
 								2. Por favor haga click en el botón de abajo para verificar su correo electrónico
 							</p>
 							<p>
-								3. Acceda a la plataforma con su usuario y password en 
+								3. Acceda a la plataforma con su usuario y password en
 								<a href="https://advancedexpertprogram.com/" target="_blank">https://advancedexpertprogram.com</a>
 							</p>
 						</td>
@@ -54,7 +54,7 @@
 								<br>
 								El equipo coordinador
 								<br>
-								Advanced Expert Program
+								Advance Expert Program
 								<br>
 								advanced@kaccesshealth.com
 							</p>
@@ -65,7 +65,7 @@
 						<td style="text-align: center;">
 							<br>
 							<br>
-							<a 
+							<a
 								href="{{ $app_uri.'/account/verify/?token='.$token }}""
 								style="background: #00a6af; border-width: 0px; color: white; padding: 10px 30px; border-radius: 8px; display: inline-block; text-decoration: none;">
 								{{ __('Verify Email Address') }}
