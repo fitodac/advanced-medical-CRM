@@ -171,11 +171,9 @@ class Visit extends Model
 	}
 
     public function formatRequestDate($req) {
-			$req['date'] = isset($req['date']) ? Carbon::createFromFormat('d/m/Y', $req['date'])->format('Y-m-d') : null;
-			$req['birth_date'] = isset($req['birth_date']) ? Carbon::createFromFormat('d/m/Y', $req['birth_date'])->format('Y-m-d') : null;
-			$req['patient_current_situation_date'] = isset($req['patient_current_situation_date']) ? Carbon::createFromFormat('d/m/Y', $req['patient_current_situation_date'])->format('Y-m-d') : null;
-			$req['valuation_date'] = isset($req['valuation_date']) ? Carbon::createFromFormat('d/m/Y', $req['valuation_date'])->format('Y-m-d') : null;
+        $req['patient_current_situation_date'] = isset($req['patient_current_situation_date']) ? Carbon::createFromFormat('d/m/Y', $req['patient_current_situation_date'])->format('Y-m-d') : null;
+        $req['valuation_date'] = isset($req['valuation_date']) ? Carbon::createFromFormat('d/m/Y', $req['valuation_date'])->format('Y-m-d') : null;
 
-			return $req;
+        return $req;
     }
 }

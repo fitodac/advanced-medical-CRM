@@ -16,12 +16,12 @@ export const AppProvider = ({children}) => {
 
 	const [user, setUser] = useState(useAuth().user)
 	const { token_type, token } = useAuth().user
-	
+
 	const setUserInfo = data => {
 		console.log('setUserInfo', data)
 		setUser({...user, info: {...data}})
 	}
-	
+
 	const notify = (message, status) => {
 		setToastContext({
 			show: true,
@@ -54,21 +54,25 @@ export const AppProvider = ({children}) => {
 
 
 			{/* Toast */}
-			<input 
-				type="checkbox" 
-				id="toast" 
+			<input
+				type="checkbox"
+				id="toast"
 				className="hidden"
 				onChange={() => {}}
 				checked={toastContext.show} />
 
-			<label 
-				htmlFor="toast" 
+			<label
+				htmlFor="toast"
 				className={`toast p-8 overflow-hidden shadow-2xl
-					${toastContext.status === 'success' ? 
-						'bg-green-700 border-green-700 text-green-200' : 
+					${toastContext.status === 'success' ?
+						'bg-green-700 border-green-700 text-green-200' :
 						'bg-red-700 border-red-700 text-red-200'}`}
 				onClick={() => setToastContext({show: false, status: '', message: ''})}>
-				<div className="">{toastContext.message}</div>
+				<div className="">
+					{toastContext.message.split('\n').map((msg, index) => (
+						<div key={index}>{msg}</div>
+					))}
+				</div>
 			</label>
 		</>
 	)

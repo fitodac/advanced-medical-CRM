@@ -1,17 +1,17 @@
-import { 
+import {
 	useEffect,
-	createContext, 
+	createContext,
 	useMemo,
 	useCallback,
 	useState
 } from 'react'
-import { 
+import {
 	useForm,
 	useAxios
 } from '../../../hooks'
 import PropTypes from 'prop-types'
 import { useAppContext } from '../../../hooks'
-import { 
+import {
 	getVisitFormDataByType,
 	visitSessionStorage
 } from '../../../helpers'
@@ -63,9 +63,9 @@ export const FormInitial = ({
 	const [formSaved, setFormSaved] = useState(false)
 
 	const {
-		formState, 
-		setFormState, 
-		onInputChange, 
+		formState,
+		setFormState,
+		onInputChange,
 		// onResetForm
 	} = useForm({})
 
@@ -75,7 +75,7 @@ export const FormInitial = ({
 
 	const {
 		response: updateResponse,
-		// error,
+		error: updateError,
 		// loading: updateLoading,
 		refetch: updateRefetch
 	} = useAxios({
@@ -89,7 +89,7 @@ export const FormInitial = ({
 
 	const {
 		response: createResponse,
-		// error,
+		error: createError,
 		// loading: createLoading,
 		refetch: createRefetch
 	} = useAxios({
@@ -156,6 +156,33 @@ export const FormInitial = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateResponse])
 
+	useEffect(() => {
+		if( createError ){
+			console.log('createError')
+			let errorMessage = '';
+			for (let e in createError.message) {
+				createError.message[e].forEach(msg => {
+					errorMessage += msg + '\n';  // Añade un carácter de nueva línea después de cada mensaje
+				});
+			}
+			notify(errorMessage, 'error');
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createError])
+
+	useEffect(() => {
+		if( updateError ){
+			console.log('updateError')
+			let errorMessage = '';
+			for (let e in updateError.message) {
+				updateError.message[e].forEach(msg => {
+					errorMessage += msg + '\n';  // Añade un carácter de nueva línea después de cada mensaje
+				});
+			}
+			notify(errorMessage, 'error');
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateError])
 
 	const handleSubmit = useCallback(e => {
 		if(e) e.preventDefault()
@@ -171,7 +198,7 @@ export const FormInitial = ({
 
 	const contextValue = {
 		patient,
-		formState, 
+		formState,
 		messages,
 		handleInputChange,
 		formSaved
@@ -181,8 +208,8 @@ export const FormInitial = ({
 	return (<>
 	<formContext.Provider value={contextValue}>
 		<form onSubmit={handleSubmit}>
-			<HeaderForm 
-				title="Visita inicial" 
+			<HeaderForm
+				title="Visita inicial"
 				dateFieldLabel="Fecha (día/mes/año)"
 				context={formContext} />
 
@@ -191,7 +218,7 @@ export const FormInitial = ({
 					<HeaderSection title="Criterios de inclusión y exclusión" />
 					<CriteriosInclusionExclusionExclusion context={formContext} />
 				</FromGroup>
-				
+
 				<FromGroup>
 					<HeaderSection title="Datos sociodemográficos" />
 					<FromGroupContainer>

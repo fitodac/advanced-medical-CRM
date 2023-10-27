@@ -1,11 +1,11 @@
-import { 
+import {
 	useState,
 	useEffect,
-	createContext, 
+	createContext,
 	useMemo,
 	useCallback
 } from 'react'
-import { 
+import {
 	useForm,
 	useAxios
 } from '../../../hooks'
@@ -52,9 +52,9 @@ export const FormFirst = ({
 	const [formSaved, setFormSaved] = useState(false)
 
 	const {
-		formState, 
-		setFormState, 
-		onInputChange, 
+		formState,
+		setFormState,
+		onInputChange,
 		// onResetForm
 	} = useForm({})
 
@@ -63,7 +63,7 @@ export const FormFirst = ({
 
 	const {
 		response: updateResponse,
-		// error,
+		error: updateError,
 		// loading: updateLoading,
 		refetch: updateRefetch
 	} = useAxios({
@@ -77,7 +77,7 @@ export const FormFirst = ({
 
 	const {
 		response: createResponse,
-		// error,
+		error: createError,
 		// loading: createLoading,
 		refetch: createRefetch
 	} = useAxios({
@@ -145,10 +145,37 @@ export const FormFirst = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateResponse])
 
+	useEffect(() => {
+		if( createError ){
+			console.log('createError')
+			let errorMessage = '';
+			for (let e in createError.message) {
+				createError.message[e].forEach(msg => {
+					errorMessage += msg + '\n';  // Añade un carácter de nueva línea después de cada mensaje
+				});
+			}
+			notify(errorMessage, 'error');
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [createError])
+
+	useEffect(() => {
+		if( updateError ){
+			console.log('updateError')
+			let errorMessage = '';
+			for (let e in updateError.message) {
+				updateError.message[e].forEach(msg => {
+					errorMessage += msg + '\n';  // Añade un carácter de nueva línea después de cada mensaje
+				});
+			}
+			notify(errorMessage, 'error');
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [updateError])
 
 	const handleSubmit = useCallback(e => {
 		if(e) e.preventDefault()
-		
+
 		if( formState.id ){
 			updateRefetch()
 		}else{
@@ -159,42 +186,42 @@ export const FormFirst = ({
 
 	const contextValue = {
 		patient,
-		formState, 
+		formState,
 		messages,
 		handleInputChange,
 		formSaved
 	}
 
-	
+
 	return (<>
 	<formContext.Provider value={contextValue}>
 		<form onSubmit={handleSubmit}>
-			<HeaderForm 
-				title="Visita Seguimiento 1" 
+			<HeaderForm
+				title="Visita Seguimiento 1"
 				dateFieldLabel="Fecha de la visita (día/mes/año) (≈3 meses de la visita basal)"
 				context={formContext} />
 
 			<div className="text-sm mt-8 space-y-4">
 				<p>
-					La visita de seguimiento se realizará en todos los 
-					pacientes cribados, tanto los diagnosticados de desnutrición 
-					en la visita basal como los que no presentaron riesgo de 
+					La visita de seguimiento se realizará en todos los
+					pacientes cribados, tanto los diagnosticados de desnutrición
+					en la visita basal como los que no presentaron riesgo de
 					desnutrición en visita basal.
 				</p>
 
 				<p className="italic">
-					En aquellos pacientes que en visita basal no presentaran 
-					riesgo o presencia de desnutrición, se plantea realizar 
-					llamada de seguimiento realizado cribado en remoto con 
-					herramienta R-MAPP (acceso a través de 
-					<a 
-						href="https://rmappnutrition.com/es" 
+					En aquellos pacientes que en visita basal no presentaran
+					riesgo o presencia de desnutrición, se plantea realizar
+					llamada de seguimiento realizado cribado en remoto con
+					herramienta R-MAPP (acceso a través de
+					<a
+						href="https://rmappnutrition.com/es"
 						target="_blank"
 						rel="noreferrer">https://rmappnutrition.com/es</a>)
-					y la automedición de circunferencia de pantorrilla por 
-					parte del propio paciente, en línea con uno de los objetivos 
+					y la automedición de circunferencia de pantorrilla por
+					parte del propio paciente, en línea con uno de los objetivos
 					del proyecto. Si sale en riesgo, se activarán las líneas
-					habituales de valoración de cada centro (directamente citar 
+					habituales de valoración de cada centro (directamente citar
 					en consultas, remitir desde atención primaria, etc.)
 				</p>
 			</div>
@@ -207,14 +234,14 @@ export const FormFirst = ({
 						<ResultadoCribadoMuscular context={formContext} />
 					</FromGroupContainer>
 				</FromGroup>
-				
+
 				<FromGroup>
 					<HeaderSection title="Valoración del estado nutricional" />
-					
+
 					<FromGroupContainer>
-						<AntropometriaSeguimiento1 context={formContext} /> 
-						<ParametrosFuncionales context={formContext} /> 
-						<OtrasMedicionesDeComposicionCorporal context={formContext} /> 
+						<AntropometriaSeguimiento1 context={formContext} />
+						<ParametrosFuncionales context={formContext} />
+						<OtrasMedicionesDeComposicionCorporal context={formContext} />
 					</FromGroupContainer>
 				</FromGroup>
 
