@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
 
 		if( env('APP_DEBUG') ) {
 			$this->call([
-				CenterSeeder::class
+				CenterSeeder::class,
+				PatientSeeder::class
 			]);
 
-			PatientSeeder::class;
 		}
 	}
 }

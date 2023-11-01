@@ -180,13 +180,6 @@ class VisitFactory extends Factory
 							null
 						]),
 						'patient_current_situation_date' => $this->faker->date,
-            // 'discharged' => $this->faker->randomElement(['y', 'n', null]),
-            // 'discharged_date' => $this->faker->date,
-            // 'readmission' => $this->faker->randomElement(['y', 'n', null]),
-            // 'readmission_date' => $this->faker->date,
-            // 'death' => $this->faker->randomElement(['y', 'n', null]),
-            // 'death_date' => $this->faker->date,
-            // 'not_come_for_control' => $this->faker->randomElement(['y', 'n', null]),
             // Valoración del estado nutricional
             // Antropometría
             'ans__anthropometry__current_weight' => $this->faker->randomFloat(2, 0, 999.99),
