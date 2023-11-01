@@ -6,11 +6,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Center;
 
-use App\Models\Doctor;
-use App\Models\Patient;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
-use Database\Factories\VisitFactory;
 
 
 class DatabaseSeeder extends Seeder
@@ -38,7 +35,7 @@ class DatabaseSeeder extends Seeder
 				CenterSeeder::class
 			]);
 
-			// VisitFactory::new()->count(10)->create();
+			PatientSeeder::class;
 		}
 	}
 }

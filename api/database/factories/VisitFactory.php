@@ -19,7 +19,7 @@ class VisitFactory extends Factory
      */
     public function definition(): array
     {
-        $mh__others = 						$this->faker->randomElement(['y', 'n', null]);
+        $mh__others = 					$this->faker->randomElement(['y', 'n', null]);
         $ns__other = 						$this->faker->randomElement(['y', 'n', null]);
         $ms__other = 						$this->faker->randomElement(['y', 'n', null]);
         $nd__other = 						$this->faker->randomElement(['y', 'n', null]);
@@ -27,8 +27,6 @@ class VisitFactory extends Factory
         $nti__en__other = 					$this->faker->randomElement(['y', 'n', null]);
 
         return [
-            'patient_id' => $this->faker->optional()->passthrough(null),
-            'visit_type' => $this->faker->optional()->passthrough(null),
             'date' => $this->faker->date(),
             // Criterios de inclusión
             'inclusion_q1' => $this->faker->randomElement(['y', 'n', null]),
