@@ -47,7 +47,7 @@ export default function Page(){
 				{title: 'Exportar datos', current: true}
 			]} />
 
-			{'superadmin' === role ? (
+			{('superadmin' === role || 'admin' === role) ? (
 				<div className="py-10 items-center max-w-4xl">
 					<div className="bg-white border border-slate-100 p-6 rounded-xl shadow-lg">
 						<Button 

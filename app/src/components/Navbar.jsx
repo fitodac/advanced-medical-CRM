@@ -57,7 +57,7 @@ export const Navbar = () => {
 				<NavLink to={'/documents'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Documentos</NavLink>
 			</li>
 
-			{ 'superadmin' === role 
+			{ ('admin' === role || 'superadmin' === role) 
 			? (<li>
 					<NavLink to={'/export-excel'} className={({isActive}) => isActive ? itemActiveClassName : itemClassName}>Exportar datos</NavLink>
 				</li>)

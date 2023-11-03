@@ -14,6 +14,10 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Concerns\WithEvents;
 
 
 
@@ -23,157 +27,273 @@ class VisitsExport implements
 	WithColumnFormatting, 
 	WithStyles, 
 	WithDefaultStyles, 
-	ShouldAutoSize
+	ShouldAutoSize,
+	WithEvents,
+	WithCustomStartCell
 {
-    use Exportable;
-    protected $header = [];
-		protected $hiddenFieldsInitial;
-		protected $hiddenFieldsFirst;
+	use Exportable;
+	protected $header = [];
+	protected $hiddenFieldsInitial;
+	protected $auth;
 
-		public function __construct()
-		{
-			require(__DIR__.'/settings/hiddenFields.php');
-			$this->hiddenFieldsInitial = $hidden_fields_initial;
-			$this->hiddenFieldsFirst = $hidden_fields_first;
-		}
+	public function __construct()
+	{
+		require(__DIR__.'/settings/hiddenFields.php');
+		$this->hiddenFieldsInitial = $hidden_fields_initial;
 
-    public function columnFormats(): array
-    {
-			return [
-				'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				'P' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				'AC' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				'DG' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				// 'EL' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				// 'EU' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				// 'FH' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-				// 'IY' => NumberFormat::FORMAT_DATE_DDMMYYYY,
-			];
-    }
+		$this->auth = Auth::user();
+	}
 
-    public function headings(): array
-    {
-			require(__DIR__.'/settings/headers.php');
-			return $headers;
-    }
+	public function columnFormats(): array
+	{
+		return [
+			'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+			'P' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+			'AC' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+			'DH' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+			'DJ' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+		];
+	}
 
 
-		public function styles(Worksheet $sheet): array
-    {
-			return [
-				1 => [
-					'font' => [
-						'bold' => true,
-						'size' => 16,
-						'color' => ['rgb' => 'FFFFFF']
-					],
-					'fill' => [
-						'fillType' => Fill::FILL_SOLID,
-						'startColor' => ['rgb' => '333333']
-					]
-				],
-				2 => [
-					'font' => [
-						'bold' => true,
-						'size' => 12
-					],
-					'fill' => [
-						'fillType' => Fill::FILL_SOLID,
-						'startColor' => ['rgb' => 'CCCCCC']
-					]
-				],
-				3 => [
-					'font' => ['bold' => true],
-					'fill' => [
-						'fillType' => Fill::FILL_SOLID,
-						'startColor' => ['rgb' => 'EEEEEE']
-					]
-				],
-				4 => [
-					'font' => ['bold' => true]
-				]
-			];
-		}
+
+	public function headings(): array
+	{
+		require(__DIR__.'/settings/headers.php');
+
+		if( $this->auth->role === 'admin' ) unset($headers[1]);
+
+		return $headers;
+	}
+
+	public function registerEvents(): array {
+
+		return [
+			AfterSheet::class => function(AfterSheet $event) {
+				require(__DIR__.'/settings/events.php');
+
+				if( $this->auth->role === 'superadmin' ){
+					$event->sheet->mergeCells('G1:DF1');
+					$event->sheet->mergeCells('DH1:FC1');
+
+					$event->sheet->setCellValue('G1', 'VISITA INICIAL');
+					$event->sheet->setCellValue('DH1', 'VISITA SEGUIMIENTO 1');
+
+					foreach($superadmin as $i=>$val) $event->sheet->setCellValue($i, $val);
+				}
 
 
-		public function defaultStyles(Style $defaultStyle)
-		{
-			return [
+				if( $this->auth->role === 'admin' ){
+					$event->sheet->mergeCells('F1:DE1');
+					$event->sheet->mergeCells('DG1:FB1');
+
+					$event->sheet->setCellValue('F1', 'VISITA INICIAL');
+					$event->sheet->setCellValue('DG1', 'VISITA SEGUIMIENTO 1');
+					
+					foreach($admin as $i=>$val) $event->sheet->setCellValue($i, $val);
+				}
+			}
+		];
+	}
+
+	public function startCell(): string
+	{
+		return 'A4';
+	}
+
+
+	public function styles(Worksheet $sheet): array
+	{
+		$styles = [
+			1 => [
 				'font' => [
-					'name' => 'sans-serif'
+					'bold' => true,
+					'size' => 16,
+					'color' => ['rgb' => 'FFFFFF']
 				],
-				'alignment' => [
-					'wrapText' => true
+				'fill' => [
+					'fillType' => Fill::FILL_SOLID,
+					'startColor' => ['rgb' => '333333']
+				]
+			],
+			2 => [
+				'font' => [
+					'bold' => true, 
+					'size' => 12
+				], 
+				'fill' => [
+					'fillType' => Fill::FILL_SOLID, 
+					'startColor' => ['rgb' => 'CCCCCC']
+				]
+			],
+			3 => [
+				'font' => [
+					'bold' => true,
+					'size' => 12
+				],
+				'fill' => [
+					'fillType' => Fill::FILL_SOLID,
+					'startColor' => ['rgb' => 'EEEEEE']
+				]
+			],
+			4 => [
+				'font' => ['bold' => true]
+			]
+		];
+
+		$cells = [
+			'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS','DK', 'DT', 'DU', 'DV', 'DW', 'DX', 
+			'DY', 'DZ', 'EA', 'EB', 'EC', 'ED', 'EE', 'EF', 'EG', 'EH', 'EI', 'EJ', 'EK', 'EL', 'EM', 
+			'EN', 'EO', 'EP', 'EQ', 'ER', 'ES', 'ET', 'EU', 'EV', 
+			'EW', 'EX', 'EY', 'EZ', 'FA', 'FB', 'FC'
+		];
+
+		foreach($cells as $c){
+			$styles[$c.'2'] = [
+				'font' => [
+					'bold' => true, 
+					'size' => 12
+				], 
+				'fill' => [
+					'fillType' => Fill::FILL_SOLID, 
+					'startColor' => ['rgb' => 'CCCCCC']
 				]
 			];
 		}
 
+		foreach($cells as $c){
+			$styles[$c.'3'] = [
+				'font' => [
+					'bold' => true,
+					'size' => 12
+				],
+				'fill' => [
+					'fillType' => Fill::FILL_SOLID,
+					'startColor' => ['rgb' => 'EEEEEE']
+				]
+			];
+		}
 
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
-    {
-        $visits = Visit::with('patient', 'patient.center', 'patient.doctor.user', 'patient.doctor.specialty')
-                    ->get()
-                    ->groupBy(['patient_id', 'visit_type']);
-        $response = [];
-        $x = 0;
+		return $styles;
+	}
 
-        foreach ($visits as $visit) {
-            $x++;
 
-            $initial = $visit['initial']->first();
-            $first = $visit['first']->first();
+	public function defaultStyles(Style $defaultStyle)
+	{
+		return [
+			'font' => [
+				'name' => 'sans-serif'
+			]
+		];
+	}
 
-            $patient = $initial['patient'];
 
-            // Con makehidden se ocultarian los campos definidos como protegidos en la linea 17 y 18
-            $initial = $initial->makeHidden($this->hiddenFieldsInitial);
-            $first = $first->makeHidden($this->hiddenFieldsFirst);
+	public function confirmationForHumans($val)
+	{
+		return 'y' === $val ? 'SÍ' : ('n' === $val ? 'NO' : $val);
+	}
 
-						$initial_values = array_values($initial->toArray());
-						// $first_values = array_values($first->toArray());
-						$first_values = [
-							'date' => $first->date,
-							'patient_current_situation' => $first->patient_current_situation,
-							'patient_current_situation_date' => $first->patient_current_situation_date,
-							'ans__anthropometry__current_weight' => $first->ans__anthropometry__current_weight,
-							'ans__anthropometry__initial_weight' => $first->ans__anthropometry__initial_weight,
-							'ans__anthropometry__difference_percentage' => $first->ans__anthropometry__difference_percentage,
-							'ans__anthropometry__current_bmi' => $first->ans__anthropometry__current_bmi,
-							'ans__anthropometry__calf_circumference' => $first->ans__anthropometry__calf_circumference
-						];
 
-						foreach($initial_values as $value => $key){
-							if($value === 'y') $initial_values[$key] = 'SÍ';
-							if($value === 'n') $initial_values[$key] = 'NO';
-						}
+	/**
+	* @return \Illuminate\Support\Collection
+	*/
+	public function collection()
+	{
+		$visits = Visit::with('patient', 'patient.center', 'patient.doctor.user', 'patient.doctor.specialty')
+								->get()
+								->groupBy(['patient_id', 'visit_type']);
+		$response = [];
+		$x = 0;
 
-						// foreach($first_values as $value => $key){
-						// 	if($value === 'y') $first_values[$key] = 'SÍ';
-						// 	if($value === 'n') $first_values[$key] = 'NO';
-						// }
+		foreach ($visits as $visit) {
+			$x++;
 
-            $response[] = array_merge(
-							[
-								'#'             => $x,
-								'code'          => $patient['code'],
-								'center_code'   => $patient['center']['code'],
-								'center'        => $patient['center']['name'],
-								'doctor'        => $patient['doctor']['user']['firstname'] .' '. $patient['doctor']['user']['lastname'],
-								'specialty'     => $patient['doctor']['specialty']['name'],
-							],
-							// array_values($initial->toArray()),
-							$initial_values,
-							[
-								'blank_1' => ''
-							],
-							// array_values($first->toArray()),
-							$first_values
-            );
-        }
+			$initial = $visit['initial']->first();
+			// Con makehidden se ocultarian los campos definidos como protegidos en la linea 17 y 18
+			$initial = $initial->makeHidden($this->hiddenFieldsInitial);
 
-        return collect($response);
-    }
+			// Patient
+			$patient = $initial['patient'];
+			$patient_data = ['#' => $x];
+			if( $this->auth->role === 'superadmin' ) $patient_data['code'] = $patient['code'];
+			$patient_data['center_code'] = $patient['center']['code'];
+			$patient_data['center'] = $patient['center']['name'];
+			$patient_data['doctor'] = $patient['doctor']['user']['firstname'] .' '. $patient['doctor']['user']['lastname'];
+			$patient_data['specialty'] = $patient['doctor']['specialty']['name'];
+
+			$initial_values = [];
+			foreach($initial->toArray() as $value){
+				$initial_values[] = $this->confirmationForHumans($value);
+			}
+
+
+			$first_values = [];
+
+			if( isset($visit['first']) ){
+				$first = $visit['first']->first();
+
+				$first_values = [
+					'date' => $first->date->format('d/m/Y'),
+					'patient_current_situation' => $first->patient_current_situation,
+					'patient_current_situation_date' => $first->patient_current_situation_date->format('d/m/Y'),
+					'ans__anthropometry__current_weight' => $first->ans__anthropometry__current_weight,
+					'ans__anthropometry__initial_weight' => $first->ans__anthropometry__initial_weight,
+					'ans__anthropometry__difference_percentage' => $first->ans__anthropometry__difference_percentage,
+					'ans__anthropometry__current_bmi' => $first->ans__anthropometry__current_bmi,
+					'ans__anthropometry__calf_circumference' => $first->ans__anthropometry__calf_circumference,
+					'dynamometry' => $first->dynamometry,
+					'dynamometry__not_possible' => $this->confirmationForHumans($first->dynamometry__not_possible),
+					'test_chair_five_repetitions' => $first->test_chair_five_repetitions,
+					'test_chair__not_possible' => $this->confirmationForHumans($first->test_chair__not_possible),
+					'bi__hydratation' => $first->bi__hydratation,
+					'bi__tbm' => $first->bi__tbm,
+					'bi__ecw' => $first->bi__ecw,
+					'bi__icw' => $first->bi__icw,
+					'bi__ffm' => $first->bi__ffm,
+					'bi__fm' => $first->bi__fm,
+					'bi__bcm' => $first->bi__bcm,
+					'bi__bcm_h' => $first->bi__bcm_h,
+					'bi__asmm' => $first->bi__asmm,
+					'bi__smi' => $first->bi__smi,
+					'bi__body_fat' => $first->bi__body_fat,
+					'bi__resistance' => $first->bi__resistance,
+					'bi__reactance' => $first->bi__reactance,
+					'bi__phase_angle' => $first->bi__phase_angle,
+					'bi__standarized_phase_angle' => $first->bi__standarized_phase_angle,
+					'dexa__ffm' => $first->dexa__ffm,
+					'dexa__fm' => $first->dexa__fm,
+					'tc__ffm' => $first->tc__ffm,
+					'tc__fm' => $first->tc__fm,
+					'au__total_adipose_tissue' => $first->au__total_adipose_tissue,
+					'au__superficial' => $first->au__superficial,
+					'au__preperitoneal' => $first->au__preperitoneal,
+					'mu__area' => $first->mu__area,
+					'mu__circumference' => $first->mu__circumference,
+					'mu__axes_xax' => $first->mu__axes_xax,
+					'mu__axes_yax' => $first->mu__axes_yax,
+					'mu__adipose_tissue' => $first->mu__adipose_tissue,
+					'hfnr__followed_prescribed_nutritional_recommendation' => $this->confirmationForHumans($first->hfnr__followed_prescribed_nutritional_recommendation),
+					'hfnr__percentage_of_adherece_to_recommendations' => $first->hfnr__percentage_of_adherece_to_recommendations,
+					'hfnr__not_followed_prescribed_recommendation' => $first->hfnr__not_followed_prescribed_recommendation,
+					'rng__has_reached_nutritional_goal' => $this->confirmationForHumans($first->rng__has_reached_nutritional_goal),
+					'rng__has_reached_nutritional_goal_reasons' => $first->rng__has_reached_nutritional_goal_reasons,
+					'cppi__considers_that_patient_perceives_improvement' => $this->confirmationForHumans($first->cppi__considers_that_patient_perceives_improvement),
+					'cppi__considers_that_patient_perceives_improvement_reasons' => $first->cppi__considers_that_patient_perceives_improvement_reasons,
+					'hfppar_followed_prescribed_physical_activity_recommendation' => $this->confirmationForHumans($first->hfppar_followed_prescribed_physical_activity_recommendation),
+					'hfppar__not_followed_prescribed_recommendation' => $first->hfppar__not_followed_prescribed_recommendation,
+				];
+			}
+			
+
+
+			$response[] = array_merge(
+				$patient_data,
+				$initial_values,
+				['blank_1' => ''],
+				$first_values
+			);
+		}
+
+		return collect($response);
+	}
 }
