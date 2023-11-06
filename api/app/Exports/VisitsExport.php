@@ -34,19 +34,28 @@ class VisitsExport implements
 	use Exportable;
 	protected $header = [];
 	protected $hiddenFieldsInitial;
+	protected $hiddenFieldsInitialForAdmins;
 	protected $auth;
 
 	public function __construct()
 	{
 		require(__DIR__.'/settings/hiddenFields.php');
 		$this->hiddenFieldsInitial = $hidden_fields_initial;
+		$this->hiddenFieldsInitialForAdmins = $hidden_fields_initial_for_admins;
 
 		$this->auth = Auth::user();
 	}
 
 	public function columnFormats(): array
 	{
-		return [
+		return $this->auth->role === 'admin' ? 
+		[
+			'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+			'H' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+			'I' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+		] 
+		:
+		[
 			'G' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 			'P' => NumberFormat::FORMAT_DATE_DDMMYYYY,
 			'AC' => NumberFormat::FORMAT_DATE_DDMMYYYY,
@@ -55,24 +64,28 @@ class VisitsExport implements
 		];
 	}
 
-
-
 	public function headings(): array
 	{
 		require(__DIR__.'/settings/headers.php');
 
-		if( $this->auth->role === 'admin' ) unset($headers[1]);
+		if( $this->auth->role === 'admin' ){
+			for($i = 7; $i < 15; $i++) unset($headers[$i]);
+			for($i = 16; $i < 28; $i++) unset($headers[$i]);
+			for($i = 29; $i < 160; $i++) unset($headers[$i]);
+		}
 
 		return $headers;
 	}
 
-	public function registerEvents(): array {
+	public function registerEvents(): array 
+	{
 
 		return [
 			AfterSheet::class => function(AfterSheet $event) {
 				require(__DIR__.'/settings/events.php');
 
 				if( $this->auth->role === 'superadmin' ){
+					$event->sheet->mergeCells('A1:F1');
 					$event->sheet->mergeCells('G1:DF1');
 					$event->sheet->mergeCells('DH1:FC1');
 
@@ -84,14 +97,21 @@ class VisitsExport implements
 
 
 				if( $this->auth->role === 'admin' ){
-					$event->sheet->mergeCells('F1:DE1');
-					$event->sheet->mergeCells('DG1:FB1');
+					$event->sheet->mergeCells('A1:F1');
+					$event->sheet->mergeCells('G1:I1');
+					$event->sheet->mergeCells('J1:L1');
 
-					$event->sheet->setCellValue('F1', 'VISITA INICIAL');
-					$event->sheet->setCellValue('DG1', 'VISITA SEGUIMIENTO 1');
+					$event->sheet->setCellValue('G1', 'VISITA INICIAL');
+					$event->sheet->setCellValue('J1', 'VISITA SEGUIMIENTO 1');
 					
-					foreach($admin as $i=>$val) $event->sheet->setCellValue($i, $val);
+					$event->sheet->setCellValue('H2', 'Datos sociodemográficos');
+					$event->sheet->setCellValue('I2', 'Ámbito asistencial');
+					
+					$event->sheet->setCellValue('J4', 'Fecha');
+					$event->sheet->setCellValue('K4', 'Situación actual del paciente');
+					$event->sheet->setCellValue('L4', 'Fecha de situación actual del paciente');
 				}
+
 			}
 		];
 	}
@@ -101,77 +121,19 @@ class VisitsExport implements
 		return 'A4';
 	}
 
-
 	public function styles(Worksheet $sheet): array
 	{
-		$styles = [
-			1 => [
-				'font' => [
-					'bold' => true,
-					'size' => 16,
-					'color' => ['rgb' => 'FFFFFF']
-				],
-				'fill' => [
-					'fillType' => Fill::FILL_SOLID,
-					'startColor' => ['rgb' => '333333']
-				]
-			],
-			2 => [
-				'font' => [
-					'bold' => true, 
-					'size' => 12
-				], 
-				'fill' => [
-					'fillType' => Fill::FILL_SOLID, 
-					'startColor' => ['rgb' => 'CCCCCC']
-				]
-			],
-			3 => [
-				'font' => [
-					'bold' => true,
-					'size' => 12
-				],
-				'fill' => [
-					'fillType' => Fill::FILL_SOLID,
-					'startColor' => ['rgb' => 'EEEEEE']
-				]
-			],
-			4 => [
-				'font' => ['bold' => true]
-			]
-		];
+		require(__DIR__.'/settings/styles.php');
 
-		$cells = [
-			'DK', 'DL', 'DM', 'DN', 'DO', 'DP', 'DQ', 'DR', 'DS','DK', 'DT', 'DU', 'DV', 'DW', 'DX', 
-			'DY', 'DZ', 'EA', 'EB', 'EC', 'ED', 'EE', 'EF', 'EG', 'EH', 'EI', 'EJ', 'EK', 'EL', 'EM', 
-			'EN', 'EO', 'EP', 'EQ', 'ER', 'ES', 'ET', 'EU', 'EV', 
-			'EW', 'EX', 'EY', 'EZ', 'FA', 'FB', 'FC'
-		];
+		if( $this->auth->role === 'admin' ){
+			$cells = ['J', 'K', 'L'];
 
-		foreach($cells as $c){
-			$styles[$c.'2'] = [
-				'font' => [
-					'bold' => true, 
-					'size' => 12
-				], 
-				'fill' => [
-					'fillType' => Fill::FILL_SOLID, 
-					'startColor' => ['rgb' => 'CCCCCC']
-				]
-			];
-		}
-
-		foreach($cells as $c){
-			$styles[$c.'3'] = [
-				'font' => [
-					'bold' => true,
-					'size' => 12
-				],
-				'fill' => [
-					'fillType' => Fill::FILL_SOLID,
-					'startColor' => ['rgb' => 'EEEEEE']
-				]
-			];
+			foreach($cells as $h){
+				$styles[$h.'1'] = $h1_style;
+				$styles[$h.'2'] = $h2_style;
+				$styles[$h.'3'] = $h3_style;
+				$styles[$h.'4'] = ['font' => ['bold' => true]];
+			}
 		}
 
 		return $styles;
@@ -210,12 +172,12 @@ class VisitsExport implements
 
 			$initial = $visit['initial']->first();
 			// Con makehidden se ocultarian los campos definidos como protegidos en la linea 17 y 18
-			$initial = $initial->makeHidden($this->hiddenFieldsInitial);
+			$initial = $this->auth->role === 'admin' ? $initial->makeHidden($this->hiddenFieldsInitialForAdmins) : $initial->makeHidden($this->hiddenFieldsInitial);
 
 			// Patient
 			$patient = $initial['patient'];
 			$patient_data = ['#' => $x];
-			if( $this->auth->role === 'superadmin' ) $patient_data['code'] = $patient['code'];
+			$patient_data['code'] = $patient['code'];
 			$patient_data['center_code'] = $patient['center']['code'];
 			$patient_data['center'] = $patient['center']['name'];
 			$patient_data['doctor'] = $patient['doctor']['user']['firstname'] .' '. $patient['doctor']['user']['lastname'];
@@ -232,7 +194,12 @@ class VisitsExport implements
 			if( isset($visit['first']) ){
 				$first = $visit['first']->first();
 
-				$first_values = [
+				$first_values = $this->auth->role === 'admin' ?
+				[
+					'date' => $first->date->format('d/m/Y'),
+					'patient_current_situation' => $first->patient_current_situation,
+					'patient_current_situation_date' => $first->patient_current_situation_date->format('d/m/Y')
+				] : [
 					'date' => $first->date->format('d/m/Y'),
 					'patient_current_situation' => $first->patient_current_situation,
 					'patient_current_situation_date' => $first->patient_current_situation_date->format('d/m/Y'),
@@ -286,7 +253,13 @@ class VisitsExport implements
 			
 
 
-			$response[] = array_merge(
+			$response[] = $this->auth->role === 'admin' ? 
+			array_merge(
+				$patient_data,
+				$initial_values,
+				$first_values
+			) :
+			array_merge(
 				$patient_data,
 				$initial_values,
 				['blank_1' => ''],
