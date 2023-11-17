@@ -196,13 +196,13 @@ class VisitsExport implements
 
 				$first_values = $this->auth->role === 'admin' ?
 				[
-					'date' => $first->date->format('d/m/Y'),
+					'date' => isset($first->date) ? $first->date->format('d/m/Y') : null,
 					'patient_current_situation' => $first->patient_current_situation,
-					'patient_current_situation_date' => $first->patient_current_situation_date->format('d/m/Y')
+					'patient_current_situation_date' => isset($first->patient_current_situation_date) ? $first->patient_current_situation_date->format('d/m/Y') : ''
 				] : [
-					'date' => $first->date->format('d/m/Y'),
+					'date' => isset($first->date) ? $first->date->format('d/m/Y') : null,
 					'patient_current_situation' => $first->patient_current_situation,
-					'patient_current_situation_date' => $first->patient_current_situation_date->format('d/m/Y'),
+					'patient_current_situation_date' => isset($first->patient_current_situation_date) ? $first->patient_current_situation_date->format('d/m/Y') : null,
 					'ans__anthropometry__current_weight' => $first->ans__anthropometry__current_weight,
 					'ans__anthropometry__initial_weight' => $first->ans__anthropometry__initial_weight,
 					'ans__anthropometry__difference_percentage' => $first->ans__anthropometry__difference_percentage,
