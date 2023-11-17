@@ -7,6 +7,8 @@ import {
 	Loading
 } from '../components'
 
+
+
 export default function Page(){
 
 	const [ loginForm, setLoginForm ] = useState({email: '', password: ''})
@@ -80,35 +82,36 @@ export default function Page(){
 						</section>
 
 
+						{'development' === process.env.NODE_ENV && (
+							<div className="w-full mt-10 space-y-3">
+								<Button 
+									className="bg-indigo-500 border-indigo-500 text-white w-full" 
+									type="button" 
+									onClick={() => {
+										setLoginForm({email: 'house_md@local.com', password: 'cpi_1975'})
+									}}>
+									Entrar como doctor
+								</Button>
 
-						<div className="w-full mt-10 space-y-3">
-							<Button 
-								className="bg-indigo-500 border-indigo-500 text-white w-full" 
-								type="button" 
-								onClick={() => {
-									setLoginForm({email: 'house_md@local.com', password: 'cpi_1975'})
-								}}>
-								Entrar como doctor
-							</Button>
+								<Button 
+									className="bg-indigo-400 border-indigo-400 text-white w-full" 
+									type="button" 
+									onClick={() => {
+										setLoginForm({email: 'dani+admin@commonpeoplei.com', password: 'cpi_1975'})
+									}}>
+									Entrar como admin
+								</Button>
 
-							<Button 
-								className="bg-indigo-400 border-indigo-400 text-white w-full" 
-								type="button" 
-								onClick={() => {
-									setLoginForm({email: 'dani+admin@commonpeoplei.com', password: 'cpi_1975'})
-								}}>
-								Entrar como admin
-							</Button>
-
-							<Button 
-								className="bg-indigo-300 border-indigo-300 text-white w-full" 
-								type="button" 
-								onClick={() => {
-									setLoginForm({email: 'dani@commonpeoplei.com', password: 'cpi_1975'})
-								}}>
-								Entrar como superadmin
-							</Button>
-						</div>
+								<Button 
+									className="bg-indigo-300 border-indigo-300 text-white w-full" 
+									type="button" 
+									onClick={() => {
+										setLoginForm({email: 'dani@commonpeoplei.com', password: 'cpi_1975'})
+									}}>
+									Entrar como superadmin
+								</Button>
+							</div>
+						)}
 
 					</div>)}
 
