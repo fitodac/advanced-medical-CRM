@@ -15,17 +15,17 @@ export default function Page(){
 		<section className="w-full overflow-x-hidden pt-5">
 			<div className="grid grid-cols-4 gap-8">
 
-				<a href="//google.com" target="_blank" rel="noreferrer" className={boxClassName}>
+				<a href="/documents/protocolo-aep.pdf" target="_blank" rel="noreferrer" className={boxClassName} download>
 					<div className="font-bold">Protocolo</div>
 					<div className="text-sm font-light leading-tight">Aquí va una descripción de lo que se trata este documento</div>
 				</a>
 
-				<a href="//google.com" target="_blank" rel="noreferrer" className={boxClassName}>
+				<a href="/documents/crd-aep.pdf" target="_blank" rel="noreferrer" className={boxClassName} download>
 					<div className="font-bold">Formulario de registro de casos</div>
 					<div className="text-sm font-light leading-tight">Aquí va una descripción de lo que se trata este documento</div>
 				</a>
 
-				<a href="//google.com" target="_blank" rel="noreferrer" className={boxClassName}>
+				<a href="/documents/consentimiento-aep.pdf" target="_blank" rel="noreferrer" className={boxClassName} download>
 					<div className="font-bold">Consentimiento informado</div>
 					<div className="text-sm font-light leading-tight">Aquí va una descripción de lo que se trata este documento</div>
 				</a>
