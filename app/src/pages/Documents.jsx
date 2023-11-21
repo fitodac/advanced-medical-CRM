@@ -16,18 +16,15 @@ export default function Page(){
 			<div className="grid grid-cols-4 gap-8">
 
 				<a href="/documents/protocolo-aep.pdf" target="_blank" rel="noreferrer" className={boxClassName} download>
-					<div className="font-bold">Protocolo</div>
-					<div className="text-sm font-light leading-tight">Aquí va una descripción de lo que se trata este documento</div>
+					<div className="font-bold leading-tight">Protocolo</div>
 				</a>
 
 				<a href="/documents/crd-aep.pdf" target="_blank" rel="noreferrer" className={boxClassName} download>
-					<div className="font-bold">Formulario de registro de casos</div>
-					<div className="text-sm font-light leading-tight">Aquí va una descripción de lo que se trata este documento</div>
+					<div className="font-bold leading-tight">Formulario de registro de casos</div>
 				</a>
 
 				<a href="/documents/consentimiento-aep.pdf" target="_blank" rel="noreferrer" className={boxClassName} download>
-					<div className="font-bold">Consentimiento informado</div>
-					<div className="text-sm font-light leading-tight">Aquí va una descripción de lo que se trata este documento</div>
+					<div className="font-bold leading-tight">Consentimiento informado</div>
 				</a>
 
 			</div>
