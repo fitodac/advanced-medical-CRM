@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\SpecialtyController;
 
 /*
@@ -26,7 +27,8 @@ use App\Http\Controllers\Api\SpecialtyController;
 //public route
 Route::get('/', function () { return 'Advance API'; });
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
-
+Route::post('/auth/forgot-password', [ResetPasswordController::class, 'sendResetPasswordEmail'])->name('password.reset.email');
+Route::post('/auth/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.reset');
 
 //protected route
 Route::group(['middleware' => ['auth:sanctum']], function(){

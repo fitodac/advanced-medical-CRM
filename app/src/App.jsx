@@ -52,7 +52,4 @@ function App() {
   )
 }
 
-
-// export const useAppContext = () => useContext(appContext)
-
 export default App

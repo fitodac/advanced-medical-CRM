@@ -7,130 +7,155 @@ import App from '../App'
 import Dashboard from '../pages/Dashboard'
 
 import Patient from '../pages/Patients'
-import Crd, {loader as loaderCrd} from '../pages/Patients/Crd'
+import Crd, { loader as loaderCrd } from '../pages/Patients/Crd'
 
 import MedicalCenter from '../pages/MedicalCenters'
-import MedicalCenterForm, {loader as loaderCenterForm} from '../pages/MedicalCenters/Form'
+import MedicalCenterForm, {
+	loader as loaderCenterForm,
+} from '../pages/MedicalCenters/Form'
 
 import Doctor from '../pages/Doctors'
-import DoctorForm, {loader as loaderDoctorForm} from '../pages/Doctors/Form'
+import DoctorForm, { loader as loaderDoctorForm } from '../pages/Doctors/Form'
 
 import User from '../pages/Users'
-import UserForm, {loader as loaderUserForm} from '../pages/Users/Form'
+import UserForm, { loader as loaderUserForm } from '../pages/Users/Form'
 
 import Login from '../pages/Login'
 import Logout from '../pages/Logout'
 import Profile from '../pages/Profile'
 import AccountVerify from '../pages/AccountVerify'
+import ForgotPasswordPage from '../pages/ForgotPassword'
+import ResetPasswordPage, {
+	loader as resetPasswordLoader,
+} from '../pages/ResetPassword'
 
 import Documents from '../pages/Documents'
 import ExportData from '../pages/ExportData'
 
 import ErrorPage from '../pages/Error404'
 
-
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <AuthProvider>
-							<ProtectedRoute>
-								<App />
-							</ProtectedRoute>
-						</AuthProvider>,
+		element: (
+			<AuthProvider>
+				<ProtectedRoute>
+					<App />
+				</ProtectedRoute>
+			</AuthProvider>
+		),
 		errorElement: <ErrorPage />,
 		// action: rootAction,
 		children: [
 			{ index: true, element: <Dashboard /> },
-			{ 
-				path: '/profile', 
-				element: <Profile /> 
+			{
+				path: '/profile',
+				element: <Profile />,
 			},
 			// Users
 			{
-				path: '/users', 
-				element: <User />
+				path: '/users',
+				element: <User />,
 			},
 			{
-				path: '/users/new', 
+				path: '/users/new',
 				element: <UserForm />,
-				loader: loaderUserForm
+				loader: loaderUserForm,
 			},
 			{
-				path: '/users/edit/:id', 
+				path: '/users/edit/:id',
 				element: <UserForm />,
-				loader: loaderUserForm
+				loader: loaderUserForm,
 			},
 			// Doctors
 			{
-				path: '/doctors', 
-				element: <Doctor />
+				path: '/doctors',
+				element: <Doctor />,
 			},
 			{
-				path: '/doctors/new', 
+				path: '/doctors/new',
 				element: <DoctorForm />,
-				loader: loaderDoctorForm
+				loader: loaderDoctorForm,
 			},
 			{
-				path: '/doctors/edit/:id', 
+				path: '/doctors/edit/:id',
 				element: <DoctorForm />,
-				loader: loaderDoctorForm
+				loader: loaderDoctorForm,
 			},
 			// Patients
 			{
-				path: '/patients', 
-				element: <Patient />
+				path: '/patients',
+				element: <Patient />,
 			},
 			{
-				path: '/crd/:id', 
+				path: '/crd/:id',
 				element: <Crd />,
-				loader: loaderCrd
+				loader: loaderCrd,
 			},
 			// Documents
 			{
-				path: '/documents', 
-				element: <Documents /> 
+				path: '/documents',
+				element: <Documents />,
 			},
 			// Medical centers
 			{
-				path: '/medical-centers', 
-				element: <MedicalCenter />
+				path: '/medical-centers',
+				element: <MedicalCenter />,
 			},
 			{
-				path: '/medical-centers/new', 
+				path: '/medical-centers/new',
 				element: <MedicalCenterForm />,
-				loader: loaderCenterForm
+				loader: loaderCenterForm,
 			},
 			{
-				path: '/medical-centers/edit/:id', 
-				element: <MedicalCenterForm /> ,
-				loader: loaderCenterForm
+				path: '/medical-centers/edit/:id',
+				element: <MedicalCenterForm />,
+				loader: loaderCenterForm,
 			},
 			// Exports
 			{
-				path: '/export-excel', 
-				element: <ExportData /> 
-			}
-		]
+				path: '/export-excel',
+				element: <ExportData />,
+			},
+		],
 	},
 
 	// Login
 	{
 		path: '/login',
-		element: <AuthProvider><Login /></AuthProvider>
+		element: (
+			<AuthProvider>
+				<Login />
+			</AuthProvider>
+		),
 	},
-	
+
 	// Logout
 	{
 		path: '/logout',
-		element: <AuthProvider><Logout /></AuthProvider>
+		element: (
+			<AuthProvider>
+				<Logout />
+			</AuthProvider>
+		),
 	},
 
 	// Verify account
 	{
 		path: '/account/verify',
-		element: <AccountVerify />
+		element: <AccountVerify />,
 	},
-
+	// Forgot password
+	{
+		path: '/forgot-password',
+		element: <ForgotPasswordPage />,
+	},
+	// Reset password
+	{
+		path: '/reset-password/:email/:token',
+		element: <ResetPasswordPage />,
+		loader: resetPasswordLoader,
+	},
 ])
 
 export default router

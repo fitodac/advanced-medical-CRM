@@ -3,159 +3,142 @@ import { useLoaderData, useNavigate } from 'react-router-dom'
 import { useAxios, useForm } from '../../hooks'
 import { useAppContext } from '../../hooks'
 
-import {
-	Loading,
-	PageHeader
-} from '../../components'
-import { 
-	Input, 
-	Button, 
-	ButtonLink 
-} from '../../components/Ui'
-
+import { Loading, PageHeader } from '../../components'
+import { Input, Button, ButtonLink } from '../../components/Ui'
 
 export const formContext = createContext({})
 
-export async function loader({params}){ return {...params, id: parseInt(params.id)} }
+export async function loader({ params }) {
+	return { ...params, id: parseInt(params.id) }
+}
 
-
-export default function Page(){
-
-	const { 
-		API_URI, 
-		token, 
-		notify 
-	} = useAppContext()
+export default function Page() {
+	const { API_URI, token, notify } = useAppContext()
 	const { id } = useLoaderData()
-	const [ centers, setCenters ] = useState(null)
-	const [ specialties, setSpecialties ] = useState(null)
-	const [ loading, setLoading ] = useState(true)
+	const [centers, setCenters] = useState(null)
+	const [specialties, setSpecialties] = useState(null)
+	const [loading, setLoading] = useState(true)
 	const navigate = useNavigate()
 
-	const {formState, setFormState, onInputChange, onResetForm} = useForm({
+	const { formState, setFormState, onInputChange, onResetForm } = useForm({
 		firstname: '',
 		lastname: '',
 		name: '',
 		email: '',
 		role: 'admin',
 		center_id: 1,
-		specialty_id: 1
+		specialty_id: 1,
 	})
 
-	const handleInputChange = e => onInputChange(e)
+	const handleInputChange = (e) => onInputChange(e)
 
 	// Get user data on edition
-	const { 
-		response: getUserResponse, 
-		// error: getUserError, 
-		// loading: getUserLoading, 
-		refetch: getUserRefetch 
+	const {
+		response: getUserResponse,
+		refetch: getUserRefetch,
 	} = useAxios({
 		url: `${API_URI}/user`,
 		method: 'POST',
-		body: {id},
+		body: { id },
 		token,
-		init: 0
+		init: 0,
 	})
 
 	// Get specialties list
 	const {
 		response: getSpecialtiesResponse,
-		// error: getSpecialtiesError,
 		loading: getSpecialtiesLoading,
-		refetch: getSpecialtiesRefetch
+		refetch: getSpecialtiesRefetch,
 	} = useAxios({
 		url: `${API_URI}/specialties`,
 		method: 'POST',
 		token,
-		init: 0
+		init: 0,
 	})
 
 	// Get centers list
 	const {
 		response: getCentersResponse,
-		// error: getCentersError,
 		loading: getCentersLoading,
-		refetch: getCentersRefetch
+		refetch: getCentersRefetch,
 	} = useAxios({
 		url: `${API_URI}/center/getAll`,
 		method: 'POST',
 		token,
-		init: 0
+		init: 0,
 	})
 
-
 	// Create user
-	const { 
-		response: createUserResponse, 
-		// error: createUserError, 
-		loading: createUserLoading, 
-		refetch: createUserRefetch 
+	const {
+		response: createUserResponse,
+		// error: createUserError,
+		loading: createUserLoading,
+		refetch: createUserRefetch,
 	} = useAxios({
 		url: `${API_URI}/user/create`,
 		method: 'POST',
-		body: {...formState},
+		body: { ...formState },
 		token,
-		init: 0
+		init: 0,
 	})
 
 	// Upadate user
-	const { 
-		response: updateUserResponse, 
-		// error: updateUserError, 
-		loading: updateUserLoading, 
-		refetch: updateUserRefetch 
+	const {
+		response: updateUserResponse,
+		// error: updateUserError,
+		loading: updateUserLoading,
+		refetch: updateUserRefetch,
 	} = useAxios({
 		url: `${API_URI}/user/update`,
 		method: 'PUT',
-		body: {...formState, id},
+		body: { ...formState, id },
 		token,
-		init: 0
+		init: 0,
 	})
 
-
 	useEffect(() => {
-		if( getUserResponse?.success ){
-			const { firstname, lastname, name, email, role, doctor } = getUserResponse.data
+		if (getUserResponse?.success) {
+			const { firstname, lastname, name, email, role, doctor } =
+				getUserResponse.data
 			const center_id = doctor ? doctor.center_id : 0
 			const specialty_id = doctor ? doctor.specialty_id : 0
 			setFormState({
-				...formState, 
-				name, 
-				firstname, 
-				lastname, 
-				email, 
+				...formState,
+				name,
+				firstname,
+				lastname,
+				email,
 				role,
-				center_id, 
-				specialty_id
+				center_id,
+				specialty_id,
 			})
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [getUserResponse])
 
-
 	useEffect(() => {
-		if( getSpecialtiesResponse?.success ) setSpecialties([...getSpecialtiesResponse.data])
+		if (getSpecialtiesResponse?.success)
+			setSpecialties([...getSpecialtiesResponse.data])
 	}, [getSpecialtiesResponse])
 
 	useEffect(() => {
-		if( getCentersResponse?.success ) setCenters([...getCentersResponse.data])
+		if (getCentersResponse?.success) setCenters([...getCentersResponse.data])
 	}, [getCentersResponse])
 
 	useEffect(() => {
-		if( createUserResponse?.success ){
+		if (createUserResponse?.success) {
 			notify(createUserResponse.message, 'success')
 			onResetForm()
-			if(navigate) navigate('/users')
+			if (navigate) navigate('/users')
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [createUserResponse])
 
 	useEffect(() => {
-		if( updateUserResponse?.success ){
+		if (updateUserResponse?.success) {
 			notify(updateUserResponse.message, 'success')
 			onResetForm()
-			if(navigate) navigate('/users')
+			if (navigate) navigate('/users')
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateUserResponse])
@@ -166,9 +149,9 @@ export default function Page(){
 	useEffect(() => setLoading(updateUserLoading), [updateUserLoading])
 
 	useEffect(() => {
-		if( id ){
+		if (id) {
 			getUserRefetch()
-		}else{
+		} else {
 			setLoading(false)
 		}
 		getSpecialtiesRefetch()
@@ -176,29 +159,28 @@ export default function Page(){
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-
-
-
-	const handleSubmit = e => {
+	const handleSubmit = (e) => {
 		e.preventDefault()
 		setLoading(true)
 
 		try {
-			if( id ){
+			if (id) {
 				const { role, center_id, specialty_id } = formState
 
-				if( 'doctor' === role ){
+				if ('doctor' === role) {
 					const centerID = !center_id ? parseInt(centers[0].id) : center_id
-					const specialtyID = !specialty_id ? parseInt(specialties[0].id) : specialty_id
+					const specialtyID = !specialty_id
+						? parseInt(specialties[0].id)
+						: specialty_id
 					setFormState({
 						...formState,
 						center_id: centerID,
-						specialty_id: specialtyID
+						specialty_id: specialtyID,
 					})
 				}
 
 				updateUserRefetch()
-			}else{ 
+			} else {
 				createUserRefetch()
 			}
 		} catch (err) {
@@ -207,72 +189,99 @@ export default function Page(){
 		}
 	}
 
-	const contextValue = {formState, handleInputChange}
+	const contextValue = { formState, handleInputChange }
 
+	return (
+		<>
+			<PageHeader
+				title={id ? 'Usuario' : 'Nuevo usuario'}
+				breadcrumbs={[
+					{ title: 'Lista de usuarios', link: '/users' },
+					{ title: id ? 'Usuario' : 'Nuevo usuario', current: true },
+				]}
+			/>
 
-	return(<>
-		<PageHeader 
-			title={ id ? 'Usuario' : 'Nuevo usuario'}
-			breadcrumbs={[
-				{title: 'Lista de usuarios', link: '/users'},
-				{title: id ? 'Usuario' : 'Nuevo usuario', current: true}
-			]} />
+			<formContext.Provider value={contextValue}>
+				<section className="max-w-3xl pt-5">
+					<form onSubmit={handleSubmit}>
+						<div className="grid grid-cols-2 gap-x-5 gap-y-4">
+							<Input label="Nombre" name="firstname" context={formContext} />
+							<Input label="Apellido" name="lastname" context={formContext} />
+							<Input label="Email" name="email" context={formContext} />
 
-		<formContext.Provider value={contextValue}>
-			<section className="max-w-3xl pt-5">
-				<form onSubmit={handleSubmit}>
-					<div className="grid grid-cols-2 gap-x-5 gap-y-4">
-						<Input label="Nombre" name="firstname" context={formContext} />
-						<Input label="Apellido" name="lastname" context={formContext} />
-						<Input label="Email" name="email" context={formContext} />
-						
-						<div className="">
-							<label className="select-none leading-tight block">Rol de usuario</label>
-							<select name="role" value={formState.role} onChange={onInputChange}>
-								<option value="admin">Admin</option>
-								<option value="doctor">Doctor</option>
-							</select>
-						</div>
+							<div className="">
+								<label className="select-none leading-tight block">
+									Rol de usuario
+								</label>
+								<select
+									name="role"
+									value={formState.role}
+									onChange={onInputChange}
+								>
+									<option value="admin">Admin</option>
+									<option value="doctor">Doctor</option>
+								</select>
+							</div>
 
-						<div>
-							{ 'doctor' === formState.role 
-							? (<div className="space-y-4 pt-4">
-									<div className="font-medium leading-tight">Datos del doctor</div>
+							<div>
+								{'doctor' === formState.role ? (
+									<div className="space-y-4 pt-4">
+										<div className="font-medium leading-tight">
+											Datos del doctor
+										</div>
 
-									{ specialties 
-									? (<div className="">
-											<label className="select-none">Especialidad</label>
-											<select name="specialty_id" value={formState.specialty_id} onChange={onInputChange}>
-												{ specialties.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
-											</select>
-										</div>) 
-									: null }
+										{specialties ? (
+											<div className="">
+												<label className="select-none">Especialidad</label>
+												<select
+													name="specialty_id"
+													value={formState.specialty_id}
+													onChange={onInputChange}
+												>
+													{specialties.map((e, i) => (
+														<option value={e.id} key={i}>
+															{e.name}
+														</option>
+													))}
+												</select>
+											</div>
+										) : null}
 
-									{ centers 
-									? (<div className="">
-											<label className="select-none">Centro médico</label>
-											<select name="center_id" value={formState.center_id} onChange={onInputChange}>
-												{ centers.map((e,i) => (<option value={e.id} key={i}>{e.name}</option>)) }
-											</select>
-										</div>) 
-									: null }
+										{centers ? (
+											<div className="">
+												<label className="select-none">Centro médico</label>
+												<select
+													name="center_id"
+													value={formState.center_id}
+													onChange={onInputChange}
+												>
+													{centers.map((e, i) => (
+														<option value={e.id} key={i}>
+															{e.name}
+														</option>
+													))}
+												</select>
+											</div>
+										) : null}
+									</div>
+								) : null}
+							</div>
 
-								</div>)
-							: null }
-						</div>
+							<div className="flex gap-x-5 justify-between pt-4 col-span-2">
+								<ButtonLink link="/users">Cancelar</ButtonLink>
 
-						<div className="flex gap-x-5 justify-between pt-4 col-span-2">
-							<ButtonLink link="/users">Cancelar</ButtonLink>
-							
-							<div className="w-32">
-								<Button className="bg-primary border-primary text-white w-full">{id ? 'Actualizar' : 'Guardar'}</Button>
+								<div className="w-32">
+									<Button className="bg-primary border-primary text-white w-full">
+										{id ? 'Actualizar' : 'Guardar'}
+									</Button>
+								</div>
 							</div>
 						</div>
-					</div>
-				</form>
-			</section>
-		</formContext.Provider>
+					</form>
+				</section>
+			</formContext.Provider>
 
-		{loading && (<Loading />)}
-	</>)
+			{loading && <Loading />}
+		</>
+	)
 }
