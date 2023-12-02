@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Doctor extends Model
 {
@@ -15,8 +15,22 @@ class Doctor extends Model
 		'specialty_id'
 	];
 
-	public function user(){ return $this->belongsTo(User::class, 'user_id')->select(['id', 'name', 'email', 'firstname', 'lastname' ]); }
-	public function specialty(){ return $this->belongsTo(Specialty::class)->select(['name']); }	
-	public function center(){ return $this->belongsTo(Center::class)->select(['id', 'name', 'code']); }
+    public function patiens() {
+        return $this->hasMany(Patient::class);
+    }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->select(['id', 'email', 'firstname', 'lastname' ]);
+    }
+
+    public function center()
+    {
+        return $this->belongsTo(Center::class);
+    }
+
+    public function specialty()
+    {
+        return $this->belongsTo(Specialty::class)->select(['id', 'name']);
+    }
 }

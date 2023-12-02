@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
 	use HasApiTokens, HasFactory, Notifiable;
 
@@ -18,12 +19,12 @@ class User extends Authenticatable
 	 * @var array<int, string>
 	 */
 	protected $fillable = [
-		'name',
 		'email',
 		'firstname',
 		'lastname',
 		'password',
-		'role'
+		'role',
+		'is_email_verified'
 	];
 
 	/**
@@ -46,7 +47,8 @@ class User extends Authenticatable
 		'password' => 'hashed',
 	];
 
-
-	public function doctor(){ return Doctor::where('user_id', $this->id)->first(); }
-
+    public function doctor(): HasOne
+    {
+        return $this->hasOne(Doctor::class);
+    }
 }

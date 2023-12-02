@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Doctor;
 use App\Traits\ApiResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\DoctorResource;
 use Illuminate\Support\Facades\Validator;
-
-use App\Models\Doctor;
 
 class DoctorController extends Controller
 {
@@ -16,15 +19,41 @@ class DoctorController extends Controller
 	use ApiResponse;
 
 
-  public function list(Request $request)
+    public function list(Request $request)
+    {
+        $query = Doctor::with(['center', 'user', 'specialty']);
+
+        if ($request->has('name') && !empty($request->name)) {
+            $query->whereHas('user', function ($query) use ($request) {
+                $query->where(DB::raw('UPPER(firstname)'), 'LIKE', '%' . strtoupper($request->name) . '%')
+                    ->orWhere(DB::raw('UPPER(lastname)'), 'LIKE', '%' . strtoupper($request->name) . '%');
+            });
+        }
+
+        if ($request->has('center_id') && $request->center_id != 0) {
+            $query->where('center_id', $request->center_id);
+        }
+
+        if ($request->has('specialty_id') && $request->specialty_id != 0) {
+            $query->where('specialty_id', $request->specialty_id);
+        }
+
+        $resp = $query->latest()->paginate(10)->withQueryString();
+
+        return $this->successResponse($resp);
+    }
+
+
+	// GET FULL LIST
+	public function getFullList(Request $request)
 	{
-		$resp = Doctor::latest()->paginate(10);
-		return DoctorResource::collection($resp);
+		$list = Doctor::with('user')->get();
+		return $this->successResponse($list);
 	}
 
 
-
-	public function show(Request $request)
+	// GET
+	public function get(Request $request)
 	{
 
 		$validate = Validator::make($request->all(), [
@@ -34,13 +63,30 @@ class DoctorController extends Controller
 			'id.numeric' => 'Formato incorrecto',
 		]);
 
-		$doctor = Doctor::select(['id', 'specialty_id', 'center_id'])->where('user_id', $request->id)->first();
+		$doctor = User::with('doctor.center')->find($request->id);
 
-		return $this->successResponse([
-			'id' => $doctor->id,
-			'specialty_id' => $doctor->specialty_id,
-			'center' => $doctor->center
-		]);
+		if( !$doctor ){
+			return $this->errorResponse('El doctor que buscas no existe en nuestra base de datos', 404);
+		}
+
+		return $this->successResponse($doctor);
+	}
+
+
+
+	public function delete(Doctor $doctor)
+	{
+		if( !$doctor ) return $this->errorResponse('El médico que tratas de eliminar no existe', 404);
+
+		$user = Auth::user();
+
+		if( $user->role == 'doctor') {
+				return $this->errorResponse('No puedes eliminar el médico', 200);
+		}
+
+		$doctor->delete();
+
+		return $this->successResponse([], 'Se ha eliminado el médico');
 	}
 
 }

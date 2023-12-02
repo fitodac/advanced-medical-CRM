@@ -13,4 +13,14 @@ class Center extends Model
 		'name',
 		'code'
 	];
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
+
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
+    }
 }

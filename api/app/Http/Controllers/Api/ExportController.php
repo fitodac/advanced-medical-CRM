@@ -15,13 +15,13 @@ class ExportController extends Controller
      */
     public function index()
     {
-        $name = 'visits-' . now()->format('Ymd-His') . '.xlsx';
+			$name = 'visits-' . now()->format('Ymd-His') . '.xlsx';
 
-        $export = new VisitsExport;
-        $export->store('public/'.$name);
+			$export = new VisitsExport;
+			$export->store('public/'.$name);
 
-        $url = Storage::disk('public')->url($name);
+			$url = Storage::disk('public')->url($name);
 
-        return $this->successResponse($url);
+			return $this->successResponse($url);
     }
 }
