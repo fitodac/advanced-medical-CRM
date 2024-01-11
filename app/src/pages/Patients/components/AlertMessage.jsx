@@ -39,6 +39,9 @@ const message = (name, val) => {
 		case 'mu__axes_yax':
 		case 'mu__adipose_tissue':
 			return val > 12 ? 'Por favor confirme el valor' : null
+		case 'hfnr__percentage_of_adherece_to_recommendations':
+			console.log('val', val)
+			return 'error...'
 		default: return null
 	}
 }

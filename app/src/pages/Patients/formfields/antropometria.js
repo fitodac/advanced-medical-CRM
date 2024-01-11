@@ -27,7 +27,7 @@ export default [
 		key: 'height',
 		name: 'height',
 		label: 'Altura', 
-		append: 'cm (medida o estimada)'
+		append: 'M (medida o estimada)'
 	},
 	{ 
 		key: 'BMI',

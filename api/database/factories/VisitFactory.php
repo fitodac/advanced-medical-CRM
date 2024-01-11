@@ -89,7 +89,7 @@ class VisitFactory extends Factory
             'nd__other' => $nd__other,
             'nd__other_description' => $nd__other ? $this->faker->text() : '',
             'patient_malnourished' => $this->faker->randomElement(['no', 'si', 'en riesgo']),
-            'patient_malnourished__code' => $this->faker->bothify('??##'),
+            // 'patient_malnourished__code' => $this->faker->bothify('??##'),
             // Parámetros funcionales
             'dynamometry' => $this->faker->randomFloat(2, 0, 100),
             'dynamometry__not_possible' => $this->faker->randomElement(['y', 'n', null]),
@@ -138,7 +138,6 @@ class VisitFactory extends Factory
             'nt__planted_objectives__other_description' => $nt__planted_objectives__other ? $this->faker->text : '',
             // Inicia tratamiento nutricional
             'nt__start' => $this->faker->randomElement(['y', 'n', null]),
-            'nt__specify' => $this->faker->text,
             // Tipo de tratamiento nutricional indicado
             'nti__parental_nutrition' => $this->faker->randomElement(['y', 'n', null]),
             'nti__dietary_modifications' => $this->faker->randomElement(['y', 'n', null]),

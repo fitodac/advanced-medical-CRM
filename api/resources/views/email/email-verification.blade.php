@@ -29,7 +29,7 @@
 									<br>
 									La podrá cambiar desde la plataforma en "mi cuenta", el apartado de "Seguridad, Cambiar la contraseña".
 									<br>
-									Su usuario es su correo electrónico con el que ha sido registrado en la plataforma.
+									Su usuario es su correo electrónico en el que ha recibido este mensaje.
 							</p>
 							<p>
 								2. Por favor haga click en el botón de abajo para verificar su correo electrónico

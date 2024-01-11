@@ -1,4 +1,4 @@
-<?php 
+<?php
 $headers = [
 	"id",
 	"Código paciente",
@@ -88,7 +88,8 @@ $headers = [
 	"Otros", // nd__other
 	"Descripción", // nd__other_description
 	"¿Está el paciente desnutrido?", // patient_malnourished
-	"Desnutrición del paciente según CIE 10", // patient_malnourished__code
+	"Diagnóstico", // patient_malnourished__diagnosis
+	"Procedimiento", // patient_malnourished__procedure
 	/**
 	 * Parámetros funcionales
 	 */
@@ -158,7 +159,6 @@ $headers = [
 	 * Inicia tratamiento nutricional
 	 */
 	" ", // nt__start
-	"Si, especifique", // nt__specify
 	/**
 	 * Tipo de tratamiento nutricional indicado
 	 */
